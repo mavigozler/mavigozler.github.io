@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "mavigozler.github.io",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "mavigozler.github.io"
+	}
+}
