@@ -1,0 +1,105 @@
+﻿/* --light-text: #f8f; */
+
+--light-text {
+   color: #f8f;
+}
+
+
+button#theme-switcher {
+   float:right;
+   margin:0;
+}
+:root { color-scheme: light dark; }
+#container {
+   margin:0.5em 20%;
+   border:10px groove blue;
+   background-color: light-dark(white, #111111);
+   color: light-dark(#111111, var(--light-text));
+   padding:1em;
+}
+body {
+   background-color: light-dark(#f8fff8, black);
+   color: light-dark(black, var(--light-text));
+   font: normal 13pt Roboto,sans-serif;
+   margin:0;
+   padding:0;
+}
+a { color: light-dark(navy, rgb(255, 170, 0))}
+h1 {
+   margin: 0.5em auto 0.25em;
+   font: bold 18pt "Segoe UI",sans-serif;
+}
+h2 {
+   font: bold 14pt Georgia;
+   margin-top: 1em;
+   margin-bottom: 0.5em;
+}
+h3 {
+   font: oblique 13pt Merriweather;
+   margin-top: 1em;
+   margin-bottom: 0.5em;
+}
+#title {
+   padding-top: 1em;
+   padding-bottom: 0.5em;
+   color: light-dark(blue, #f4e625);
+   font: bold 24pt Arial,sans-serif;
+   text-align: center;
+}
+table {
+   font-size: 115%;
+   color: light-dark(#111111, var(--light-text));
+   background-color:light-dark(#888, #111111);
+   width:80%;
+   font-family:Helvetica,Arial,sans-serif;
+	margin:1em auto;
+   padding:0.5em;
+   border-collapse: collapse;
+}
+caption {
+   margin:0;
+   color:light-dark(black, yellow);
+   background-color:light-dark(white,black);
+   font: bold 110% Montserrat;
+}
+th {
+   color: light-dark(black, #bbb);
+   background-color:light-dark(white,dark);
+   text-align:center;
+   border:2px solid;
+   border-color: light-dark(black, #a8a);}
+td {
+   color: light-dark(black, var(--light-text));
+   background-color: light-dark(white,black);
+   border:2px solid;
+   border-color: light-dark(black, #a8a);
+}
+td.separator {
+   font: italic 80% Lato;
+   color: light-dark(black, black);
+   background-color: light-dark(silver, rgb(235, 217, 171));
+}
+ul ul, ul ol {
+   font-size: 87%;
+   list-style-type: square;
+}
+ul {
+   padding-inline-start: 2em;
+}
+span.scope {
+   font: normal 85% Poppins;
+   color: light-dark(brown, orange);
+}
+table#reduction td {
+   text-align: center;
+}
+td#per-session {
+   font: normal 80% Verdana,sans-serif;
+}
+td:nth-child(2) {
+   text-align: center;
+}
+table#rates {
+   width: 85%;
+   text-align: justify;
+}

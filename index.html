@@ -2,76 +2,155 @@
 <html lang="en">
 <head>
 <title>Tutoring Services</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- see below for AI font suggestions -->
+<link href="posting.css" rel="stylesheet">
+<script src="tutor-posting.js"></script>
 </head>
 <body>
-<div style="width:50em;border:10px groove blue;background-color:#f0f0ff;padding:1em;">
+<button id="theme-switcher">Switch Theme</button>
+<p id="title">
+	Mitch Halloran Tutoring Services
+</p>
+<div id="container">
+
 <p>
 The goal of tutoring is to help you, the student, with succeeding in courses you are
 taking at an educational institution. It is not to offer the course work itself apart
 from the objectives of the school or college instruction you are getting. Find out more
 on how tutoring preparation is done.
-
 </p>
+
+<h1>Interaction</h1>
 <p>
-
+Will the interaction between myself and those tutored be face-to-face or strictly online?
+Will there be just one who is tutored or will there be a group?
 </p>
-My tutoring services include the following subjects:
-
+<h2>In-Person or Online</h2>
+<p>
+Online tutoring is occurring more and more these days, and there are many advantages.
 <ul>
-<li>University level
- <ul>
- <li>Chemistry
-	<ul>
-		<li>General/Fundamental/Introductory</li>
-		<li>Organic</li>
-		<li>Biochemistry</li>
-	</ul>
- <li>Biology: general introductory course
- <li>Information Technology
-	<ul>
-		<li>Web Application Development: HTML, CSS, JavaScript, TypeScript</li>
-		<li>SharePoint: Site/List-Library Building</li>
-		<li>Power Platform: Power App (Canvas), Power Automate</li>
-		<li>Microsoft Office applications: Excel, Word, PowerPoint</li>
-	</ul>
- </ul>
-<li>Primary &amp; Secondary School Level
- <ul>
- <li>Mathematics: Pre-Algebra, Algebra, Geometry, Analytical
-   Geometry, Analytical Trigonometry, Pre-Calculus, Problem Solving
- <li>Biology:  general, zoology
- <li>Chemistry: general
- </ul>
+<li><b>Right at Home.</b> You don't have to leave home if you don't want to.</li>
+<li><b>Security.</b> Because you don't have to leave home and invite someone you consider
+	a relative stranger into your home, there's no worry or need for <q>background checks</q>,
+	if this is important to you
+</li>
+<li><b>Lower Cost</b>. There is no cost for travel at all, both its time and resources
+like fuel and vehicle wear-and-tear</li>
 </ul>
 <p>
-I have competencies beyond the list above, but
-Please email to inquire about your particular subject(s) of study and I will inform you as to whether I
-am competent to provide instructional assistance to you or the tutored student.
+Some students are not comfortable with online interaction however, and feel they
+get a better interaction through a face-to-face session. Decide what is best for you.
+</p>
+
+<h3>Requirements for Online Tutoring</h3>
 <p>
-<h2>Pricing</h2>
+	At the <a href="setup">end of this page</a>, recommendations the resources and setup for the student
+	for online tutoring are shown.
+</p>
+
+<h2>One-on-One or Group</h2>
+<p>
+Your best result would be a completely one-on-one session with your tutor. But if there are
+a group of you studying the same course/subject/content, I can teach a group of up to 6
+learners. I will not teach more or else I would probably just open up a school, and so
+teaching larger numbers is impractical unless you really want a school.
+<p>
+Because the time and attention are divided among more persons in the group, There
+is a discount on the per hour rate for each student. I could not divide the rate by
+the number of each student because that can affect the incentive to learn in a more
+one-on-one interaction. See the table below on group rate calculation.
+</p>
+
+<h2>First Session</h2>
+<p>
+I prefer the first session be only 30-45 minutes long. I expect the first session actually
+to be a "get acquainted" session and to get organized. I will not charge a fee for any
+session that is not related to actual tutoring/learning, but which are just administrative
+things like this.
+
+<h1>Pricing</h1>
+<p>
+<b></b>
+</p>
+<p>
+Because the interaction can vary as explained above (one-on-one vs group, in-person vs online,
+me traveling vs client traveling), the per-hour final rate will vary with adding to or
+subtracting from a base rate. The base rate has three tiers: middle school level, high school level,
+and college/university level (primary school students should really be tutored by
+experienced credentialed teachers).
+</p>
+<p>
+While I will try to follow a reasonable formula for determining the final per-hour rate as indicated
+in the table below, there might be other factors that mean I have to determine a customized
+per-hour rate for a particular client or group.
+</p>
+In subsequent sessions a per-hour base rate
 The fees depend on the level of the subject.  See the table below for the fees.  This is either at my home
 or place of business.  If you require/prefer that I travel to a location, an additional I charge an
 additional 36 cents/mile from either my work or home location, whichever is closest to your location.
 
-<table style="font-size:90%;background-color:#888;width:30em;font-family:Helvetica,Arial,sans-serif;
-	margin:1em 1.5em;padding:0.5em;">
-<caption style="margin:0;color:yellow;background-color:black;">Individual (One-On-One) Online-Based Tutoring</caption>
-<tr><th style="background-color:#fff;text-align:left;">University level subjects
-  <td style="background-color:#fff;">$23 per hour
-<tr><th style="background-color:#fff;text-align:left;">Primary and Secondary School level subjects
-  <td style="background-color:#fff;">$17 per hour
-<tr><td colspan="2" style="background-color:#fff;font-size:85%;">For face-to-face tutoring, if student
-	travels to my home, pricing is not different from online tutoring. If I travel to location set by the student,
-	a per-session additional charge will be added based on time/distance
-<tr><td colspan="2" style="background-color:#fff;font-size:85%;color:green;">For groups of students:  I apply
-	a 25% discount rate to the hourly rate for each additional student rounded down to the nearest dollar down to a minimum
-	of $8/hr per student.
-  <ul>
+<table id="rates">
+	<caption>Subjects and Per-Hour Rates</caption>
+<col><col class="rate-col">
+<tr><th>Subject</th><th>Per Hour</th></tr>
+<tr><td class="separator" colspan="2">Grades 6-9 (Middle School)</td></tr>
+<tr><td>Arithmetic, Geometry</td>   <td><span id="Math6-9">&nbsp;</span></td></tr>
+<tr><td>[Earth] <b>Science</b></td> <td><span id="Science6-9">&nbsp;</span></td></tr>
+<tr><td class="separator" colspan="2">Grades 10-12 (High School)</td></tr>
+<tr><td><span class="scope">Science:</span> chemistry, biology</td> <td><span id="Science10-12">&nbsp;</span></td></tr>
+<tr><td><span class="scope">Mathematics:</span> pre-algebra, algebra, (analytical) trigonometry</td>
+	<td><span id="Math10-12">&nbsp;</span></td></tr>
+<tr><td class="separator" colspan="2">College/University/Advanced Placement</td></tr>
+<tr><td>Introductory/General Chemistry</td><td><span id="GenChem">&nbsp;</span></td></tr>
+<tr><td>Organic Chemistry</td><td><span id="OrgChem">&nbsp;</span></td></tr>
+<tr><td>Biochemistry</td><td><span id="Biochem">&nbsp;</span></td></tr>
+<tr><td>Biology: includes zoology, embryology</td><td><span id="Biology">&nbsp;</span></td></tr>
+<tr><td class="separator" colspan="2">Special Expertise: Information Technology</td></tr>
+<tr><td><span class="scope">Web [Application] Development:</span> HTML, CSS, JavaScript,
+	TypeScript</td><td><span id="WebDev">&nbsp;</span></td></tr>
+<tr><td><span class="scope">Microsoft Office:</span> Word, Excel, PowerPoint</td><td><span id="MSO">&nbsp;</span></td></tr>
+<tr><td><span class="scope">SharePoint:</span> Site/List-Library Building</td><td><span id="SharePoint">&nbsp;</span></td></tr>
+<tr><td><span class="scope">Power Platform:</span> Power app (Canvas), Power Automate</td><td><span id="PowerApp">&nbsp;</span></td></tr>
+<tr><td colspan="2" id="per-session">
+<b>Per-Session Fee</b>. This only applies to my traveling to meet the student, and it is because of the cost
+of my time and use of resources (fuel, vehicle) for that travel. This is not a per-hour cost, but
+a fixed cost related to each session, no matter how long the session. This fee will be determined during
+the initial organization of the tutoring contract.
+</td></tr>
+</table>
+<p>
+I have competencies beyond the list above, but please email to inquire about your particular
+subject(s) of study and I will inform you as to whether I am competent to provide instructional
+assistance to you or the tutored student.
+</p>
+<p>
+For groups of students up to a maximum of 6 students (I don't want to open a school at this
+time), the table below shows the rate adjustment by percentage that I would use to
+reduce the per hour rate for each student:</p>
+<table id="reduction">
+	<tr><th># Students</th><th>Percent Reduction</th><th>Example Calculation</th></tr>
+	<tr><td>1</td><td></td><td></td></tr>
+	<tr><td>2</td><td></td><td></td></tr>
+	<tr><td>3</td><td></td><td></td></tr>
+	<tr><td>4</td><td></td><td></td></tr>
+	<tr><td>5</td><td></td><td></td></tr>
+	<tr><td>6</td><td></td><td></td></tr>
+</table>
+<ul>
 </ul>
 To maintain tutoring quality, group sizes shall not be greater than six (6) students&mdash;I do not want
 to open a school
-</table>
-<h2>Preparation for Tutoring</h2>
+<h1>Payment for Service</h1>
+<p>
+For new customers, payment is due after a session is completed. Once payment is complete, the next session
+can be scheduled and session preparation started. The method of payment may vary depending on whether
+payment is made in person (cash, check) or digitally by a system (Zelle, Venmo, PayPal). Customers will
+receive a detailed receipt which I recommend they retain for the customary period; clients should consult
+with their financial advisors about whether payment for tutoring services have additional benefits,
+such as those related with taxes.
+</p>
+<h1>Preparation for Tutoring</h1>
 <p>
 I prefer online instruction using the latest interaction technologies, but am open
 In order to keep your costs down, I will ask the student what specific subject he/she is studying in order
@@ -84,7 +163,38 @@ Your tutor has a Ph.D. in Biochemistry &amp; Molecular Biology but I have been w
 primarily in Information Technology, using Microsoft technologies particularly app Development
 with SharePoint. I have limited non-credentialed <q>substitute</q> middle school teacher
 experience teaching science to middle school students.
-</div>
 
+<hr>
+
+<h1 id="setup">Setup/Resources Recommendations for Online Tutoring</h1>
+<ul>
+	<li>Computing device
+		<ul>
+			<li>Desktop: 21- to 24-in monitor recommended as minimum </li>
+			<li>Laptop: 15.6 in monitor</li>
+			<li>At least 1920 x 1080 (Full HD) resolution</li>
+			<li>Audio/video: a 720p webcam is recommended, and
+				a microphone built-in to monitor or headset</li>
+			<li>A dual-core 4 GB RAM is a minimum, and 8 GB quad core
+				is recommended</li>
+			<li>While a keyboard &amp; mouse will work, and added
+				benefit is obtained if a touchscreen or Wacom tablet
+				is helpful</li>
+		</ul>
+	</li>
+	<li>Internet Connection
+		<ul>
+			<li>Bandwidth: Your download service should have a minimum 5 Mbps, but
+				20 Mbps is really best for HD video calls &amp; whiteboarding</li>
+			<li>Your latency (ping) should be less than 100 ms, but dont
+				worry if you cant determine it</li>
+			<li>If a wireless connection to computer to home LAN is used,
+				make sure it does not contribute to any lag</li>
+			<li>Learn whether the ISP throttles service: a 1-2 GB per hour
+				connection is needed typically if whiteboarding</li>
+		</ul>
+	</li>
+</ul>
+</div> <!-- id=container -->
 </body>
 </html>
