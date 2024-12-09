@@ -1,56 +1,72 @@
-﻿/* --light-text: #f8f; */
+﻿/* cSpell: disable */
 
---light-text {
-   color: #f8f;
+:root {
+   --light-text:  #ddd;
+   --container-light-bkgd: white;
+   color-scheme: light dark;
 }
-
 
 button#theme-switcher {
-   float:right;
-   margin:0;
+   position: fixed;
+   right: 0;
+   top: 10px;
+   margin: 0;
 }
-:root { color-scheme: light dark; }
+
 #container {
-   margin:0.5em 20%;
-   border:10px groove blue;
+   margin:0.5em auto;
+   border:10px groove light-dark(blue, rgb(183, 183, 164));
    background-color: light-dark(white, #111111);
-   color: light-dark(#111111, var(--light-text));
+   color: light-dark(#111111, var(--light-text, #ddd));
    padding:1em;
+   width: 80%;
+   max-width: 45em;
 }
 body {
    background-color: light-dark(#f8fff8, black);
-   color: light-dark(black, var(--light-text));
+   color: light-dark(black, var(--light-text, #ddd));
    font: normal 13pt Roboto,sans-serif;
    margin:0;
    padding:0;
 }
+p {
+   margin: 0;
+   padding: 0;
+   margin-bottom: 1em;
+}
 a { color: light-dark(navy, rgb(255, 170, 0))}
 h1 {
-   margin: 0.5em auto 0.25em;
-   font: bold 18pt "Segoe UI",sans-serif;
+   /* clear: both; */
+   margin: 0;
+   padding: 0;
+   margin-top: 1em;
+   margin-bottom: 0.25em;
+   color: light-dark(blue, #f4e625);
+   font: bold 24pt Arial,sans-serif;
+   text-align: center;
 }
 h2 {
-   font: bold 14pt Georgia;
-   margin-top: 1em;
-   margin-bottom: 0.5em;
+   margin: 1em 0 0.5em;
+   font: bold 18pt "Segoe UI",sans-serif;
 }
 h3 {
+   margin: 1em 0 0.5em;
+   font: bold 14pt Georgia;
+}
+h4 {
+   margin: 1em 0 0.5em;
    font: oblique 13pt Merriweather;
-   margin-top: 1em;
-   margin-bottom: 0.5em;
 }
 #title {
    padding-top: 1em;
    padding-bottom: 0.5em;
-   color: light-dark(blue, #f4e625);
-   font: bold 24pt Arial,sans-serif;
-   text-align: center;
 }
 table {
    font-size: 115%;
    color: light-dark(#111111, var(--light-text));
    background-color:light-dark(#888, #111111);
    width:80%;
+   max-width: 35em;
    font-family:Helvetica,Arial,sans-serif;
 	margin:1em auto;
    padding:0.5em;
@@ -93,6 +109,11 @@ span.scope {
 table#reduction td {
    text-align: center;
 }
+table#reduction th {
+   font: bold 83% Roboto,sans-serif;
+   color: light-dark(black, #8f8);
+   background-color: light-dark(var(--container-light-bkgd));
+}
 td#per-session {
    font: normal 80% Verdana,sans-serif;
 }
@@ -101,5 +122,22 @@ td:nth-child(2) {
 }
 table#rates {
    width: 85%;
+   margin:0.5em auto;
    text-align: justify;
+}
+table#deviceprops {
+   position: fixed;
+   font: normal 8pt Roboto,sans-serif;
+   width: auto;
+   top: 0;
+   left: 0;
+}
+table#deviceprops th {
+   text-align: left;
+}
+table#deviceprops td {
+   font: bold 110% Roboto,sans-serif;
+   color: lightgreen;
+   text-align: right;
+   padding:0.1em 0.3em;
 }
