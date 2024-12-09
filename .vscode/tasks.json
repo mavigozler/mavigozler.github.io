@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+			"label": "tsc: build - tsconfig.json"
+		},
+		{
+			"label": "copy files",
+			"type": "shell",
+			"command": "${workspaceFolder}/setupDist.ps1"
+		},
+		{
+			"label": "build posting",
+			"dependsOn": [
+				"tsc: build - tsconfig.json",
+				"copy files"
+			],
+			"group": {
+				"kind": "build"
+			}
+		}
+	]
+}
