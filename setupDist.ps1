@@ -4,7 +4,7 @@
 #   "tutor-posting.ts"
 )
 $sourcePath = "src"
-$destPath = "dist"
+$destPath = "gh-pages"
 foreach ($item in $sourceFiles) {
    $srcInfo = Get-ChildItem -Path "${sourcePath}/${item}"
    if (Test-Path -Path "${destPath}/${item}") {
