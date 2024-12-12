@@ -1,5 +1,5 @@
 "use strict";
-
+import contentBuilder from "./content-builder.js";
 const CSSvalueRE = /(\-?\d+\.?(\d+)?)([a-z]{2})?/;
 const InitialStyleRules = {
     "h1": {

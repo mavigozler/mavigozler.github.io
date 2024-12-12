@@ -10,20 +10,48 @@
 			"group": "build",
 			"label": "tsc: build - tsconfig.json"
 		},
+		/*{
+			"label": "prelaunch task set for debug",
+			"dependsOn": [
+				"tsc: build - tsconfig.json"
+			],
+			"group": {
+				"kind": "none"
+			}
+		},
+		/*
 		{
 			"label": "copy files",
 			"type": "shell",
 			"command": "${workspaceFolder}/setupDist.ps1"
 		},
 		{
+			"label": "copy noscript files",
+			"type": "shell",
+			"command": "${workspaceFolder}/setupDist.ps1",
+			"args": [ "noscript" ]
+		}, */
+		{
 			"label": "build posting",
-			"dependsOn": [
-				"tsc: build - tsconfig.json",
-				"copy files"
-			],
+			"command": "node",
+			"args": [ "${workspaceFolder}/withscriptset/tunescript.js" ],
+			"dependsOn": [ "tsc: build - tsconfig.json" ],
 			"group": {
 				"kind": "build"
 			}
-		}
+		},
+		/*
+		{
+			"label": "build no-script posting",
+			"command": "node",
+			"args": [ "${workspaceFolder}/withscriptset/tunescript.js" ],
+			"dependsOn": [ "tsc: build - tsconfig.json" ],
+			"options": {
+				"env": { "scripting" : "no" }
+			},
+			"group": {
+				"kind": "build"
+			}
+		} */
 	]
 }

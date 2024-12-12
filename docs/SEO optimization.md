@@ -1,4 +1,4 @@
-﻿# SEO Optmiziation
+﻿# SEO Optimization
 
 Getting your tutoring services website noticed requires a combination of SEO (Search Engine Optimization), online presence building, and targeted advertising. Here are actionable steps to increase visibility:
 
