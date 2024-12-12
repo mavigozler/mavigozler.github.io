@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+         General Assay / Calibration Curve Calculations
+	============================ -->
+<head>
+<title>Assay Curves Calculations</title>
+<style type="text/css">
+#stdcurve-table {background-color:#777;border:2px solid #777;}
+#stdcurve-table caption {background-color:#aaa;color:yellow;
+		font:bold 90% Helvetica,Arial,sans-serif;margin:0;padding:0;}
+#stdcurve-table TH {background-color:#333;color:white;
+		font:normal 110% "Times New Roman","Times Roman",Times,serif;}
+		.X-DataVal, .Y-DataVal {text-align:center;background-color:#333;}
+		.X-DataVal input, .Y-DataVal input {text-align:right;}
+		.param-cell {color:cyan;background-color:#333;text-align:right;
+				font:bold 125% "Times New Roman","Times Roman",Times,serif;}
+		.placesnum {text-align:center;background-color:#333;}
+		.entrynum {font:bold 90% Verdana,Tahoma,sans-serif;text-align:right;
+				background-color:#333;color:lime;padding-right:1em;}
+		#options-row TD {font-size:75%; color:white;}
+		.Fitted-Y-Value {background-color:#222;text-align:right;vertical-align:bottom;
+				font:normal 100% Tahoma,Verdana,sans-serif;color:yellow;}
+#stdcurve-report {background-color:#88d;border:2px solid #8dd;}
+#stdcurve-report caption {background-color:#252;color:cyan;}
+#stdcurve-report TH {background-color:#eee;color:black;text-align:left;
+		font:bold 90% Arial,Helvetica,sans-serif;line-height:1.2em;padding:1em;}
+	.calcdinputs {text-align:center;margin:0;
+		font:normal 90% Arial Narrow,Arial,Helvetica,sans-serif!important;}
+	.calcdinputs select {margin:0;font:normal 83% Arial,Helvetica,sans-serif!important;}
+	.calcdinputs input {font:normal 125% Arial,Helvetica,sans-serif!important;}
+#stdcurve-report TD {background-color:#d88;font-size:150%;padding:0.1em;}
+#unknowncounts-text {padding-bottom:2em;}
+#unknown-table {background-color:maroon;}
+#unknown-table caption {background-color:#fa3;color:black;
+		font:bold 90% Helvetica,Arial,sans-serif;margin:0;padding:0;}
+#unknown-table TH {background-color:#d81;color:black;padding:0.1em;
+		font:normal 110% "Times New Roman","Times Roman",Times,serif;}
+		.X-Unknown {text-align:right;color:yellow;}
+		.Y-Unknown {text-align:right;}
+		.entrynum {font:bold 90% Verdana,Tahoma,sans-serif;text-align:right;
+				background-color:#333;color:lime;padding-right:1em;}
+</style>
+</head>
+<body onload="AssayCurveFit.finishDocument();">
+<div id="assay-page" style="min-width:40em;">
+
+<p style="color:olive;font:bold 125% Verdana,Tahoma,sans-serif;">
+A Generic Standard (Calibration) Curve for Assays of All Types</p>
+<p>&nbsp;</p> <!-- Note that MSIE illegally inlines FORM under P elements -->
+<form id="assay-form" action="#">
+<div id="assay-entry-prompt">
+Select between manual <i>or</i> imported (copy/cut &amp; paste)
+entry of values for the calibration/standard curve:
+<div style="margin-top:0.5em;font:100% Helvetica,Arial,sans-serif;">
+<input type="radio" name="entry-mode" value="manual" /> manual entry
+<br /><input type="radio" name="entry-mode" value="import" checked="checked" />
+  imported entry by cut/copy &amp; paste
+</div>
+<p style="margin-top:0.5em;">
+<button type="button" onclick="AssayCurveFit.interfaceAssayTable(this);">Enter Values</button></p>
+</div> <!-- id=assay-entry-prompt -->
+
+<div id="prompt-datapairs" style="display:none;">
+Enter the count of (<i>x</i>, <i>y</i>) data pairs that make up the
+calibration/standard curve:
+
+<span id="paircounts-select"></span>
+
+
+<div style="display:none;" id="paircounts-text">
+<input type="text" size="2" maxlength="2" />
+ <span style="color:green;font:normal 90% Arial,Helvetica,sans-serif;">
+  &larr;Enter a number greater than 1 and less than 50 in the box at left</span>
+</div>
+</div> <!-- id=prompt-datapairs -->
+
+<div id="import-boxes" style="display:none;">
+<p style="float:left;margin-right:1em;">
+<textarea name="xval-entry" rows="15" cols="20"
+  onfocus="this.select();">Paste X values here</textarea>
+<textarea name="yval-entry" rows="15" cols="20"
+  onfocus="this.select();">Paste Y values here</textarea>
+<br /><button type="button"
+onclick="elems=this.form.elements;elems['xval-entry'].value='';elems['yval-entry'].value='';">Clear entry boxes</button>
+<button type="button" name="import-process"
+  	onclick="AssayCurveFit.interfaceAssayTable(this);">Process Values</button>
+<button type="button"
+		onclick="AssayCurveFit.interfaceAssayTable(this);">Example Entries</button></p>
+<p style="margin-top:2em;">
+Cut or copy and then paste the <i>x</i> and <i>y</i> coordinate
+values in the appropriate boxes.  This can usually be done by selecting
+values in another application, such as in a database table or report, or
+in a spreadsheet like Excel.</p>
+<p>
+The values can be separated either by commas or <i>whitespace</i> (<i>
+whitespace</i> is either one or more space characters or one or more tab
+characters or one or more linefeeds and/or carriage return characters). Do not
+mix the separator character for values: for example, do not start using a comma
+and then switch to a space or linefeed or carriage return. </p>
+<p>
+Value must be real numbers: they can be integers (whole numbers), floating
+point, or in scientific notation. The proper format for scientific notation is
+<i>&lt;mantissa&gt;</i><b>e</b>[&minus;]<i>&lt;exponent&gt;</i>. Some examples:
+2.97 &times; 10<sup>&minus;5</sup> should be written <b>2.97e&minus;5</b>.
+&minus;9.600&times;10<sup>12</sup> is <b>&minus;9.600e12</b>. Note that there
+are no spaces. Positive values of either the mantissa or exponent do not
+require plus (&lsquo;+&rsquo;) signs, but values less than zero always require
+a minus sign or hyphen. Any entry which contains unrecognized characters within
+a string of non-whitespace characters will be considered a non-entry (and
+converted to a single space for the purpose of evaluation).</p>
+<p>
+There must be a one-to-one correspondence between values. If there is a
+mismatch in the count of values between the <i>x</i> and <i>y</i> entries, no
+evaluation will be done and an error message will be reported indicating a
+correction should be done.</p>
+
+</div> <!-- id="import-boxes" -->
+
+<div id="stdcurve-table-box" style="display:none;margin:1.5em;float:left;">
+<table id="stdcurve-table">
+<caption>Standard Curve Data</caption>
+<col style="width:3em;" />
+<thead>
+<tr id="stdcurve-table-labels"><th></th>
+  <th id="x-axis"><i>x</i></th>
+  <th id="y-axis"><i>y</i></th></tr>
+</thead>
+<tbody>
+<tr><td>&nbsp;</td></tr>
+</tbody>
+</table>
+<br />
+<button type="button" name="mantable-process"
+		onclick="AssayCurveFit.interfaceAssayTable(this);">Process Values</button>
+<button type="button" name="mantable-reset"
+		onclick="AssayCurveFit.interfaceAssayTable(this);">Clear entries</button>
+<button type="button" name="mantable-example"
+		onclick="AssayCurveFit.interfaceAssayTable(this);">Example Fill</button>
+</div> <!-- id="stdcurve-table-box" -->
+
+<!-- Manual entry of Standard Curve values -->
+<div id="stdcurve-table-entry-help" style="display:none;margin-top:3em;">
+Enter the <i>x</i> and <i>y</i> coordinate
+values in the appropriate boxes in a one-to-one correspondence in the
+table at the left.  Enter <em>only the calibration/standard curve values</em>
+in this table.  After processing these values, a table or import
+entry box will be made available to calculate unknowns
+(<i>x</i> values from <i>y</i> values).
+<p>
+Values must be real numbers: they can be integers (whole numbers), floating
+point, or in scientific notation. The proper format for scientific notation is
+<i>&lt;mantissa&gt;</i><b>e</b>[&minus;]<i>&lt;exponent&gt;</i>. Some examples:
+2.97 &times; 10<sup>&minus;5</sup> should be written <b>2.97e&minus;5</b>.
+&minus;9.600 &times; 10<sup>12</sup> is <b>&minus;9.600e12</b>. Note that there
+are no spaces. Positive values of either the mantissa or exponent do not
+require plus (&lsquo;+&rsquo;) signs, but values less than zero always require
+a minus sign or hyphen. Any entry which contains unrecognized characters will
+be considered a non-entry, evaluation will not be possible, and an error will
+be reported.</p>
+<p>
+If there is a mismatch in the count of values between the <i>x</i> and <i>y</i>
+entries, no evaluation will be done and an error message will be reported
+indicating a correction should be done. If there are fewer entries than
+available input rows, the extra rows will be trimmed.</p>
+</div> <!-- id="stdcurve-table-entry-help" -->
+
+<table id="stdcurve-report" style="display:none;">
+<caption>Line Fit Report</caption>
+<colgroup style="text-align:left;"></colgroup>
+<tbody>
+<tr><td id="report-line-equation" colspan="2"></td></tr>
+<tr><th>Slope       </th><td id="slope" class="right"></td></tr>
+<tr><th>Intercept   </th><td id="intercept" class="right"></td></tr>
+<tr><th>Correlation Coefficient (Pearson moment, <i>r</i>)</th>
+  <td id="pearson"  class="right"></td></tr>
+<tr><th>Residual Sum of Squares</th>
+  <td id="residual-sum-square" class="right"></td></tr>
+<tr><th>Regression Sum of Squares</th>
+  <td id="regress-sum-square" class="right"></td></tr>
+<tr><th>Coefficient of Determination (<i>r</i> <sup>2</sup>)</th>
+  <td id="r2" class="right"></td></tr>
+</tbody>
+</table>
+
+<p>
+<object data="file://c:/testsvg.svg" type="image/svg+xml" width="400"
+  height="200" style="display:none;" id="stdcurve-chart"></object></p>
+
+<!--
+<script type="text/javascript">
+debugger;
+	var svgPoint = document.getElementById("stdcurve-chart")!.
+	var svgObj = new embedSVG(400, 200);
+	svgObj.setFill("yellow");
+	svgObj.setStroke("navy");
+	svgObj.setStrokeWidth("10");
+	svgObj.drawRect(20, 20, 200, 100);
+</script>
+-->
+
+<div id="prompt-unknowns" style="display:none;margin-top:2em;">
+Enter the count of unknowns (<i>y</i> values):
+<input type="text" style="display:none" size="2" maxlength="2"
+  onchange="AssayCurveFit.interfaceAssayTable(this);" />
+<span id="unknown-select-inline"></span>
+</div> <!-- id=prompt-unknowns -->
+
+<div style="display:none;" id="unknowncounts-text">
+<input type="text" size="2" maxlength="2" />
+ <span style="color:green;font:normal 90% Arial,Helvetica,sans-serif;">
+  &larr;Enter a number greater than 1 and less than 50 in the box at left</span>
+</div>
+
+<table id="unknown-table" style="display:none;">
+<caption>Unknowns</caption>
+<col style="width:3em;" />
+<thead>
+<tr id="unknown-table-labels"><th></th>
+  <th>unknown <i>y</i></th>
+  <th>calculated <i>x</i></th></tr>
+</thead>
+<tbody>
+<tr><td>&nbsp;</td></tr>
+</tbody>
+</table>
+
+</form> <!-- id=assay form -->
+<!--
+	var graphNode = document.getElementById("assay-graph")!.
+	var graphNode.setAttribute("data", gifdata);
+-->
+<div id="assay-graph">
+	<!-- graph inserted here -->
+
+</div>
+
+<div style="visibility:hidden;" id="svgcontents"></div>
+
+</div> <!-- id="assay-page"  -->
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+           Solutions
+	============================ -->
+<head>
+<title>Solution Chemistry Calculations</title>
+<link href="./Solutions.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div id="solutions-page">
+
+<button id="soln-help-button" type="button" style="border:none;background:none;"
+  onmouseover="this.style.color='red';" onmouseout="this.style.color='';">Instructions?</button>
+    <!-- click="SolutionChemistry.solnhelp();" -->
+<form id="solnForm" action="#">
+
+
+<!--
+	qsoln is entire form of 3 panels
+-->
+<table id="qsoln">
+ <tr>
+	<!-- left panel TD -->
+	<td rowspan="2" style="vertical-align:top;">
+
+  <table id="chempanel">
+	<!-- Suppose to show chemicals, forumula weight, selection -->
+	<tr>
+		<td id="MolDisplay"></td>  <!-- display for molecule -->
+		<td> FW&nbsp;=&nbsp;
+			<input type="text" size="6" name="FWdis" id="FWdisplay" disabled="disabled"/>
+					<input type="hidden" id="selected-compound" />
+		</td>
+	</tr>
+	<tr><td colspan="2"><table id="chemlist-table"></table></td></tr>
+	   <!-- insert the list of chemicals in above table, use class=chemitem for each -->
+   <tr><td colspan="2" id="formula-weights">&nbsp;</td></tr>
+	 <tr><td class="tblrowhdr" colspan="2" id="other-header-rule">
+		<!-- Molecular formula required in text box -->  &nbsp;
+	 </td></tr>
+	 <tr><td colspan="2">
+     <input id="calcFW-radio" type="radio" value="other"/>Other:&nbsp;&nbsp;
+	  <!-- click="SolutionChemistry.calcFW(this);"  -->
+		 <input type="text" size="15" maxlength="30" name="custom" id="other-textbox-calcFW"/>
+			<!--  change="calcFW(this);" -->
+	   <div id="soln-help-button-container">
+       <button id="another-soln-help">?</button>
+		 <!-- click="SolutionChemistry.solnhelp();" -->
+     </div>
+	  <span id="not-recognized">Not Recognized</span>
+	  <span id="unknown-char">Unknown Character<br />(See Help)</span>
+	  <span id="no-space-char">No Space Character<br />(See Help)</span>
+	</td></tr>
+	</table> </td> <!-- id=chemlist -->
+	<!-- middle panel TD -->
+ <td id="solndens-tbl-td-container">
+	<table id="solndens" class="solnfactor">
+	 <tr><td id="soln-dens-desired-conc-val" colspan="4">Enter
+	      the desired solution density (concentration) and indicate the dimensions:
+      </td></tr>
+	 <tr><td rowspan="2" style="width:8em;">
+		<!-- textbox for value for concenttration -->
+	   <input type="text" id="concVal" name="concVal" class="numvalue" size="8" maxlength="8" /></td>
+	  <td id="soln-dens-units-label" colspan="3">Units:</td></tr>
+	 <tr>
+    <td style="padding:0.2em;width:12em;">
+	   <input type="radio" name="cmassDim" value="uG" />&micro;G&nbsp;(micrograms)<br />
+	   <input type="radio" name="cmassDim" value="mG" />mG&nbsp;(milligrams)<br />
+	   <input type="radio" name="cmassDim" value="_G" />G&nbsp;(grams)<br />
+	   <input type="radio" name="cmassDim" value="kG" />kG&nbsp;(kilograms)<br />
+	   <input type="radio" name="cmassDim" value="umol" />&micro;mol&nbsp;(micromoles)<br />
+	   <input type="radio" name="cmassDim" value="mmol" />mmol&nbsp;(millimoles)<br />
+	   <input type="radio" name="cmassDim" value="_mol" checked="checked" />mol&nbsp;(moles) </td>
+	  <td style="padding:0.2em;"><strong>per</strong> </td>
+	  <td style="padding:0.2em;width:8em;">
+	   <input type="radio" name="cvolDim" value="uL" />&micro;L&nbsp;(microliter)<br />
+	   <input type="radio" name="cvolDim" value="mL" />mL&nbsp;(milliliter)<br />
+	   <input type="radio" name="cvolDim" value="_L" checked="checked" />L&nbsp;(liter) </td></tr>
+	</table> <!-- id=solndens --> </td>
+<!-- right panel TD -->
+ <td style="vertical-align:top;">
+	<table id="vol" class="solnfactor">
+	 <tr><td colspan="2" style="background-color:#cfc;">Enter the
+			final volume of your solution: </td></tr>
+	 <tr><td rowspan="2" style="text-align:right;">
+		<!-- textbox for value for volume of solution  -->
+	    <input type="text" id="solnVolVal" name="solnVolVal" class="numvalue" size="8" maxlength="8" /> </td>
+	  <td id="vol-units-label">Units:</td></tr>
+	 <tr><td >
+	   <input type="radio" name="svolDim" value="uL" />&micro;L&nbsp;(microliter)<br />
+	   <input type="radio" name="svolDim" value="mL" />mL&nbsp;(milliliter)<br />
+	   <input type="radio" name="svolDim" value="_L" checked="checked" />L&nbsp;(liter) </td></tr>
+	</table> <!-- id=vol -->
+	<table id="versions">
+	 <tr>
+    <td><input type="radio" name="version" value="short" />short version </td>
+		<td><input type="radio" name="version" checked="checked" value="long" />long version </td></tr>
+	 <tr>
+    <td colspan="2">
+     <button type="button" name="calc" id="calcsoln-report">Give me the lowdown</button> </td></tr>
+	   <!-- click="SolutionChemistry.calcsoln(this.form);" -->
+	</table> </td></tr>
+<!-- end of panels -->
+ <tr>
+  <td colspan="2" style="vertical-align:top;">
+   <table style="width:100%;">
+    <tr><td rowspan="2"> </td></tr>
+   </table>
+   <!--  SOLUTION INSTRUCTIONS -->
+   <div id="solnerror" class="errors"></div>
+   <div id="solninstruct"> <!-- Large div to contain instructions -->
+    <div id="solnguide"></div> <!-- where the guid is writtne -->
+   	<span id="solnprintable">
+    		<input type="button" name="printbox" value="Give me a printable version"
+				id="printable-version-click"/>
+			<!--  click="printable(document.getElementById('solnguide').innerHTML);"-->
+			<br/>
+			<span id="solnguide-span">
+				<span style="color:red;">Note</span>
+		     		Pressing this button opens a new window
+			</span>
+		</span> <!-- solnprintable -->
+   </div> <!-- id="solninstruct" --> </td></tr>
+</table> <!-- id=qsoln -->
+	<div>
+    <button type="button" id="show-examples">Show Examples</button>
+	 <!-- click="SolutionChemistry.solutionExamples(this.form);" -->
+	</div>
+</form>
+</div> <!-- id="solutions-page" -->
+
+<!--
+Used to make long version in page and printable version
+-->
+<div id="longversion">
+<span id="print-button-span"><button id="print-button">Print</button></span>
+Please read the following steps to prepare your solution:
+
+<ol>
+<li>Weigh out on a balance accurate to the nearest <span id="nearest"></span>
+exactly <span id="exactmass"></span> of <span id="substsym1"></span>
+<span id="substname"></span> </li>
+
+<li>Pour (or weigh) the <span id="substsym2"></span> into either:
+ <ul>
+ <li>a <span id="cylvol"></span> graduated cylinder if you have
+a PTFE (Teflon)-coated magnetic stirring bar that comfortably fits
+into and spins in the graduate cylinder and which can mix the
+entire solution at full volume in the with a reasonably viewable vortex or, </li>
+ <li>a <span id="beakervol"></span> beaker containing the proper
+Teflon-coated stir bar. </li>
+  </ul>
+Before adding the <span id="substsym3"></span>, fill your container with
+approximately <span id="firstfill"></span> <span id="volunits"></span> (about
+80% of the final volume) with water of the proper quality (see elsewhere for a
+discussion of proper water quality). </li>
+
+<li>Begin stirring on a magnetic stirrer to dissolve the <span id="substsym4">
+</span>. For certain salts, dissolution is aided by slight (40-50&deg;C) or
+even moderate (as much as 80-90&deg;C) heating. Don't be so quick to use
+heating however since it will be necessary to cool the solution prior to adding
+the remaining amount of water to the final volume; note the temperature etched
+on the glass of the vessel container is the temperature at which the solution
+and solvent must be for the final addition of water to produce the accurate
+concentration. Another reason to avoid heating is if the chemical is
+heat-sensitive and destroyed or altered above a certain temperature. </li>
+
+<li>When the substance has dissolved (there may be insoluble impurities present
+however) to the best of your experience, then q.s. (add water) to the mark
+representing the final volume. Note that the bottom of of the meniscus at the
+air-water interface must align with the mark The final concentration of the
+solution will be accurate if the temperature of the solution is at the
+temperature marked on the glass of the container, plus or minus 5&deg;C. </li>
+
+<li>If the entire volume of the solution is not used immediately and it is
+intended that the solution is to be a working stock solution to be stored and
+used from from time to time, obtain an appropriate container for storage. If
+the substance is light-sensitive, it is especially important to use a container
+that reduces or even eliminates the transmission of room light through the
+container wall into the solution. A dark brown glass container is adequate for
+most purposes where light sensitivity is a consideration; alternatively, any
+glass container wrapped well in something like aluminum foil is sufficient. The
+bottle cap and its seal should be nonreactive with the solution. Be suspicious
+of using solutions where inspection of the material of the bottle cap seal
+shows it has disintegrate or been discolored possibly because of contact or the
+presence of the solution. Use appropriately non-reactive storage vessels with
+particularly corrosive solutions. </li>
+
+</ol>
+<p>
+The bottles of all solutions should absolutely be labeled properly.
+Proper labeling prevents losses and waste that add to the supply costs
+of the laboratory when improper labeling requires discarding of
+substances whose contents or concentrations are unknown.  There is
+also a safety factor, since certain chemicals are hazardous and must
+be discarded in hazardous waste containers (as opposed to dumping into
+the sink);  hazardous waste disposal is very expensive, all the more
+so when one is using the service to discard a chemical that is harmless
+and disposed of by less expensive (or cost-free) means.  Proper labeling
+requires printing in block letters large enough to be seen several feet
+away first the concentration then the name of the substance:
+A date (in short form) should be written as well.  The initials
+the person preparing the solution may be useful or necessary as well,
+perhaps in accordance with policy of a multi-member lab or to identify
+ownership, etc.</p>
+<p>
+Each solution has a certain shelf or storage life when stored in
+ideal conditions and when volumes are sampled properly.  Where information
+regarding the life and usefulness of solutions is insufficient,
+experience will fill the void. </p>
+</div> <!-- id="longversion" -->
+</body>
+
+</html>

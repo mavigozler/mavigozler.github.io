@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "chem-calc-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/chemCalc/ChemCalcWebPart.js",
+          "manifest": "./src/webparts/chemCalc/ChemCalcWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ChemCalcWebPartStrings": "lib/webparts/chemCalc/loc/{locale}.js"
+  }
+}

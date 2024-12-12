@@ -1,0 +1,91 @@
+#what-is-this {
+	left: 0;
+	background-color: #eef;
+	margin: 0 auto;
+	text-align: left;
+	float: left;
+}
+#the-fine-print {
+	right: 0;
+	background-color: #fee;
+	margin: 0 auto;
+	float: right;
+}
+
+/********* Menu Styling ********/
+div#wholeMenu {
+	border: 2px solid navy;
+	padding-bottom: 2em;
+	width: 50em;
+}
+div.menuItemDiv {
+	margin: 1em 0 0 2em;
+	width: 40em
+}
+p.menuItemModClickP {
+	font: bold 14pt "Segoe UI",Helvetica,sans-serif;
+	color: navy;
+	margin: 1em 0 0 0;
+	border: 1px solid transparent; /* Start with a transparent border */
+	border-radius: 4px;
+	transition: border-color 0.3s ease, border-width 0.3s ease;
+	cursor: pointer;
+}
+p.menuItemModClickP :hover {
+	background-color: pink;
+	border-color: #2980b9; /* Change border color on hover */
+	border-width: 2px; /* Change border width on hover */
+}
+p.menuItemModDesc {
+	margin: 0 0 0 1.5em;
+	font: normal 11pt Arial,sans-serif;
+}
+
+#main-menu {position:relative;left:0;top:0;margin:0 auto;
+    font:normal 100% Tahoma,Verdana,sans-serif;}
+.main-menu-item {cursor:pointer;}
+.main-menu-item:hover {color:purple;text-decoration:underline;}
+
+/*
+#content-panels {position:relative;left:1%;top:25%;
+			margin:0 auto;padding:0.3em 0.5em;}
+*/
+
+/******************************************************************************/
+  hr {color:#e0b0f0;height:4px}
+  h1 {font:bold 110% Verdana,Helvetica,Arial,sans-serif;color:blue;}
+  sub, sup {font-size:75%;}
+  li {margin-left:1em;}
+  input {margin:0 0.2em;padding:0.1em;}
+  table {margin:0;}
+  td, th {padding:0;}
+  th {vertical-align:bottom;}
+   .units {padding-left:2em;}
+   .textinput {text-align:center;}
+	.textinput input {font-size:130%;text-align:right;}
+   .section-prompt {font-size:110%;text-align:left!important;
+			background-color:#333 ! important;color:white;}
+	.radio-choices {font:bold 95% "Courier New",Courier,monospace;color:blue;}
+
+  #title {
+      font: bold 175% Verdana,Helvetica,Arial,sans-serif;
+      color: purple;
+      text-align: center;
+      margin: 0 0 0.5em 0;
+  }
+
+.numvalue {text-align:right;font:bold 135% Arial,Helvetica,sans-serif;
+  		margin:0;padding:0;}
+.right {text-align:right;}
+.left {text-align:left;}
+
+iframe {
+	width: 80em;
+   height: 630px;
+   margin: 0 auto;
+	display: none;
+}
+
+div#description {
+	display: none;
+}

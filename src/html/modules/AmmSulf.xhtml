@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ==================================================
+               Ammonium Sulfate Calculator
+  ===================================================== -->
+<head>
+<title>Calculating Ammonium Sulfate Concentrations and Additions</title>
+<style type="text/css">
+#ammsulfate_form td {padding:0.1ex 0.5em;font:normal 100% Helvetica,Arial,sans-serif;}
+</style>
+</head>
+<body>
+
+<div id="ammsulfate-page">
+ <div style="float:right;background-color:#f0f0ff;border:2px solid blue;padding:0 0.5em;
+  color:blue;font:bold 133% 'Times New Roman','Times Roman',Times,serif;"
+      onclick="AmmoniumSulfate.showHelp();">Help</div>
+<!--  Main Table for Calculations  -->
+<form id="ammsulfform" action="#">
+<table id="ammsulfate_form">
+<!-- input rows  -->
+ <tr><td class="headings"  style="background-color:#fff0f0;">
+    <span >Select form of salt</span>:</td>
+  <td colspan="2" style="background-color:#ffd;text-align:left;font-size:90%;">
+   <div class="errorborder" id="saltformerror">
+   <input type="radio" name="salttype" value="solid" checked="checked" />Solid ammonium sulfate
+   <br />
+   <input type="radio" name="salttype" value="satd" />Saturated ammonium sulfate
+    solution</div></td>
+  <td><span id="ammsulfate-error" style="color:red;font:bold 90%
+ 	   Arial,Helvetica,sans-serif;">&nbsp;</span></td></tr>
+ <tr><td class="headings" style="background-color:#fff0f0;">Temperature of
+      solution:</td>
+  <td colspan="2">
+		<div class="errorborder" id="tempformerror">
+ 		<input type="radio" name="solntemp" value="0" checked="checked" />0-4&deg; C&nbsp;&nbsp;
+ 		<input type="radio" name="solntemp" value="10" />10&deg; C&nbsp;&nbsp;
+ 		<input type="radio" name="solntemp" value="20" />20&deg; C&nbsp;&nbsp;
+ 		<input type="radio" name="solntemp" value="25" />25&deg; C
+		</div></td></tr>
+ <tr><td class="headings" style="background-color:#fff0f0;">Volume of solution:</td>
+  <td style="text-align:right;padding-right:0;"><div class="errorborder" id="solnvolerror">
+ 		<input type="text" name="solnVolVal"
+ 		size="6" maxlength="6" class="numvalue" /></div></td>
+  <td class="units" style="text-align:left;padding-left:0;">
+   <select name="volunits">
+    <option value="micro">&micro;L</option>
+    <option value="milli" selected="selected">mL</option>
+    <option value="liter">L</option>
+   </select></td>
+  <td rowspan="2" id="ammsulfate-report" style="padding-left:2em;vertical-align:top;
+ 		font:normal 120% 'Times New Roman','Times Roman',Times,serif;">&nbsp;</td></tr>
+ <tr><td class="headings" style="background-color:#fff0f0;">Current/Initial Saturation:</td>
+  <td style="text-align:right;padding-right:0;"><div class="errorborder" id="initsaterror">
+ 	  <input type="text" name="initsat" value="0"
+ 		 size="4" maxlength="4" class="numvalue" /></div></td>
+  <td class="units" style="text-align:left;padding-left:0;">%</td></tr>
+ <tr><td class="headings" style="background-color:#fff0f0;">Target/Final Saturation:</td>
+  <td style="text-align:right;padding-right:0;"><div class="errorborder" id="finalsaterror">
+ 	 <input type="text" name="finalsat"
+ 	 size="4" maxlength="4" class="numvalue" /></div></td>
+  <td class="units" style="text-align:left;padding-left:0;">%</td></tr>
+ <tr><td></td>
+  <td><button type="button" onclick="AmmoniumSulfate.calcammsulfate(this);"
+		style="font:bold 115% Arial;color:green;">Evaluate</button></td>
+  <td><input style="margin-left:3em;" type="reset" name="clear" value="Clear All"
+		onclick="resetAmmSulfCalculator(this);" /></td></tr>
+</table>
+</form>
+</div> <!-- id=ammsulfate-page -->
+</body>
+</html>

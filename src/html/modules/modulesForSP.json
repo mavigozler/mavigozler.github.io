@@ -1,0 +1,71 @@
+{
+	"ChemModulesRegistryData": [
+		{
+			"name": "Solution Chemistry Calculations",
+			"moduleId": "SolnChem",
+			"pageRef": 	"Solutions.xhtml",
+			"menuItemText": "Solutions calculations",
+			"description": [
+				"Can find a list of most basic laboratory chemicals with formula weights and also " ,
+				"specify concentrations and volumes to prepare and get instructions to do so" ]
+		},
+		{
+			"name": "Calculations for Centrifuges",
+			"moduleId": "Centrifuge",
+			"pageRef": "Centrifuge.xhtml",
+			"menuItemText": "Centrifuge calculations",
+			"description": [
+				"Will help make calculations concerning use of centrifuges"]
+		},
+		{
+			"name": "Calculations for SDS-PAGE Gels",
+			"moduleId": "SDSPAGE",
+			"pageRef": "SDSPAGE.xhtml",
+			"menuItemText": "SDS-PAGE calculations",
+			"description": [
+				"Useful in preparation of electrophoretic gels used for separating proteins" ]
+		},
+		{
+			"name": "Convert units",
+			"moduleId": "Convert",
+			"pageRef": "Conversions.xhtml",
+			"menuItemText": "Perform conversions",
+			"description": [ "Helps in making conversions between units/dimensions" ]
+		},
+		{
+			"name": "Mass Spectrometry-Related Calculations",
+			"moduleId": "MassSpec",
+			"pageRef":  "MassSpecCalc.xhtml",
+			"menuItemText": "Mass Spec calculations",
+			"description": [ "Used for doing stuff with mass spectrometry" ]
+		},
+		{
+			"name": "Ammonium Sulfate Calculations",
+			"moduleId": "AmmSulf",
+			"pageRef": "AmmSulf.xhtml",
+			"menuItemText": "Ammonium sulfate calculations",
+			"description": [ "Are you precipitating proteins in the laboratory? Try this chemical" ]
+		},
+		{
+			"name": "Dilution-Related Calculations",
+			"moduleId": "Dilutions",
+			"pageRef": "Dilutions.xhtml",
+			"menuItemText": "Dilutions calculations",
+			"description": [ "A calculator for figuring out how to do dilutions" ]
+		},
+		{
+			"name": "Calculate curves of assay results",
+			"moduleId": "AssayCurves",
+			"pageRef": "Assay.xhtml",
+			"menuItemText": "Assay results calculations",
+			"description": [ "Doing statistics to compute calibration curves for determining unknowns" ]
+		},
+		{
+			"name": "PCR-Related Calculations",
+			"moduleId": "PCR",
+			"pageRef": "PCR.xhtml",
+			"menuItemText": "PCR calculations",
+			"description": [ "Doing basic stuff for PCR" ]
+		}
+	]
+}

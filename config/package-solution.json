@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "chem-calc-sp-fx-client-side-solution",
+    "id": "b5aedb27-a855-4813-a334-7677ffc1fcf5",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "chem-calc-sp-fx description"
+      },
+      "longDescription": {
+        "default": "chem-calc-sp-fx description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "chem-calc-sp-fx Feature",
+        "description": "The feature that activates elements of the chem-calc-sp-fx solution.",
+        "id": "8a0c6fda-393f-44b4-8443-991e04eabc9a",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/chem-calc-sp-fx.sppkg"
+  }
+}

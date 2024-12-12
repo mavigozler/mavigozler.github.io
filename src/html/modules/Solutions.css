@@ -1,0 +1,150 @@
+﻿body {margin:0 auto;}
+.chemitem {
+    font-size:12pt;
+    border:1px solid silver;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+ }
+ #solutions-page * sub {font-size:75%}
+
+/* contains most everything */
+form#solnForm {clear:both;}
+/* 3 panels across */
+table#qsoln {border-top:#aad 9px solid;border-bottom:#aad 9px solid;
+    width:75em;margin:0 auto;}
+/* leftmost panel: chemlist, formula box */
+table#chempanel {
+   font: bold 85% Arial,Helvetica,sans-serif;
+   min-width:25em;
+   background-color: #e0e0e0;
+}
+td#MolDisplay {
+   margin:0;
+   color:navy;
+   border:none;
+   font-size:150%;
+   height:1.4em;
+   width: 50%;
+}
+input#FWdisplay {
+   text-align:right;
+   margin:0;
+   color:green;
+   border:none;
+   background-color:#fff0f0;
+   font-size:150%;
+}
+
+ td.tblrowhdr {
+   padding:0.1em 1em;
+   font: bold 90% Helvetica,Arial,Tahoma,sans-serif;
+   color:#fafafa;
+   background-color:#509050;
+}
+ table#chemlist-table {
+   width:100%
+}
+td#formula-weights {
+   background-color:#555;
+   font-size:30%;
+}
+/* middle panel with entry for concentration */
+td#solndens-tbl-td-container {
+	vertical-align:top;width:45%;
+}
+table#solndens {
+   width:32em;
+}
+table.solnfactor { /* set for the middle and right panel tables */
+    width: auto; /* what to do with them? */
+ }
+td#soln-dens-desired-conc-val {
+	background-color:#dfd;
+}
+td#soln-dens-units-label, td#vol-units-label {
+	font:bold 90% Verdana,Arial,sans-serif;
+	color:blue;
+}
+div#soln-help-button-container {
+   display:inline;
+   text-align:right;
+}
+button#another-soln-help {
+	background-color:black;
+	color:yellow;
+	border-color:black;
+	font:bold 120% Verdana,Arial,Helvetica,sans-serif;
+}
+input#other-textbox-calcFW {
+	font:normal 120% 'Courier New',Courier,monospace;
+}
+input#concVal {
+	font: normal 14pt Arial,sans-serif;
+	color: navy;
+   text-align: right;
+}
+ input#solnVolVal {
+    font: normal 14pt Arial,sans-serif;
+    color: navy;
+    text-align: right;
+ }
+/* rightmost with enter the volume */
+table#vol {width: 18em;}
+ /* small table on right side */
+table#versions {margin-top:2em;}
+div#solnerror {
+    width: auto;
+}
+div#solninstruct {
+    display: none;
+}
+div#solnguide {
+   border:1px solid black;
+   padding:0.5em;
+   font:normal 90% 'Courier New',Courier,monospace;
+}
+div.short-version {
+	font: "normal 115% 'Times New Roman','Times Roman',Times,serif";
+	width: 20em;
+}
+span#print-button-span {
+	display: none; /* inline-block */
+	float:right;
+	margin:0 0 0 5px;
+}
+button#print-button {
+	font-weight:bold;
+}
+div#solnguide input[type=button] {
+   margin-top: 1em;
+}
+
+span#solnprintable {
+   display: none;
+}
+span#solnguide-span {
+   font-size:80%;
+}
+span#solnguide-span span {
+   color: red;
+}
+button#show-examples {
+   margin-left:1em;
+   text-align:left;
+}
+div#longversion {
+	font: normal 90% Arial,Helvetica,sans-serif;
+	width:auto;
+	display:none;
+}
+span#not-recognized, span#unknown-char,
+span#no-space-char
+ {
+   color: black;
+   background-color: pink;
+   display:none;
+   font:bold 9pt Tahoma,sans-serif;
+   width:80px;
+   text-align:center;
+   vertical-align: bottom;
+}

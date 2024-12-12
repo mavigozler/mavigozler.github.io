@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+       Beckman PF2D Find Fraction
+	============================ -->
+<head>
+<title>Calculations for the Beckman-Coulter PF2D System</title>
+<style type="text/css">
+ .thorngrid TD {font-size:300%;line-height:40%;border:none!important;}
+ #ThornMap TD {text-align:center;border:2px solid green;}
+ .platetitle {font:bold 125% Arial,Helvetica,sans-serif;color:blue;}
+</style>
+</head>
+
+<body onload="Pf2dCalculations.finishDocument();">
+<div id="beckman-page">
+
+<form id="beckmanform" action="#">
+<p>
+<a href="#" onclick="chk=document.getElementById('BeckmanModHelpChkbox');
+ chk.checked=true;Pf2dCalculations.showBeckmanModHelp(chk);">Instructions?</a> </p>
+<!--   Beckman input table  -->
+
+<p style="color:#fe8;font:bold 125% Verdana,Tahoma,sans-serif;
+    background-color:#117;padding:0.2em 1em;">
+ Beckman-Coulter PF2D 2<sup>nd</sup> Dimension Select Fraction Calculator</p>
+
+<table id="beckman-table" style="width:48em;float:left;margin:0 2em 2em 1em">
+<col style="width:30em;" />
+<col style="width:15em ! important;text-align:center ! important;" />
+
+<tr><th colspan="3" class="section-prompt">Provide information about your 2<sup>nd</sup>
+  dimension parameters: </th></tr>
+
+<tr><th>Enter the volume or time for each fraction collected:<br />
+ <span class="radio-choices">
+  <input type="radio" name="perfraction" value="time" checked="checked"
+    onchange="Pf2dCalculations.setperfractionunit(this);Pf2dCalculations.updateBeckman(this);" /> time per fraction
+  <input type="radio" name="perfraction" value="volume"
+    onchange="Pf2dCalculations.setperfractionunit(this);Pf2dCalculations.updateBeckman(this);" /> volume per fraction&nbsp;&nbsp;
+ </span> </th>
+ <td class="textinput">
+		<input type="text" size="6" maxlength="6" name="perfracval" /> </td>
+
+ <td class="units" id="perfrac"></td></tr>
+
+<tr id="hprpflow" style="display:none;"><th>Flow rate: </th>
+ <td class="textinput">
+ 		<input type="text" size="6" maxlength="6" name="flowrate"
+		onchange="Pf2dCalculations.updateBeckman(this);" /> </td>
+ <td class="units">ml/min  </td></tr>
+
+<tr><th>Enter the start collection time: </th>
+ <td class="textinput"><input type="text" size="4" maxlength="4"
+ 		name="startcollect"  onchange="Pf2dCalculations.updateBeckman(this);" />   </td>
+ <td class="units">min </td></tr>
+
+<tr><th>Enter the end collection time: </th>
+ <td class="textinput"><input type="text" size="4" maxlength="4"
+ 	name="endcollect"  onchange="Pf2dCalculations.updateBeckman(this);"  /> </td>
+ <td class="units">min  </td></tr>
+
+<tr id="true-end-collect" style="display:none;"><th>True time of end of collection:
+ <br /><span style="color:green;
+ font:normal 87% 'Times New Roman','Times Roman',Times,serif;">(based
+ on the more limiting specified count of tubes or wells collected per cycle)</span> </th>
+ <td class="textinput">
+ 		<input type="text" size="4" maxlength="4" name="true-end-collect-tbox" disabled="disabled"
+		style="background-color:#ddd;" />  </td>
+ <td class="units">min </td></tr>
+
+<tr><th>Enter the count of tubes or wells collected per cycle:
+  <br /><span onmouseover="this.style.fontWeight = 'bold';this.style.color='green';"
+    onmouseout="this.style.fontWeight = 'normal';this.style.color='red';"
+	 onclick="Pf2dCalculations.showTubesPerCycleHelp();"
+style="color:red;font:normal 90% 'Times New Roman','Times Roman',Times,serif;">Click
+   here for help</span> </th>
+ <td class="textinput"><input type="text" size="2" maxlength="3"
+ 	name="tubespercycle" onchange="Pf2dCalculations.updateBeckman(this);" /> </td>
+ <td class="units"># </td></tr>
+
+<tr><th>Enter the detector-collector delay time or dimensions of the
+tubing between these points:<br />
+ <span class="radio-choices">
+  <input type="radio" name="detectordelay" value="time" checked="checked"
+    onchange="Pf2dCalculations.setcollectordelay(this);Pf2dCalculations.updateBeckman(this);" /> time
+  <input type="radio" name="detectordelay" value="tubing"
+    onchange="Pf2dCalculations.setcollectordelay(this);Pf2dCalculations.updateBeckman(this);" /> tubing&nbsp;dimensions
+ </span> </th>
+ <td class="textinput">
+  <span id="delaylenparam" style="display:none;
+   font:normal 85% 'Arial Narrow',Arial,sans-serif;">
+  tubing&nbsp;length: </span><input
+		type="text" size="6" maxlength="10" name="delay1param" />
+  <span id="delaydiamparam" style="display:none;
+  font:normal 85% 'Arial Narrow',Arial,sans-serif;">
+    <br />tubing&nbsp;diameter: <input type="text"
+	size="6" maxlength="10" name="delay2param" /></span> </td>
+<td class="units" id="delay"></td></tr>
+
+<tr><th colspan="3" style="background:none;">&nbsp; </th></tr>
+<tr><th colspan="3" class="section-prompt">Provide
+information about your protein: </th></tr>
+
+<tr><th>Enter HPCF (1<sup>st</sup> dimension) fraction:<br />
+	<span class="radio-choices">
+	<input type="radio" name="hpcfset" value="rowcol"
+		checked="checked" />&nbsp;Row&nbsp;A&nbsp;Column&nbsp;1&nbsp;format&nbsp;(A1)&nbsp;&nbsp;
+	<input type="radio" name="hpcfset" value="number" />&nbsp;Fraction&nbsp;number
+	</span> </th>
+ <td class="textinput"><input type="text" size="3" maxlength="3"
+ name="hpcf-frac" /> </td>
+ <td id="hpcfprompt"> </td></tr>
+
+<tr><th>Enter HPRP (2<sup>nd</sup> dimension) column peak retention
+	time or peak start and end times:<br />
+	<span class="radio-choices">
+	<input type="radio" name="peakread" value="retention" checked="checked"
+		onchange="setpeakread(this);" />retention time&nbsp;&nbsp;
+	<input type="radio" name="peakread" value="start-end"
+		onchange="setpeakread(this);" />start and end times
+	</span> </th>
+ <td class="textinput">
+	<span id="peakstarttext" style="display:none;">start: </span><input
+		type="text" size="6" maxlength="6" name="peakread1" />
+	<span id="peakend" style="display:none;"><br />end: <input type="text"
+	size="6" maxlength="6" name="peakread2" /></span> </td>
+ <td class="units">min  </td></tr>
+
+<tr><th style="background:none;">
+ <button type="button" onclick="Pf2dCalculations.updateBeckman(this);">Find Fraction</button>
+ <button type="reset" onclick="this.form.reset();">Clear Form</button><br />
+ <button type="button" onclick="Pf2dCalculations.showBeckmanExample(this);"
+ 	style="background-color:#da7;font-size:85%;">Show Typical Example</button></th>
+ <th colspan="2"
+ style="background:none;text-align:left;font:normal 100% Verdana,Helvetica,san-serif;">
+	<input type="checkbox" onclick="Pf2dCalculations.setThornMapDisplay(this);" /> Display the Thorn Well Map<br />
+	<input type="checkbox" onclick="Pf2dCalculations.showBeckmanModHelp(this);"
+		id="BeckmanModHelpChkbox" /> Display
+	 Help/Instructions </th></tr>
+</table>
+<div id="BeckmanError" style="color:red;background-color:#fff8f8;
+  padding:1em 2em;font:bold 90% Verdana,Tahoma,Arial,sans-serif;
+  border:1px solid red;display:none;">
+</div>
+<div id="BeckmanWell"  style="margin:2em;padding:1em 2em;color:green;
+  background-color:#f8fff8;border:1px solid green;display:none;
+   font:bold 90% Tahoma,Arial,sans-serif;">&nbsp;</div>
+
+<div id="defaultdelaynotice"
+style="margin:2em;padding:1em 2em;color:navy;
+background-color:#f8fff8;border:1px solid green;display:none;
+font:bold 90% Helvetica,Arial,sans-serif;">A default
+detector-collector delay has been calculated assuming a separation of
+310 cm (about 10 feet) long tubing between the detector and the collector
+drop point, using tubing with a diameter of 0.007 inches (0.01778 cm or
+0.1778 mm).
+If this assumption is wildly incorrect, you are strongly advised to
+enter the correct delay</div>
+
+</form>
+</div>
+
+<div id="ThornMapSection" style="display:none;float:left;clear:left;">
+<!--
+<textarea rows="2" cols="60" id="debugdata"></textarea>
+-->
+<table id="ThornMap">
+<tr><td><span class="platetitle">Plate 1</span>
+ <table class="thorngrid">
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+ </table></td>
+<td><span class="platetitle">Plate 2</span>
+ <table class="thorngrid">
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+ </table></td>
+<td><span class="platetitle">Plate 3</span>
+ <table class="thorngrid">
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+ </table></td>
+<td><span class="platetitle">Plate 4</span>
+ <table class="thorngrid">
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th>  </th><th>A     </th><th>B     </th><th>C     </th><th>D     </th><th>E     </th><th>F     </th><th>G     </th><th>H</th></tr>
+ </table></td></tr>
+<tr><td>
+ <table class="thorngrid">
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+ </table>
+ <span class="platetitle">Plate 8</span></td>
+<td>
+ <table class="thorngrid">
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+ </table>
+ <span class="platetitle">Plate 7</span></td>
+<td>
+ <table class="thorngrid">
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+ </table>
+ <span class="platetitle">Plate 6</span></td>
+<td>
+ <table class="thorngrid">
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+  <tr><th> 1</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 1</th></tr>
+  <tr><th> 2</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 2</th></tr>
+  <tr><th> 3</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 3</th></tr>
+  <tr><th> 4</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 4</th></tr>
+  <tr><th> 5</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 5</th></tr>
+  <tr><th> 6</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 6</th></tr>
+  <tr><th> 7</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 7</th></tr>
+  <tr><th> 8</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 8</th></tr>
+  <tr><th> 9</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th> 9</th></tr>
+  <tr><th>10</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>10</th></tr>
+  <tr><th>11</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>11</th></tr>
+  <tr><th>12</th><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><td>&bull;</td><th>12</th></tr>
+  <tr><th>  </th><th>H     </th><th>G     </th><th>F     </th><th>E     </th><th>D     </th><th>C     </th><th>B     </th><th>A</th></tr>
+ </table>
+ <span class="platetitle">Plate 5</span></td></tr>
+</table>
+</div>
+
+<div id="ThornMapHelp" style="padding:1em 2em;display:none">
+
+<h1>Instructions</h1>
+<p>
+This is a special calculation program for the Beckman-Coulter PF2D system: it
+is for determining the fraction in the Gilson FC204 fraction collector
+containing the protein peak in which you are interested. Several parameters
+need to be entered to make that determination. </p>
+
+<ul>
+
+<li><b>Volume or Time Per Fraction</b>. You can choose to enter the value of
+the time (in minutes per fraction) or volume (in milliliters per fraction) that
+you are collecting in the FC204. This will usually be the setting on the FC204
+that displays that value. Note that if you select a volume per fraction, the
+flow rate textbox input will appear and you must enter a flow rate of the HPRP
+2<sup>nd</sup> dimension. </li>
+
+<li><b>Start Collection Time</b>. A required value is the time in minutes of
+the 2nd dimension program in which you start the collection of the 2nd
+dimension chromatography. Be very exact: if the time is 5.25 minutes, do not
+round it off to 5.3 minutes! </li>
+
+<li><b>End Collection Time</b>. As well, it is necessary to enter the time in
+minutes at which collection ends, even if it is the time at which the program
+ends. Again, exact values required. </li>
+
+<li><b>Count of Tubes or Well Collected Per Cycle</b>. This is a number that is
+programmed into the FC204. This indicates the maximum number of tubes or wells
+to be collected per cycle, and overrides any stop collection signal from an
+external controlling device. It is absolutely essential to enter this value if
+it is used. </li>
+
+<li><b>Delay Between Detector and Collector</b>. You can choose to enter a time,
+or perhaps better, to enter the dimensions of the tubing between the detector
+and the end of the tubing on the FC204 where it drops into the well. A
+reasonable default will be assumed if no entry is made here, but you are
+absolutely advised to enter the correct delay parameters, since no installation
+is standard. </li>
+
+<li><b>HPCF fraction</b>. You can enter, either in Row-Column (e.g., A1, A7,
+A10, B6, etc.) or Number of Fraction Collected format (1, 7, 10, 18, etc.), the
+fraction in which your protein was collected in the first dimension
+(chromatofocusing). </li>
+
+<li><b>HPRP peak information</b>. You can one of two kinds of information. One
+is the peak retention time: this is the actual top of the peak. Most users may
+do this. The other way is to enter the <i>start</i> time of when the peak
+begins its rise, and <i>end</i> time when you think it completes its detection,
+and perhaps when the peak width is long in time and may span more than one
+fraction. Spanning more than one fraction is quite possible if you measure the
+peak width at the half height in seconds or minutes, and your time per fraction
+is less than that. </li>
+
+</ul>
+
+After entering the required values, just click the <b>Find Fraction</b>
+button and the answer should be given.  Alternatively, an error message
+might be displayed explaining why a determination could not be made.
+<p>
+In addition, the user can display a Thorn well map of the fraction collector
+multi-well plates, and view the fraction collected as a red-colored dot on
+the plate.</p>
+<p>
+This module makes many assumptions.  The two most important are:</p>
+<ol>
+<li>The multiwell plates are positioned in exactly the order shown,
+noting the A1 well position of each plate. </li>
+<li>The movement of the FC204 fraction collector arm is serpentine such
+that collection starts with A1 and proceeds in the following order:
+ <ul>
+ <li>A1 to A12, then to the next row to B12 </li>
+ <li>B12 to B1, then to the next row to C1 </li>
+ <li>C1 to C12, then to the next row to D12 </li>
+ <li>continuining in this pattern shown </li>
+ </ul> </li>
+</ol>
+A future version of this module may be more programmable in that it
+lets the user define the motion/movement of the collector.
+</div>
+
+<div id="tubespercyclehelp" style="display:none;">
+The Gilson FC204 Fraction Collector that collects the 2<sup>nd</sup>
+dimension eluate from the HPRP column into fractions is set to collect
+both a time per fraction and also to collect a maximum number of
+tubes/vials/wells per cycle.  By setting the tubes/vials/wells per cycle,
+there is an assurance that partial fractions will not be collected.
+<p>
+To <b>set</b> or to <b>view</b> the number of tubes/vials/wells collected
+in a cycle, press the <code>EDIT</code>.</p>
+</div>
+
+
+<div onmouseover="this.style.color='blue';this.style.textDecoration='underline';"
+	onmouseout="this.style.color='';this.style.textDecoration='';"
+	onclick="reportErrors();" title="Yes, click here, in case you were wondering"
+	style="clear:both;float:left;margin-top:1em;color:gray;font:normal 60% Arial,Helvetica,sans-serif;">
+errors?
+</div>
+
+<div style="text-align:right;margin-top:1em;color:gray;font:normal 60% Arial,Helvetica,sans-serif;"
+ title="Modules of this reference calculator developed by SMH">
+smh
+</div>
+</body>
+</html>

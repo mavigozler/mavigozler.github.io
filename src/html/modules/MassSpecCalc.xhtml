@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+           Mass Spectrometry
+	============================ -->
+<head>
+<title>Mass Spectrometry Calculations</title>
+
+<style type="text/css">
+.matrixtabl td {padding:0.2em;}
+.mass-spec-vals {background-color:#aaa;}
+.mass-spec-vals TH {background-color:#faa;vertical-align:bottom;}
+.mass-spec-vals TD {background-color:#afa;text-align:center;
+			font:normal 100% 'Courier New',Courier,monospace;}
+ #proteoresults {background-color:#aaa;}
+ #proteoresults TH {background-color:#fff0f0;padding:0.3em 0.75em;
+ 		font:normal 90% Verdana,Tahoma,sans-serif;}
+ #proteoresults TD {background-color:#f0f0ff;padding:0.3em 0.75em;
+ 		font:bold 100% Arial,Helvetican,sans-serif;}
+ #info-box {white-space:pre;color:blue;}
+</style>
+</head>
+
+<body onload="MassSpecCalculations.finishDocument();">
+
+<div id="mass-spec-page">
+<hr style="margin-bottom:0;" />
+<p class="subtitle" style="margin-top:0;background-color:#eee;">
+Mass Spectrometry of Peptides and Proteins</p>
+<fieldset>
+ <legend>Select a Submodule within the Mass Spectrometry Module</legend>
+ <button type="button" class="msModuleButton"
+   onclick="MassSpecCalculations.setMSmodule(this);">Protein Sequence Analyzer</button>
+ <button type="button" class="msModuleButton"
+   onclick="MassSpecCalculations.setMSmodule(this);">Mass Spectrum Analyzer</button>
+</fieldset>
+
+
+<!--
+<table>
+<tr><td>Digest Peptides Mass Analysis
+ <td>
+</table>
+</div>
+
+
+<div style="margin-top:0;">
+<div style="float:right;background-color:#f0f0ff;border:2px solid blue;padding:0 0.5em;
+color:blue;font:bold 200% 'Times New Roman','Times Roman',Times,serif;"
+      onclick="show_massSpecHelp();">?
+</div>
+</div>  -->
+<div id="mass-spec-analysis-mod" style="display:none;margin:1em 0;">
+<form id="massSpectrumForm" action="#">
+<p>
+Place in the entry box below your list of <i>m/z</i> and intensity values.<br />
+<input type="checkbox" name="comma-is-decimal" /> Comma is decimal point </p>
+
+<div style="width:32em;">
+<textarea cols="50" rows="21" name="mass-spec-entry" style="font-size:120%;">
+READ THE INSTRUCTIONS IN THIS BOX IF NECESSARY
+BEFORE PROCEEDING:
+Place within this entry field a list representing
+mass spectrum values.
+The list should be two columns of values, with
+the first column being a real number value
+corresponding to the m/z of the mass spectrum,
+and the second column being its intensity value.
+The intensity value should be either space-,
+tab-, or comma-separated from the m/z value.
+It is permitted to omit the intensity value;
+all intensity values will be considered equal,
+and no m/z values will be eliminated as noise.
+
+If the comma represents the decimal point in the
+values, you must indicate this in the checkbox,
+and the m/z and intensity pairs must be separated
+by whitespace of some kind.
+
+For a random example, click the &ldquo;Show Example&rdquo;
+button.
+</textarea>
+<br />
+<button type="button" onclick="setExampleMassSpecAnalysis"
+  style="float:right;">Show Example</button>
+<button type="button" onclick="this.form.elements['mass-spec-entry'].value='';">Clear
+entry field text</button>
+</div> <!-- width box -->
+<p style="clear:both;margin-top:3em;">
+<button type="button" onclick="analyzeMassSpectrum(this.form);">Analyze Entry</button></p>
+</form>
+<p>
+Your most intense <i>m/z</i> values:</p>
+<div id="most-intense-mz">
+.
+</div>
+Your entered mass spectrum values:
+<div id="entered-spectrum">
+.
+</div>
+
+</div> <!-- id = mass-spec-analysis-module -->
+
+<div id="protein-sequence-analysis-mod" style="display:none;">
+<form id="proteinSequenceForm" action="#">
+<div style="float:left;margin-right:1em;">
+<div style="margin:0;font:normal 90% Arial,Helvetica,sans-serif;"><input 
+  type="checkbox" name="keywordEntry" />Keywords are entered</div>
+<textarea cols="50" rows="12" name="peptide-entry" 
+   style="font-size:120%;display:inline;">Click the "Clear entry field text" button 
+to clear text in this box.
+
+READ THE INSTRUCTIONS IN THIS BOX IF NECESSARY
+BEFORE PROCEEDING:
+Place within this entry field the sequence of the
+polypeptide to be analyzed.  (At a later time,
+it will be possible to use accession numbers
+or names of a well-known database.)
+
+Allowed special modifications:
+* C-terminal amides: end the sequence with '-nh2'
+</textarea>
+<br />
+<button type="button" onclick="MassSpecCalculations.analyzeProtein(this.form);"
+  style="margin-right:3em;">Analyze Entry</button>
+<button type="button"
+onclick="clearTextArea(this);">Clear entry field text</button>
+<button type="button" onclick="MassSpecCalculations.insertExample();" 
+	style="float:right;">Insert Example</button>
+</div> <!--  float=left div -->
+
+<!--
+ A connection
+to the Internet is required if an accession
+number or name is supplied,
+so that the sequence may be obtained; no connection
+is required if the sequence is directly supplied.
+Alternatively, keywords can be supplied to indicate
+the intention to search for database accession
+information or sequences, but indicate that keywords
+are being submitted by marking the checkbox above.
+Select this text and hit the Delete key or press the
+Clear Text button below to remove text before
+entering your own text.  Select the functions on
+this page to limit or tailor the response. -->
+
+<p id="enzyme">Enzyme:
+
+<br />Cys modification:
+<span id="cys-mod"></span></p>
+<p>
+ <input type="radio" name="results_request" value="masses"
+	onchange="MassSpecCalculations.predictSpectrum(this);" />Tabulate
+		 predicted <i>m/z</i> values <br />
+ <input type="radio" name="results_request" value="spectrum"
+			onchange="MassSpecCalculations.predictSpectrum(this);" />Display a
+		 predicted (graphical) mass spectrum  </p>
+<div id="info-box">&nbsp;</div>
+</form>
+
+<table id="proteoresults" style="display:none;">
+<tr><th class="right">Formula </th>        <td id="molformula"></td></tr>
+<tr><th class="right">Average mass:</th>   <td id="pmass-avg"></td></tr>
+<tr><th class="left" colspan="2"><i><b>Monoisotopic masses</b></i></th></tr>
+  <tr><td class="right">[M] </td>                     <td id="pmass-mono"></td></tr>
+  <tr><td class="right">[M + H]<sup>+</sup></td>      <td id="pmass-mono-plus"></td></tr>
+  <tr><td class="right">[M - H]<sup>&minus;</sup></td><td id="pmass-mono-minus"></td></tr>
+<tr><th class="left">Est. pI:  </th>             <td id="isoelectric"></td></tr>
+</table>
+<div id="AAerror" style="color:red;font:bold 110% Arial,Helvetica,sans-serif;"></div>
+</div>
+</div> <!-- id = protein sequence-analyzer-module -->
+</body>
+</html>

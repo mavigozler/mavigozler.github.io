@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.20.4",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.24.0"
+    },
+    "version": "1.20.0",
+    "libraryName": "chem-calc-sp-fx",
+    "libraryId": "b5aedb27-a855-4813-a334-7677ffc1fcf5",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "chem-calc-sp-fx",
+    "solutionShortDescription": "chem-calc-sp-fx description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

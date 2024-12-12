@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<!-- ============================
+           Conversions
+	============================ -->
+<head>
+<title>Unit/Dimension Conversions</title>
+</head>
+
+<body onload="Conversions.finishDocument();">
+
+
+<div id="conversions-page">
+
+<button id="conversionHelp" type="button" style="border:none;background:none;">
+	Instructions?</button>
+<p class="module-title">
+  Unit/Dimension Conversion Tool </p>
+
+<table style="background-color:#ccc;">
+<tr><td colspan="5" style="font:normal 90% 'Arial Narrow',Arial,sans-serif;
+	color:blue;background-color:#fff8f8;text-align:center;padding:0.5em 1.5em;">
+	Select Category:
+
+   <p id="dimension-select">  <!-- nodes added to this element via script -->  </p></td></tr>
+
+<tr><td style="font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;
+	background-color:#f8fff8;text-align:center;padding:0.5em 1.5em;">
+	Enter the input value here (value to be converted):<br />
+	<input type="text" size="7" maxlength="7" id="inputval"
+	onchange="Conversions.recalcUnits(this);"
+	style="text-align:right;font:normal 250% Tahoma,Verdana,Arial,sans-serif;" />
+	  <span style="font-size:70%;color:black;"><br />Press Enter</span> </td>
+ <td style="font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;
+	text-align:center;vertical-align:top;background-color:#f8fff8;padding:0.5em 1em;width:10em;">
+	<div style="text-align:justify;">
+	Select the units/dimensions from which you want to convert:</div>
+		<select id="inputdim" onchange="Conversions.recalcUnits(this);"
+		style="font:normal 150% 'Arial Narrow',Arial,sans-serif;">
+		<option>&nbsp;</option></select> </td>
+ <td style="font:bold 130% Arial,Helvetica,sans-serif;">= </td>
+ <td style="background-color:#f8f8ff;width:15em;vertical-align:top;padding:0.5em 1em;
+ font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;text-align:center;">
+ Your converted value is:<p>
+  <span id="outputval"
+style="color:maroon;font:normal 250% 'Times New Roman','Times Roman',Times,serif;">&nbsp;</span></p></td>
+ <td style="background-color:#f8f8ff;padding:0.5em 1em;width:10em;
+ 		font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;text-align:center;">
+	<div style="text-align:justify;">
+	Select the units/dimensions from which you want to convert:</div>
+ <select id="outputdim" onchange="Conversions.recalcUnits(this);"
+		style="font:normal 150% 'Arial Narrow',Arial,sans-serif;">
+		<option>&nbsp;</option></select> </td></tr>
+</table>
+
+<!--
+		<table style="background-color:#ccc;">
+		<tr><td style="font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;
+			background-color:#f8fff8;text-align:center;padding:0.5em 1.5em;">
+			Enter the input value here (value to be converted):<br>
+			<input type="text" size="7" maxlength="7" id="inputval"
+			onchange="recalcUnits(this);"
+			style="text-align:right;font:normal 250% Tahoma,Verdana,Arial,sans-serif;">
+			  <span style="font-size:70%;color:black;"><br>Press Enter</span>
+		 <td style="font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;
+			text-align:center;vertical-align:top;background-color:#f8fff8;padding:0.5em 1em;width:10em;">
+			<div style="text-align:justify;">
+			Select the units/dimensions from which you want to convert:</div>
+				<select id="inputdim" onchange="recalcUnits(this);"
+				style="font:normal 150% 'Arial Narrow',Arial,sans-serif;">
+				<option>&nbsp;</option></select>
+		 <td style="background-color:#f8f8ff;width:15em;vertical-align:top;padding:0.5em 1em;
+		 font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;text-align:center;">
+		 Your converted value is:<p>
+		  <span id="outputval"
+		style="color:maroon;font:normal 250% 'Times New Roman','Times Roman',Times,serif;">&nbsp;</span>
+		 <td style="background-color:#f8f8ff;padding:0.5em 1em;width:10em;
+		 		font:normal 90% 'Arial Narrow',Arial,sans-serif;color:blue;text-align:center;">
+			<div style="text-align:justify;">
+			Select the units/dimensions from which you want to convert:</div>
+		 <select id="outputdim" onchange="recalcUnits(this);"
+				style="font:normal 150% 'Arial Narrow',Arial,sans-serif;">
+				<option>&nbsp;</option></select>
+		</table>
+-->
+
+</div>
+
+
+<!-- ======================================
+          Unit/Dimension Conversions
+	======================================== -->
+
+<!--
+<div id="conversion" style="display:none;">
+<form id="conversion-form" action="#">
+<select name="choose_conversion">
+<option value=""></option>
+<option value="pressure">pressure (of fluid &amp; gas)</option>
+</select>
+
+<div id="conv-pressure" style="display:none;">
+Fluid &amp; Gas Pressure Conversions
+<table id="conv-pressure-table">
+<tr><td><input type="text" size="8" name="conv-atm"
+			onchange="recalc_pressure(this);">
+ <td>atm (atmosphere)
+<tr><td><input type="text" size="8" name="conv-bar"
+			onchange="recalc_pressure(this);">
+ <td>bar
+<tr><td><input type="text" size="8" name="conv-pascal"
+			onchange="recalc_pressure(this);">
+ <td>Pa (pascal)
+<tr><td><input type="text" size="8" name="conv-mpascal"
+			onchange="recalc_pressure(this);">
+ <td>MPa (megapascal)
+<tr><td><input type="text" size="8" name="conv-psi"
+			onchange="recalc_pressure(this);">
+ <td>psi (pounds per square inch)
+<tr><td><input type="text" size="8" name="conv-nm2"
+			onchange="recalc_pressure(this);">
+ <td>N/m<sup>2</sup>
+<tr><td><input type="text" size="8" name="conv-mmHg"
+			onchange="recalc_pressure(this);">
+ <td>mm Hg (millimeters of mercury)
+<tr><td><input type="text" size="8" name="conv-torr"
+			onchange="recalc_pressure(this);">
+ <td>torr
+<tr><td><input type="text" size="8" name="conv-inHg"
+			onchange="recalc_pressure(this);">
+ <td>in. Hg (inches of mercury)
+<tr><td><input type="text" size="8" name="conv-ftH2O"
+			onchange="recalc_pressure(this);">
+ <td>ft. H<sub>2</sub>O
+<tr><td><input type="text" size="8" name="conv-lbft2"
+			onchange="recalc_pressure(this);">
+ <td>lb/ft<sup>2</sup>
+<tr><td><input type="text" size="8" name="conv-dyne-cm2"
+			onchange="recalc_pressure(this);">
+ <td>dyne/cm<sup>2</sup>
+<tr><td><input type="text" size="8" name="conv-kgm2"
+			onchange="recalc_pressure(this);">
+ <td>kg/m<sup>2</sup>
+</table>
+</div>
+</form>
+</div>
+-->
+
+<!--  Calculation Matrices for Unit Conversions -->
+<div style="display:none;">
+Physical Properties Calculation Matrices
+
+<!-- rows are 'from', col is 'to' -->
+<table id="mass-matrix">
+<tr><th>      </th><th> kg      </th><th> lb    </th><th>  slug  </th><th>  stone </th></tr>
+<tr><th>kg	  </th><td> =x*1.0  </td><td>=x/2.2 </td><td>=x/32   </td><td> = x/8  </td></tr>
+<tr><th>lb    </th><td> =x*2.2  </td><td>=x*1.0 </td><td>=x*16   </td><td> =x*4   </td></tr>
+<tr><th>slug  </th><td> =x*32   </td><td>=x/16  </td><td>=x*1.0  </td><td> =x*2   </td></tr>
+<tr><th>stone </th><td> =x*8    </td><td>       </td><td>        </td><td>        </td></tr>
+</table>
+
+
+<!--
+ <option value="elecurrent">Electric Current<\/option>
+ <option value="time">Time<\/option>
+ <option value="lumintens">Luminous Intensity<\/option>
+ <option value="substance">Amount of Substance<\/option>
+ <\/optgroup>
+ <!- - SI-derived
+ <optgroup label="SI-derived">
+ <option value="area">Area<\/option>
+ <option value="volume">Volume<\/option>
+ <option value="velocity">Velocity, Speed<\/option>
+ <option value="acceleration">Acceleration<\/option>
+ <option value="massdens">Mass Density<\/option>
+ <option value="solndens">Solution Density<\/option>
+ <option value="energy">Energy/Work/Heat<\/option>
+ <option value="pressure">Pressure/Stress<\/option>
+ <option value="power">Power/Radiant Flux<\/option>
+  <optgroup label="Electric Field Properties">
+  <option value="charge">Electric Charge<\/option>
+  <option value="resist">Electric Resistance<\/option>
+  <option value="conduc">Electric Conductance<\/option>
+  <\/optgroup>
+  <optgroup label="Magnetic Field Properties">
+  <option value="magflux">Magnetic Flux<\/option>
+  <option value="magfluxdens">Magnetic Flux Density<\/option>
+  <option value="induct">Inductance<\/option>
+  <\/optgroup>
+  <optgroup label="Radiant Energy Properties">
+  <option value="radioact">Radioactivity<\/option>
+  <option value="absdose">Absorbed Energy Dose<\/option>
+  <option value="equivdose">Equivalent Dose<\/option>
+  <\/optgroup>
+ <option value="enzymatic">Enzymatic/Catalytic Activity<\/option> -->
+</div>
+</body>
+</html>

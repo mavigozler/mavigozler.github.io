@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<root>
+<!-- ===========================================================
+                 PRINCIPAL COMPONENT ANALYSIS
+     ===========================================================  -->
+<div id="pca-info" style="margin-top:2em;width:30em;">
+Principal Component  Analysis (PCA)
+
+<h1>Prerequisite Knowledge</h1>
+A knowledge of parametric statistics will be assumed, such as the
+fundamental calculation of mean, variance, and standard deviation
+of normally distributed data.  Tests for normality exist to indicate
+if data is skewed or not.
+
+<h2>Covariance and Covariance Matrix</h2>
+Whereas the variance of a one-dimensional dataset is the sum of
+square of differences between data about its mean, the
+covariance is the sum of the product of the difference between
+two datasets and their mean:
+
+<div class="eqnserif" style="margin-top:1em;margin-left:auto;margin-right:auto;">
+<i>var</i>(<i>x</i>) = { &sum; (<i>x<sub>i</sub></i> &minus;
+ <i style="text-decoration:overline;">x</i>)(<i>x<sub>i</sub></i> &minus;
+ <i style="text-decoration:overline;">x</i>) } / (<i>n</i> &minus; 1)
+<p>
+<i>cov</i>(<i>x, y</i>) = { &sum; (<i>x<sub>i</sub></i> &minus;
+ <i style="text-decoration:overline;">x</i>)(<i>y<sub>i</sub></i> &minus;
+ <i style="text-decoration:overline;">y</i>) } / (<i>n</i> &minus; 1)
+</div>
+for all <i>i</i> from 1 to <i>n</i>.  Note that if the computed
+value is &lt;0, the increase in one dataset involves a decrease
+in values of the second dataset.  If the covariance is 0, then
+the data are independent of one another.
+<p>
+In a multidimensional dataset, a pairing of each dimension can
+help in the computation of a covariance.  For 3 dimensions,
+3 covariance values can be computed.  In fact for <i>n</i>
+dimensions, it is possible to compute
+<i>n</i>!&nbsp;/&nbsp;(2(<i>n</i>&minus;2)!) covariance values.
+For all values of all dimensions, a covariance matrix can be
+constructed with <i>n</i> &times; <i>n</i> dimensions:
+<p style="text-align:center;" class="eqnserif">
+<i>C<sup>n&times;n</sup></i> = (<i>c<sub>i,j</sub></i>,
+<i>c<sub>i,j</sub></i> = <i>cov</i>(<i>Dim<sub>i</sub></i>,
+<i>Dim<sub>j</sub></i>).
+<p>A three-dimensional <i>x, y, z</i>
+covariance matrix would look:
+<div style="text-align:center;">
+<table class="matrixtabl">
+<tr><td rowspan="3"><i>C</i> = <span style="font-size:250%;">(</span>
+ <td><i>cov</i>(<i>x,x</i>)
+ <td><i>cov</i>(<i>x,y</i>)
+ <td><i>cov</i>(<i>x,z</i>)
+<td rowspan="3" style="font-size:250%;">)
+<tr><td><i>cov</i>(<i>y,x</i>)
+ <td><i>cov</i>(<i>y,y</i>)
+ <td><i>cov</i>(<i>y,z</i>)
+<tr><td><i>cov</i>(<i>z,x</i>)
+ <td><i>cov</i>(<i>z,y</i>)
+ <td><i>cov</i>(<i>z,z</i>)
+</table>
+</div>
+Note that in the matrix, the diagonal is just the variance of
+one dimension of the dataset.  Also the matrix is symmetrical,
+since <i>cov</i>(<i>a,b</i>) = <i>cov</i>(<i>b,a</i>)
+
+<h1>Matrix Algebra</h1>
+Two matrices can be multiplied together if they meet certain
+requirements.  Suppose a vector is multiplied to a square matrix,
+which is a <i>transformation matrix</i>.  The result is another
+vector that is transformed from its original position.
+An <i>eigenvector</i> is a vector that is a multiple of
+a vector affected by a transformation matrix.  Eigenvectors
+are properties of only certain square matrices:  for such
+<i>n</i> &times; <i>n</i> matrices, there are <i>n</i> eigenvectors.
+Eigenvectors as such scale the magnitude of vectors they transform,
+without altering their direction.  An additional property is
+that all eigenvectors are <i>orthogonal</i> (perpendicular) to
+the plane of the square matrix.  Additionally eigenvectors
+are scaled to 1 so that they all have the same length.
+<div style="text-align:center;"><table class="matrixtabl">
+<tr><td rowspan="2"><span style="font-size:175%;">(</span>
+ <td>3
+<td rowspan="2" style="font-size:175%;">)
+<tr><td>2
+</table></div>
+is an eigenvector with a length of &radic;(3<sup>2</sup> +
+2<sup>2</sup>) = &radic;13.  Thus if the vector is divided
+by that amount, a vector whose length is one is produced
+<div style="text-align:center;"><table class="matrixtabl">
+<tr><td rowspan="2"><span style="font-size:175%;">(</span>
+ <td>3/&radic;13
+<td rowspan="2" style="font-size:175%;">)
+<tr><td>2/&radic;13
+</table></div>
+The <b>eigenvalue</b> is the scaling factor of the matrix
+to produce the eigenvector.
+<div style="text-align:center;"><table class="matrixtabl">
+<tr><td rowspan="2"><span style="font-size:175%;">(</span>
+ <td>2 <td>3
+ <td rowspan="2"><span style="font-size:175%;">)</span>
+    &times; <span style="font-size:175%;">(</span>
+ <td>3
+ <td rowspan="2"><span style="font-size:175%;">)</span>
+     = <span style="font-size:175%;">(</span>
+ <td>12
+ <td rowspan="2"><span style="font-size:175%;">)</span>
+  = 4 &times; <span style="font-size:175%;">(</span>
+ <td>3
+ <td rowspan="2"><span style="font-size:175%;">)</span>
+<tr><td>2 <td>1  <td>2  <td>8  <td>2
+</table></div>
+Thus for the matrix, an eigenvector and its eigenvalue
+are determined.
+
+
+<h1>PCA Defined</h1>
+[Taken from one single page explanation by NGA Data Mining.]
+<ul>
+<li>Reduces dimensionality of large data sets,
+ particularly useful in microarray analysis
+<li>Finds signals in noisy data
+</ul>
+Suppose <i>X</i> is a matrix of data <i>n</i> rows (observations)
+&times; <i>p</i> columns (variables), <i>x</i><sub>1</sub>,
+<i>x</i><sub>2</sub>, ...,<i>x<sub>p</sub></i>.  There is
+another matrix <i>S</i> which is a <i>p</i> &times; <i>p</i>
+covariance matrix with the same set of <i>x<sub>i</sub></i> variables.
+<p>
+A vector <i>a</i><sub>1</sub> of length <i>p</i> is found such that
+<i>a</i><sub>1</sub><sup><i>T</i></sup><i>Sa</i><sub>1</sub>
+is maximized subject to
+<i>a</i><sub>1</sub><sup><i>T</i></sup><i>a</i><sub>1</sub> = 1.
+<p>
+A variable <i>z</i><sub>1</sub> = &sum;<sup><i>p</i></sup><sub
+style="margin-left:-0.5em;vertical-align:-0.5em;"><i>i</i>=1</sub>
+<i>a</i><sub>1<i>i</i></sub><i> x<sub>i</sub></i>
+represents the first principal component, and provides a linear
+combination of variables yielding maximum variation.
+A second principal component, <i>z</i><sub>2</sub> =
+&sum;<sup><i>p</i></sup><sub
+style="margin-left:-0.5em;vertical-align:-0.5em;"><i>i</i>=1</sub>
+<i>a</i><sub>2<i>i</i></sub><i> x<sub>i</sub></i>
+is found with the condition that
+<i>a</i><sub>2</sub><sup><i>T</i></sup><i>Sa</i><sub>2</sub>
+is maximized subject to
+<i>a</i><sub>2</sub><sup><i>T</i></sup><i>a</i><sub>2</sub> = 0.
+<p>
+A linear combination of variables will now be orthogonal to the first
+principal component to provide maximum variation.  Additional
+principal components are derived in a similar way.
+<p>
+Vectors <i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, ...,
+<i>a<sub>p</sub></i> are eigenvectors of matrix <i>S</i>.  Associated
+with each is an eigenvalue &lambda;<sub><i>i</i></sub><sup>2</sup>.
+The value &lambda;<sub><i>i</i></sub><sup>2</sup> /
+&sum; &lambda;<sub><i>i</i></sub><sup>2</sup> is the proportion of
+variation explained by the <i>i</i>th principal component.
+Alternative, the <i>a<sub>i</sub></i> values can be considered to be
+right singular vectors in a singular value decomposition with
+singular values &lambda;<sub><i>i</i></sub> of the matrix centered
+about its mean and scaled by 1&nbsp;/&nbsp;&radic;<span
+style="text-decoration:overline;">(<i>n</i>&nbsp;&minus;&nbsp;1)</span>,
+<i>X<sub>s</sub></i>.
+<p>
+If <i>X<sub>s</sub></i> = <i>V</i> &Lambda; <i>P&acute;</i>,
+with &Lambda; being a diagonal matrix with elements &lambda;<sub><i>i</i></sub>,
+<i>P&acute;</i> is a <i>p</i> &times; <i>p</i> matrix with columns
+<i>a<sub>i</sub></i>, and <i>V</i> is an <i>n</i> &times; <i>p</i>
+matrix with <i>V&acute;V = I</i>, this produces the principal component
+scores.
+<p>
+In reducing the dimensions of data sets, one replaces a large number
+of correlated variables with smaller number of orthogonal variables
+containing most of the information of the data set.  The choice of
+the count of dimensions is based on the variation of the leading
+principal components.  If <i>k</i> principal components are selected,
+the test of equality for the remaining <i>p&nbsp;&minus;&nbsp;k</i> eigenvalues
+is:
+<p class="eqnserif" style="width:30em;text-align:center;">
+(<i>n</i> &minus; 1 &minus; (2<i>p</i> + 5) / 6 { &minus;
+&sum;<sup style="margin-left:-0.5em;vertical-align:1.5em;"><i>p</i></sup>
+<sub style="margin-left:-2em;vertical-align:-1.25em;"><i>i=k</i>+1</sub>
+log(&lambda;<sub><i>i</i></sub><sup>2</sup>) + (<i>p &minus; k</i>)
+log ( &sum;<sup style="margin-left:-0.5em;vertical-align:1.5em;"><i>p</i></sup>
+<sub style="margin-left:-2em;vertical-align:-1.25em;"><i>i=k</i>+1</sub>
+&lambda;<sub><i>i</i></sub><sup>2</sup>/(<i>p&nbsp;&minus;&nbsp;k</i>) }
+<p>
+This has asymptotically a &chi;<sup>2</sup> distribution with
+1/2(<i>p&nbsp;&minus;&nbsp;k</i>&nbsp;&minus;&nbsp;1)(<i>p&nbsp;&minus;&nbsp;k</i>&nbsp;+&nbsp;2)
+degrees of freedom.  Equality in the remaining eigenvalues indicates
+that if more principal components are to be considered, they should
+all be considered.
+<p>
+Instead of the variance-covariance matrix, the correlation matrix,
+sum of squares and cross-products matrix, or a standardized sum of
+squares and cross-products matrix can be used.  In the latter case
+&sigma;<sup>&minus;1/2</sup><i>S</i>&sigma;<sup>&minus;1/2</sup>
+is used instead of <i>S</i> for a diagonal matrix &sigma; with positive
+elements.  If correlation matrix is used, the &chi;<sup>2</sup>
+approximation for the statistic given above is not valid.
+<p>
+Principal component scores <i>F</i> are the values of the principal
+component variables for the observations.  They can be adjusted
+(standardized) so that the variance of the scores for each component
+is 1.0 or equal to the corresponding eigenvalue.
+<p>
+In weighting components, the matrix <i>X</i> is first centered about the
+weighted means, then each row is scaled by an amount &radic;<i>w<sub>i</sub></i>
+where <i>w<sub>i</sub></i> is the weight of the <i>i</i>th observation.
+
+
+</div>
+</root>

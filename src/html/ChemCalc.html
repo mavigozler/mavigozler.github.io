@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<!--  see notes at end of markup -->
+<html lang="en">
+<head>
+<title>Biochemist's Reference Calculator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>.tt {font-family:monospace;}</style>
+    <link  href="./css/ChemCalc.css" rel="stylesheet">
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/eventemitter3/5.0.1/index.min.js"
+integrity="sha512-2Ennqwp8s5F7iz0njdlWWKbd6bCby5nny78Wt9e9t780ErG6eb/vaFDkIt/j3EVhBXeCYH7uc0eFmOvc0EbwLA==" crossorigin="anonymous" refrrerpolicy="no-referrer"></script>
+    <script  src="./js/ModuleController.js"></script>
+    <script  src="./js/UtilFuncs.js"></script>
+    <script  src="./js/GenLib/html-dom.js"></script>
+    <script  src="./js/GenLib/numberExtended.js"></script>
+    <script  src="./js/SolnChem.js"></script>
+    <script  src="./js/AmmSulf.js"></script>
+    <script  src="./js/LibraryData.js"></script>
+    <script  src="./js/GenLib/error.js"></script>
+    <script  src="./js/GenLib/windows.js"></script>
+</head>
+<body>
+<div id="full-width-top-panel">
+  <div id="what-is-this">
+    <a href="#" id="what-is-this-anchor">What is this!?</a>
+    <!--<br>Are you wasting my time with yet another useless page!!??? -->
+    </div>
+    <div id="the-fine-print">
+    the <button id="fine-print-click">fine print</button>
+    </div>
+<p id="title">
+Biochemist's Reference Calculator
+</p>
+
+<div id="mainmenu_error_msg" style="display:none;">
+<strong>You didn't make a selection</strong>
+</div> <!-- id="mainmenu_error_msg" -->
+</div> <!-- id=full-width-top-panel -->
+
+<div id="main-page">
+<!-- main menu -->
+  <div id="main-menu"></div>
+
+
+</div> <!-- id=main-page -->
+
+<!-- menu with activated module -->
+<!--
+<div id="active-module-menu" style="display:none;">
+<button onclick="ChemController.deactivateModule();">Main Menu</button>
+</div>
+-->
+<!-- ============ Content panels ================
+<div id="content-panels"></div>
+-->
+
+<iframe id="module-iframe"></iframe>
+<!-- =========================================================== -->
+<div id="description">
+<p style="background-color:#888;display:inline;margin-top:35px;
+padding:0.5em 1em;border:10px outset #888;color:yellow;font:bold 125% Helvetica,Arial,sans-serif;">
+A Reference Calculator for General, Organic, Biological Chemists
+</p>
+<h1>How Much Of This Salt Do I Weigh Out?</h1>
+<p>
+This web page contains interactive features that basically permit users to
+determine what they need to do to make solutions for chemistry. This calculator
+can provide a description (short and long) about how much to weigh out of a salt
+and to prepare the solution.  The inputs /include the concentration and volume
+the desired solution.  There is no need to remember molecular weights:  the user
+can provide a molecular formula or select from a list of commonly used
+chemicals, and the software embedded in the web page does the rest.</p>
+
+<h1>No Internet Connection Needed</h1>
+<p>
+There is no need to be connected to the Internet to use this page <em>at
+all</em>.  All you need to do is to make sure that this web page is saved to the
+device where you maintain permanent storage.  (For 99% of users, that is their
+hard disk.)</p>
+<p>
+All of the content and software of this web page has been coded (most
+painstakingly, I might add) to run using client-side JavaScript. In order to use
+the interactive features of this web page, your client (browser) must therefore
+be enabled to execute scripts, specifically JavaScript.  If you are reading
+this, then you are already enabled, so don't bother wondering how to do it.</p>
+
+<h1>Personalizing Your Copy</h1>
+<p>
+Is this cool or not!?  I mean, the user can have this web page write his name at
+the top in big letters...impress his friends colleagues.<p>To do this, you need
+to have an editor that opens web pages for editing them.  If you are using an
+operating environment other than a version of Microsoft Windows, you can ask
+someone how to find, open, and use an HTML editor.  If you are using a version
+of Windows, do this:</p>
+
+<ol>
+<li>Start the simple text reader/editor called <b>Notepad</b>. If you know where
+it is on the <span class="menuitem">Programs</span> popup menu in the <span
+class="menuitem">Start</span> menu, then go there.  A fast way to start it is to
+click <span class="menuitem">Run...</span> from the <span
+class="menuitem">Start</span> menu, then type in <span
+style="font-family:Courier,monospace;">Notepad</span> in the text entry space,
+then click `OK' or press ENTER.</li>
+
+<li>From within Notepad, use the <span class="menuitem">File->Open</span>
+dialog, look for the name of this file (HTML document).  Notepad by default
+shows only files that have the type (extension) of <span
+style="font-family:Courier,monospace;">.TXT</span> as part of their filename.
+Either select the file type to show all files, or type an asterisk (<span
+style="font-family:Courier,monospace;">*</span> in the file name box to show all
+the files.  Once you found the directory and file, open it by selecting and
+double-clicking it.</li>
+
+<li>Notepad will probably tell you that the file is too big, and it offer to
+open the file in Word Pad instead.  Say <b>Yes</b>. <li>In Word Pad (or whatever
+alternative Notepad offered), use the <span class="menuitem">Find...</span>
+command under the <span class="menuitem">Edit</span> menu to search for the word
+&lsquo;Personalized.&rsquo; You should see a large coded comment that tells you
+what to do to personalize the page.  Basically, you just put the name in quotes
+between an equal symbol and semicolon character.  (If you want to know what it
+does, it assigns the <i>string constant</i> or the text in quotes to an
+identifier (variable) where it will be used later to write the text to the web
+page as it is filled.)</li>
+</ol>
+
+<p>
+<b>One other thing!</b>  Whatever HTML editor you use, make absolutely sure that
+it is <strong>not</strong> Microsoft Word! Yes, I know that Word edits and
+creates and saves as HTML documents, but the kind of coding that Word does to
+make HTML documents is positively awful!  It is well known to web developers
+that Word creates the most unreadable and overly long web pages of any
+application that calls itself an HTML editor.  Its so-called web pages can be
+rendered well enough (and that's a big guess) in Microsoft&rsquo;s own browser,
+Internet Explorer, but other browsers have understandable trouble in rendering
+Word's positively dreadful HTML.  You can open well-written pages in Word, and
+then immediately save them, and Word will save its own mangled HTML
+understanding of what the page looks like. <b>Therefore, don&rsquo;t use Word as
+an HTML editor....never!</b></p>
+
+<h1>Suggestions?  Comments?  Criticism?  Major Gripes?</h1>
+<p>
+If this software makes major blunders or errors, it pretty much makes it
+useless, doesn't it?  Once a user discovers that it cannot trust one feature of
+the software, the user figures that there are probably plenty of other problems
+with the software, and he decides against using it altogether.  (Or it could be
+that the one feature he found important is the one that is broken, and would
+only use if for that purpose anyway.)</p>
+<p>
+Then there is the case where the software works for the user, but the interface
+has something wrong with it.  Maybe a prompt message is not properly descriptive
+or verbose, or the presentation of an entry form could be more <q>intuitive</q>,
+or perhaps the color scheme (use of color) sucks.</p>
+<p>
+If any or all of that is true, then please drop a quick note to the <a
+href="mailto:mavigozler@yahoo.com?subject=Chemistry%20Calculator%3A%20%20Suggestions,%20Comments,%20Complaints">author</a>
+if you wouldn&rsquo;t mind?  Thanks.</p>
+</div>
+
+<!-- =========================================================== -->
+<div id="fineprint" style="display:none;">
+<div style="text-align:center;">
+<div style="background-color:#888;display:inline;margin-top:35px;
+padding:0.5em 1em;border:10px outset #888;color:yellow;font:bold 125% Helvetica,Arial,sans-serif;">
+The Fine Print</div></div>
+
+<h1>LIABILITY</h1>
+<p>
+No warranties, express or implied, are made to users of this software. The
+author of this interactive page provides it <b>as-is</b>. Any loss or damage or
+error that results from a failure of the interactive or processing features of
+this page to perform as intended is the responsibility of the user.  The user is
+warned that all possible conditions under which the software operates may not
+have been tested.</p>
+
+<h1>RESTRICTIONS ON LICENSE (USE): GOVERNMENT EMPLOYEES or AGENTS,
+LITIGIOUS PERSONS, PERSONS WITHOUT ABILITY TO GIVE LEGAL CONSENT</h1>
+<p>
+The following persons are expressly given no license to use, and are
+<em>strictly</em> and <em>absolutely</em> <strong>prohibited</strong> from using
+the executable features of this web page:</p>
+
+<ul>
+<li>Persons who use this software within jurisdictions which by law or custom do
+not allow the user to give total consent to or take full responsibility for the
+use of the software features of this page. Such users are expressly
+<strong>forbidden</strong> from using any of the features of this page, and
+should immediately close this and all window views of the parts or whole of this
+web page document.</li>
+
+<li>Persons who are in the employ of or are members and officers of law
+enforcement organizations of jurisdictions where outrageous and hypocritical
+standards apply regarding legal and illegal drugs, and the duty or present task
+of the person is in the enforcement or administration of those laws.  This
+clause especially /includes prohibition of the use of the executable code of this
+web page to those in the employ of the Drug Enforcement Administration (DEA) and
+the Office of National Drug Control Policy (ONDCP), agencies of the government
+of the United States of America, irrespective of the present duty or task of the
+person who is a member, officer, or employee of this organization.  This clause
+also applies to those organizations or members and employees of organizations
+under contract with law enforcement organizations, especially the DEA and/or
+ONDCP, to provide forensic testing services for the testing or evaluation of
+<em>illegal</em> drug use, possession, distribution, and manufacture.  For the
+purposes of this clause, the phrase <q>outrageous and hypocritical standards
+apply regarding legal and illegal drugs</q> has the following express criteria:</li>
+</ul>
+
+<ul>
+<li>with respect to jurisdictions which differentiate the severity and schedule
+of punishment in criminal and civil statutes or codes regarding, each separately
+considered, of the:
+	<ol>
+	<li>use</li>
+	<li>possession</li>
+	<li>distribution</li>
+	<li>manufacture</li>
+	</ol>
+of the following drugs: potable alcohol or alcohol-containing products, tobacco
+(<i>Nicotiana tabacum</i>) or tobacco products, marijuana (<i>Cannabis
+sativum</i>), opiates (including but not limited to natural products of
+<i>Papaverum somniferum</i> such as morphine, codeine, heroin, or their
+synthetic or modified forms), cocaine, amphetamines, and any substances listed
+on the Schedule I of the U.S. DEA. This applies especially to jurisdictions
+which criminalize (prescribe fines more than $10,000 or imprison a person for
+any length of time, or both) one <em>but not all</em> of these drugs or drug
+classes.</li>
+
+<li>with respect to jurisdictions which, irrespective of the absence of double
+or hypocritical standards in their approach to the various and diverse classes
+of drugs, provide for a penalty of death for persons adjudged to be guilty of
+use, possession, distribution, or manufacture, or any or all of these, of the
+illegal drug substances listed or defined in the preceding clause.</li>
+
+<li>Persons who have within the previous twelve (12) calendar months filed
+<b>one</b> claim, with or without the representation of an attorney or advocate
+otherwise certified as a member of a legal bar, in any law court where such
+claims under civil law are authoritatively adjudicated, irrespective of the
+amount of the claim; <strong>and</strong> for which said claim was dismissed
+with prejudice, or without prejudice except where dismissal was based on want of
+jurisdiction or lack of proper standing; or for which said claim was decided by
+the adjudicating officer of the law (claim) court and the claimant (petitioner)
+took <em>nothing</em> (no remuneration) on the claim.</li>
+
+<li> Persons who have within the previous five (5) calendar years filed
+<b>two</b> or more claims, with or without the representation of an attorney, or
+advocate otherwise certified as a member of a legal bar, in any law court where
+such claims under civil law are authoritatively adjudicated, irrespective of the
+amount of the claims; <strong>and</strong> for which said claims were dismissed
+with prejudice, or without prejudice except where dismissal was based on want of
+jurisdiction or lack of proper standing; or for which said claims were decided
+by the adjudicating officer of the law (claim) court and the claimant
+(petitioner) took <em>nothing</em> (no remuneration) on the claim.</li>
+
+<li> Persons who have filed any claim within the last ten (10) calendar years,
+whether any such claims were aided by the representation of an attorney, or
+advocate otherwise certified as members of a bar, in any law court where such
+claims under civil law are authoritatively adjudicated, irrespective of the
+amount of the claims; <strong>and</strong> for which the judge or adjudicating
+officer of the court entered into the legal record a notation that the claimant
+(petitioner) was to be characterized or qualified as needlessly litigious or
+that the claim or petition before the court was frivolous; or that the person
+filing such claim is registered or otherwise qualified under expressly given law
+to be a person who is a person who frivolously or needlessly files meritless
+claims or damage petitions to courts having jurisdiction.</li>
+
+<li>If people regularly call you an <q>asshole,</q> you should probably think
+twice, even three times, about using this software.</li>
+</ul>
+</div>
+
+<!-- ======   Requirements For Use  =========================== -->
+
+<div id="requirements-page" style="display:none;">
+This client-side web page was developed using two popular browsers (Microsoft
+Internet Explorer version 6 and Mozilla version 1.7).  If something does not
+work when it is clicked, it is possible that the browser is one different than
+those tested, or that it is an older version of a browser that does not
+recognize code used to provide interactivity.  The script makes use of functions
+and core objects in JavaScript 1.5 and level 1 of the Document Object Model as
+specified by the World Wide Web Consortium.  In a few instances wrapper
+functions were written to provide workarounds with browsers that do not fully
+comply with the standards (although they are modestly called
+<q>recommendations</q>).
+<p>
+This page requires some external JavaScript and stylesheet files for support,
+which should have been installed if the install script/wizard was used. The
+files are placed within a path within the local filesystem; this path is
+<span class="tt">//include</span> for the script files, and
+<span class="tt">//include/script</span> for the
+external stylesheets.  It is entirely possible to incorporate all script code
+and stylesheet descriptions within this one file, although the file size will
+surely be enormous. If this becomes a good idea (as indicated by several
+requests that it be done, or complaints that the page does not work), it is
+quite likely this page will be distributed as a single fully functional
+interactive web document.</p>
+<p>
+There is the strongest interest in trying to make this page work on every system
+for every user that wants it to work.  It is believed that the concepts taught
+and the tools provided are those used by and useful to many students and
+scholars of biochemistry and molecular biology. It is for this reason that where
+errors, faults, and exceptions occur, a routine is embedded to provide the user
+with the ease to send a message to the author of this system which contains
+information about the error or exception that has occurred.  If the error
+reporting system should also somehow fail to work or be disabled, the author can
+be contacted at this <a
+href="mailto:stevempenner@gmail.com?subject=Error%20in%20Chemistry%20Calculator">address</a>.</p>
+</div>
+<!-- =========================================================== -->
+
+<div id="solnhelp" style="display:none;">
+Use the <b>Solutions Preparation</b> interactive web page to get instructions
+for preparing a typical chemical solution, whether an acid, base, or salt.
+There are <strong>three</strong> necessary inputs:
+ <ol>
+ <li>the molecular formula (to get the molecular weight of the chemical)</li>
+ <li>the concentration (or solution density)</li>
+ <li>the volume</li>
+ </ol>
+
+<div style="float:right;margin:2em 0 3em 2em;">
+<table id="examples">
+<tr><td>H<sub>2</sub>O:<td><input disabled type="text" value="H2O">
+<tr><td>Na<sub>2</sub>SO<sub>4</sub>:
+  <td><input disabled type="text" value="Na2SO4">
+<tr><td>Ba(NO<sub>3</sub>)<sub>2</sub>:
+  <td><input disabled type="text" value="Ba(NO3)2">
+<tr><td>Pb(OOCCH<sub>3</sub>)<sub>2</sub>:
+  <td><input disabled type="text" value="Pb(OOCCH3)2">
+<tr><td>C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>:
+  <td><input disabled type="text" value="C6H12O6">
+<tr><td>MgSO<sub>4</sub> &bull; 7 H<sub>2</sub>O:
+  <td><input disabled type="text" value="MgSO4,7*H2O">
+</table>
+</div>
+For the molecular formula, there is the option of selecting from a list of
+common chemicals.  If the chemical of interest is not in the list however, the
+molecular formula can be entered in a text box located next to an option called
+<q>Other</q>, with that option selected.
+<p>
+Molecular formulas can be complex.  They must make use of recognized atomic
+symbols.  Subscripts always apply to the atom subscripted, and radicals or
+groups of atoms can be grouped inside parentheses, with integers following the
+parentheses being subscripts for the grouping. Coefficients must be
+distinguished from subscripts with a leading comma and a trailing asterisk.
+Examples of atoms are given in the table to the right.</p>
+</div>
+
+<!-- =========================================================== -->
+<noscript id="noscript">
+  If scripting is disabled&mdash;although for the life of me I cannot imagine
+  why&mdash;you will not find this interactive page at all useful.
+<p>Much of the web now depends on web pages with scriptable content, and
+  scripted pages are secure and have been for 25 years. Let's just say this:
+  if scripted pages are not safe, then unscripted or script-disabled content
+  is also not safe, and it would be better really in all paranoia to stay off
+  the web and live as far away in the wilderness as what is possible and imaginable.
+</p>
+<p>Good luck and safe journey</p>
+
+<!-- NOTICE OF COPYRIGHT
+  The contents of this web page are written by S. Mitchell Halloran.
+  Copyright 2001-2012.  The terms of license and exceptions of use
+  are presented through the user's interface, or can be read from the
+  source of the document presented here, in the relevant sections
+  at the end of this document.
+  Stated briefly, for all but a fraction of the users, this document
+  and its interactive features can be used and distributed freely.
+  Under no circumstances are the contents or interactive features of
+  this document to be sold.
+
+   To personalize your own version of this interactive page,
+   Just put your (or the person's) name IN QUOTES between
+   the equal symbol and semicolon characters below, to the right
+   of the text that says `var personalizedName'.  Make sure it is
+   IN DOUBLE QUOTES, and that it is between the `=' and the `;'
+   characters!
+
+	Also special characters with diacritical marks (a-, o-, u-umlaut,
+	etc.) are rendered as "Character Entities".  Character entities
+	in HTML documents are rendered with the syntax:
+
+	 '&' + |name| or |numeric code| + ';'
+	 that is you write the ampersand character, the special name/abbreviation
+	 or numeric code, and then a semicolon character.
+
+	 Note the u-umlaut in the Personalized_Name below is
+	 written "&uuml;" where "uuml" is the name for u-umlaut.
+	 You can also use UTF hex codes by writing "\u" + four-digit hex code
+	 If you want to know what these are, go to http://www.w3.org/
+	 and get the HTML specification and search the document for those
+	 keywords.
+
+	Enjoy!
+
+ *************************************************************************/
+-->
+
+  <!--
+<h1>ECMAscript/Javascript Not Enabled</h1>
+
+<p>
+This interactive web document makes use of ECMAscript/Javascript and requires
+that it be enabled in order to make use of the dynamic web page features.   If
+you can read this text, it means that your client (browser) has been  disabled
+or is otherwise unable to interpret Javascript. Consult your online help and/or
+user manual which instructs you on how to enable ECMAscript/Javascript.</p>
+
+<h1>What Is The Danger of Enabling Scripting Features (Turning on
+ECMAscript/Javascript?</h1>
+<p>
+Generally there is no danger or risk to the operating or computing system that
+is enabled to interpret ECMAscript/Javascript.  The script languages were
+created for the purpose of running in a contained environment that does not
+permit access <em>by default</em> to any part of the computer where data and
+code are stored or used, whether it is in memory or on disk.
+<p>
+If the user has maintained the updates and upgrades to the operating system,
+especially those critical to system security, the probability of a malicious
+script code author gaining access to the system by exploiting a discovered or
+even well-known defect or weakness is virtually nil.  That is not to say it is
+impossible, but the script execution environment for ECMAscript/Javascript is
+quite mature, with both browser and operating system (Microsoft) developers
+constantly providing fixes of potential security problems that were not even
+usually exploited by malicious parties.
+
+<h1>But There Are Some Scripts That Can Get Privileged Access?</h1>
+<p>
+For users of Microsoft Windows operating systems, Microsoft created its very
+much popularly used Internet Explorer browser with the ability to interpret
+special <em>extended</em> (not core!) abilities to gain access to privileged
+uses through something Microsoft calls <b>Active X</b>.  A script that
+instantiates an <b>Active X</b> class as an object, and then calls the object,
+can gain access to privileged uses, such as interacting with the file system
+(files on your disk):  this /includes reading, creating, writing, and (yes!)
+deleting files and folders (directories) on the file system.  They even allow
+the script author the ability to run applications and open files within them,
+and possibly can access to system functions, including reading or sending data
+on networking connections.
+<p>
+But these Active X functions are turned off by default, and the user must make a
+real effort to turn them on to use them when the user wants to.  Moreover,
+Active X is interpreted only by Internet Explorer, and not by other browsers,
+since it is an extension of Microsoft.  Microsoft's Internet Explorer evens
+disables core ECMAscript/Javascript functions and calls even when no Active X
+script code is used, always asking the user to enable the execution of the most
+safe of scripts.  This can be a real annoyance to the user in many cases.
+<p>
+If the user wants Active X functionality&mdash;and it is useful in the
+knowledgeable user&rsquo;s hands&mdash;then the user must use Internet Explorer
+as the browser and turn the capability on or the user can ask if there is a
+plug-in available for Active X interpretation in the browser the user works
+with.
+
+<h1>Standard Disclaimer</h1>
+<p>
+Now while it is true that ECMAscript/Javascript is created with the intention of
+running in a self-contained environment, there is a possibility that there are
+unintentionally created defects or faults either in the script code itself or in
+the environment that interprets the code, and that these defects or faults can
+cause corruption of code or data in system memory or on data or code on
+permenant storage (disks).  The user is warned of these risks now, and agrees to
+assume all risks in which any corruption of data or code or loss of time or
+value of property is incurred by enabling the interpretation of script code. -->
+</noscript>
+
+<div id="error-reporting" style="display:none;padding:0.5em 1em;
+	border:2px solid silver;background-color:#ddd;margin:1em;">
+You can help make the modules of this interactive web page reference calculator
+bug-free and better if you report any errors or problems and make suggestions
+for improvements by sending an email to the <a
+href="mailto:mavigozler@yahoo.com?subject=Reference%20Calculator">
+<span class="tt">developer</span></a>.
+Your help is much appreciated.
+
+</div>
+</body>
+</html>
+<!-- NOTICE OF COPYRIGHT
+  The contents of this web page are written by S. Mitchell Halloran.
+  Copyright 2001-2012.  The terms of license and exceptions of use
+  are presented through the user's interface, or can be read from the
+  source of the document presented here, immediately above.
+  Stated briefly, for all but a fraction of the users, this document
+  and its interactive features can be used and distributed freely.
+  Under no circumstances are the contents or interactive features of
+  this document to be sold.
+ -->

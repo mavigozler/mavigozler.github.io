@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+         General Assay / Calibration Curve Calculations
+	============================ -->
+<head>
+<title>Dilutions Calculations</title>
+<!-- ============================
+           Dilutions
+	============================ -->
+
+<style type="text/css">
+  #dilntbl, #beckman-table {background-color:#eee;width:100%;}
+  #dilntbl th, #beckman-table th {background-color:#fff8f8; text-align:right;
+       font:bold 90% Helvetica,Arial,sans-serif;padding:0.1em 0.5em; }
+  #dilntbl td, #beckman-table td {background-color:#f8fff8;
+       font:bold 105% Helvetica,Arial,sans-serif; }
+	#example-step-2, #example-step-3 {color:red;
+				font:normal 100% Helvetica,Arial,sans-serif;margin-left:2em;}
+</style>
+</head>
+<body>
+
+<div id="dilutions-page">
+ <button id="dilutions-instructions">Instructions?</button>
+  <!-- click = dilutions instructions -->
+
+<form id="dilnform" action="#">
+<!--   The dilution factors input table  -->
+
+<table id="dilntbl">
+<tr id="promptrow">
+ <td colspan="4" style="text-align:right;vertical-align:middle;">
+  <div style="float:left;text-align:left;color:green;
+   font:bold 150% 'Times New Roman','Times Roman',Times,serif;">
+  Enter the required values below<br />
+  <a href="#help" style="font:bold 70% Arial,Helvetica,sans-serif;">More
+    help, please</a>
+	  &nbsp;&nbsp;
+    <button type="button" id="dilution-example">Show	An Example</button>
+    <!-- click="Dilutions.dilnExample(this);return false;" -->
+      <span style="display:none;" id="example-step-2">Now click the
+        <b>How is it done?</b> button</span>
+      <span style="display:none;" id="example-step-3">Now reset/clear the form
+					with the <b>reset</b> button</span>
+  </div>
+    <button type="reset">reset</button><br />
+  <!-- onclick="Dilutions.resetDilution(this);" -->
+ <div style="margin-top:0.5em;float:right;">
+  <input type="checkbox" name="practice" value="yes" id="dilutions-practice" />
+     <!--   onclick="Dilutions.willPractice(this);"  -->
+  <span style="font-size:70%;">Check&nbsp;this&nbsp;box
+  if&nbsp;you&nbsp;are&nbsp;practicing these&nbsp;calculations<br />
+  and want to provide your own answer</span>
+ </div></td></tr>
+<tr><th>Enter here the <span class="dilnconcword">concentration</span>
+	of the substance in the
+  <span class="dilnsolntypewords">stock&nbsp;(more&nbsp;concentrated)</span>
+  solution and select&nbsp;the&nbsp;units:</th>
+ <td><input class="inputvalue" type="text" maxlength="6" size="6"
+    name="stockConcentrationValue" /></td>
+ <td id="dilution-concentrations"></td>
+ <td style="width:30%;vertical-align:top;padding:0 0 0.5em 0.5em;" rowspan="6">
+ <div style="float:right;">
+ <input style="font:bold 105% Arial,Helvetica,sans-serif;margin-bottom:0.5em;"
+  type="button" value="How is it done?" id="calc-diln"/>
+</div>
+  <!--  onclick="Dilutions.calcDiln(this.form);return(false);" -->
+<!-- the guide and error and practice boxes -->
+   <div id="dilnerror" class="errors" style="clear:both;"></div>
+   <div id="dilnreport" style="display:none;clear:both;">
+    <div id="dilnguide" style="border:1px solid maroon;padding:0.5em;
+	 font:normal 100% Verdana,Helvetica,sans-serif;"></div>
+	<!--
+     <br><input type="button" name="printbox" value="Give me a printable version"
+      style="margin-top:1em;" onclick="printable(this.form.guide.value)"><br>
+      <span style="font-size:75%;"><span style="color:red;">Note</span>:
+			Pressing this button opens a new window</span> -->
+    </div>
+    <div id="pracanswer" style="margin-top:2em;color:blue;"></div>
+ </td></tr>
+<tr><th>Enter the <span class="dilnconcword">concentration</span>
+	of the substance in the
+	<span class="dilnsolntypewords">working&nbsp;(diluted)</span>
+	solution and select&nbsp;the&nbsp;units:</th>
+ <td><input type="text" class="inputvalue" size="6" maxlength="6"
+    name="diluteConcentrationValue" /></td>
+ <td id="diluteDim"></td></tr>
+<tr><th>Enter the <span class="dilnconcword">volume</span>
+	of the <span class="dilnsolntypewords">working&nbsp;(diluted)</span>
+	solution and select&nbsp;the&nbsp;units:</th>
+<td><input type="text" class="inputvalue" size="6" name="volumeValue" /></td>
+<td id="volumeDim"></td></tr>
+<tr id="FWrow" style="visibility:hidden;">
+ <th style="text-align:right;vertical-align:middle;">
+ <div style="font-size:150%;float:right;margin:0.5em 0 0.5em 1em;">FW&nbsp;=</div>
+   The formula (molecular) weight of the substance is required for
+   this calculation:</th>
+ <td colspan="2" align="left" style="vertical-align:middle">
+  <input type="text" style="margin-right:0.5em;" class="inputvalue"
+   size="6" name="FW" />g/mol</td></tr>
+
+<!-- row of table for user to practice -->
+
+<tr id="practicerow" style="visibility:hidden;">
+ <th style="text-align:right;">
+  Enter the answer that you calculated<br />
+  for the volume of the stock solution to use:</th>
+ <td align="right"><input type="text" size="4" name="practiceValue"
+   style="font-size:120%;background-color:#f0f0ff;text-align:right;" /></td>
+<td id="practiceDim"></td></tr>
+</table>
+</form>
+</div>
+<!-- ============================
+       Write Dilutions Help
+     ============================ -->
+<div id="write-dilutions-help" style="display:none;">
+<p style="font:bold 110% 'Times New Roman','Times Roman',Times,serif;
+      color:blue;margin-top:8em;"><a name="help">How To Use</a></p>
+<div style="font-size:90%;">
+This calculator determines the volume of a more concentrated stock solution
+that will be used in preparing a dilute working solution whose desired
+concentration and volume is known.
+<p>
+This type of calculation is virtually the most commonly done among biological
+scientists/researchers, and this calculator makes it easy.  Calculations of
+this type apply the law that describes the conservation of mass: the product of
+solution density (or concentration) and the volume of a solution is equal to
+the mass of the substance in solution, and since dilution of a more
+concentrated solution does not change the mass of the solute in solution, then
+the products of concentration and volume of the solution before and after
+dilution are equal.</p>
+<p>
+Expressing that as an equation:</p>
+<p style="text-align:center;">
+  <i>C</i><sub>1</sub><i>V</i><sub>1</sub> = <i>C</i><sub>2</sub><i>V</i><sub>2</sub></p>
+<p>
+<b>Example #1</b>: As an example of using this form, suppose
+one wants to make a 500 ml solution of 0.2 M sodium acetate solution
+and there is a 3 M sodium acetate stock solution available.
+Enter "3" in the input box for the stock solution (first box)
+and select "mol/L" in the dropdown selection list,
+enter "0.2" in box below for dilute working solution and select
+its units, and then enter "500" in the box for the volume and select
+"mL" for the volume dimensions.  To get the answer, click the button
+"How is it done?"</p>
+<p>
+<b>Example #2</b>: Suppose one has a 70% concentrated perchloric acid stock
+solution and one wants to make 1 liter of a 0.5 M stock solution. (Do not be
+confused here: "stock" essentially means a solution one will keep stored for
+regular use. One more dilute stock solution is being prepared from a more
+concentrated stock, so this calculator is still useful.). Enter "70" top box,
+"0.5" in the one below, and "1" in the box for the volume. Notice that as the
+units are selected, that a new entry suddenly appears, asking for a "formula
+weight" (or molecular weight). Read the formula weight for perchloric acid from
+the label, and enter it. Note that whenever the concentration units for one
+solution is &lsquo;a form of grams per unit volume&rsquo; and the other is
+&lsquo;a form of moles per unit volume,&rsquo; a formula weight for the
+substance is required to make the proper conversion.</p>
+<p>
+This calculator also provides a service of letting you calculate the answer
+yourself and checking it against the computed result. Check the box to activate
+the part of the form that allows you to enter an answer.</p>
+</div>
+  <a href="#document-title">Back to the calculator</a>
+</div>
+</body>
+</html>

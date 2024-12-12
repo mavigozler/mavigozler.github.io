@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ================================================
+                    pH TABLE
+     ================================================ -->
+
+<head>
+<title>pH and pKa Calculations</title>
+</head>
+
+<body>
+<div id="pHpKa-page">
+<p style="clear:both;" />
+<hr style="margin-bottom:0;" />
+<p class="subtitle" style="margin-top:0;background-color:#eee;">
+pH and p<i>K</i><sub>a</sub>: Henderson-Hasselbach</p>
+
+<div style="margin-top:0;">
+<div style="float:right;background-color:#f0f0ff;border:2px solid blue;padding:0 0.5em;
+color:blue;font:bold 200% 'Times New Roman','Times Roman',Times,serif;"
+      onclick="show_pH_help();">?
+</div>
+</div>
+
+<form id="pHpKaform" action="#">
+<table id="pH_form">
+<col />
+<col />
+<col style="padding-left:0.5em;padding-right:0.5em;" />
+<!-- input rows  -->
+<tr style="background-color:#fff0f0;">
+ <td class="headings">pH: </td>
+ <td rowspan="3" style="background-color:#ffd;text-align:center;"><button type="button"
+ 	style="width:60px;height:60px;background-color:#d8d8d8;"
+	 onclick="centcalc();">Press To Update</button>
+  <div style="text-align:left;font-size:75%;margin-top:1em;">
+   <input type="radio" name="updatefactor" value="ph" />pH<br />
+   <input type="radio" name="updatefactor" value="pka" />p<i>K</i><sub>a</sub><br />
+   <input type="radio" name="updatefactor" value="conc" />total concentration<br />
+  </div> </td>
+ <td><div class="errorborder"><input type="text" name="pH" size="6"
+ maxlength="6" value="" class="numvalue" onchange="calcHenderson(this);" /></div></td></tr>
+<tr style="background-color:#f0fff0;">
+ <td class="headings">p<i>K</i><sub>a</sub>: </td>
+ <td><div class="errorborder"><input type="text" name="pKa" size="6"
+ maxlength="6" class="numvalue" onchange="calcHenderson(this);" /></div> </td></tr>
+<tr style="background-color:#f0f0ff;">
+ <td class="headings">Total Concentration: </td>
+ <td><div class="errorborder"><input type="text" name="totconc" size="6"
+ maxlength="6" class="numvalue" onchange="calcHenderson(this);" /></div> </td> </tr>
+<tr> <td> </td> <td>
+   <input type="reset" name="clear" value="Clear All" onclick="clearpHpKa();" />
+  </td></tr>
+</table>
+</form>
+</div>
+
+<div id="pHpKa-help" style="display:none;">
+<div style="width:30em;float:left;margin-right:3em;
+  padding:1em 2em;background-color:#f8fff8;border:1px solid green;">
+<h1>Theory</h1>
+Weak acids such as acetic acid (CH<sub>3</sub>COOH) or phosphoric acid
+(H<sub>3</sub>PO<sub>4</sub>) can be placed in water and reach an equilibrium
+in aqueous solution in which protons are transferred in the reaction:
+<p class="eqnserif">
+HA<sup><i>n</i></sup> + H<sub>2</sub>O
+  <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> A<sup><i>n</i>&minus;1</sup> +
+  H<sub>3</sub>O<sup>+</sup> </p>
+<p>
+<b>HA</b> represents the protonated (acid) form of <b>A</b>, which is
+the conjugate base.  <b>A</b> has an ionic charge of <i>n</i> while bound
+to its proton (<i>n</i> could be zero). </p>
+<p>
+The equilibrium constant for this acid-base reaction, also called
+the acid dissociation constant, is defined as the ratio of the multiplied
+concentrations of the product and the multiplied concentration of the
+reactants, as for all equilibrium constants: </p>
+
+<table class="eqnserif">
+<tr><td rowspan="2"><i>K</i><sub>a</sub> = </td>
+    <td class="numer">[A<sup><i>n</i>&minus;1</sup>] &times;
+		[H<sub>3</sub>O<sup>+</sup>] </td> </tr>
+<tr><td>[HA<sup><i>n</i></sup>] &times; [H<sub>2</sub>O] </td></tr>
+</table>
+<p>
+By long-standing convention, water is removed from the equilibrium
+equation because its concentration effectively does not change in dilute
+acid solutions. </p>
+
+<p class="eqnserif">
+HA<sup><i>n</i></sup> <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> A<sup><i>n</i>&minus;1</sup> +
+  H<sup>+</sup> </p>
+<p>
+And the acid dissociation constant is thus defined: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>a</sub> = </td>
+    <td class="numer">[A<sup><i>n</i>&minus;1</sup>] &times;
+		[H<sup>+</sup>] </td></tr>
+<tr><td>[HA<sup><i>n</i></sup>]  </td></tr>
+</table>
+<p>
+The following equation takes the logarithm of both sides of the equation
+above and does some algebraic rearrangement:  </p>
+
+<table class="eqnserif"  style="margin:auto;">
+<tr><td rowspan="2">&minus;log [H<sup>+</sup>] = &minus; log<i>K</i><sub>a</sub> + log</td>
+  <td class="numer">[A<sup><i>n</i>&minus;1</sup>] </td></tr>
+<tr><td>[HA<sup><i>n</i></sup>] </td></tr>
+</table>
+<p>
+Note that a principle of logarithms is that
+log&nbsp;(<i>ab</i>&nbsp;/&nbsp;<i>c</i>) = log&nbsp;<i>a</i> + log&nbsp;<i>b</i> &minus;
+log&nbsp;<i>c</i>.  </p>
+<p>
+By definition, <b>pH</b> = &minus; log [H<sup>+</sup>], and
+<b>p<i>K</i><sub>a</sub></b> = &minus; log <i>K</i><sub>a</sub>, and so
+the following substitutions are made: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2">pH = p<i>K</i><sub>a</sub> + log </td>
+  <td class="numer">[A<sup><i>n</i>&minus;1</sup>] </td></tr>
+<tr><td>[HA<sup><i>n</i></sup>] </td></tr>
+</table>
+<p>
+This equation is called the Henderson-Hasselbach equation, after the
+scientists who presented what is really another form of the acid
+dissociation constant.  It essentially states that given the physical
+property of a weak acid, its acid dissociation constant the <i>K</i><sub>a</sub>,
+and knowing the ratio of its conjugate base A<sup><i>n</i>&minus;1</sup>
+to its protonated form HA<sup><i>n</i></sup>, one can calculate the pH.
+Actually one can calculate any parameter of the equation if one knows
+any of the other parameters. </p>
+<p>
+In many cases the ratio of the conjugate base A<sup><i>n</i>&minus;1</sup>
+and protonated form HA<sup><i>n</i></sup> is not set (and thus not known).
+For example, if only the acid form or conjugate base (salt of the acid)
+is placed in solution, then the dissociation must be determined from the
+total concentration.  Assume the total concentration of all forms of
+the conjugate base <b>A</b> is <i>C</i> (a number representing the solution
+density, such as 1 M [one molar]).  Thus: </p>
+<p class="eqnserif">
+ <i>C</i> = A<sup><i>n</i>&minus;1</sup> + HA<sup><i>n</i></sup>  </p>
+<p>
+Now if the acid had been added, the concentration of
+A<sup><i>n</i>&minus;1</sup> and H<sup>+</sup> are the same, since
+acid dissociation means that these ions must be formed equally.
+And with the dissociation, the concentration of HA<sup><i>n</i></sup>
+should be the total <i>C</i> less the concentration of
+A<sup><i>n</i>&minus;1</sup> (or H<sup>+</sup>) that is formed.
+Assume that <i>x</i> = [A<sup><i>n</i>&minus;1</sup>] which also equals
+[H<sup>+</sup>], and so [HA<sup><i>n</i></sup>] = <i>C</i> &minus; <i>x</i>.
+The equilibrium equation should now look like this: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>a</sub> = </td>
+  <td class="numer"><i>x</i><sup>2</sup> </td></tr>
+<tr><td><i>C</i> &minus; <i>x</i> </td></tr>
+</table>
+<p>
+<i>C</i> and <i>K</i><sub>a</sub> are known, and so the solution of
+<i>x</i> is obtained (use the quadratic equation to solve for the positive
+root of <i>x</i>).  As <i>x</i> represents [H<sup>+</sup>], the resulting
+pH of the solution is easily calculated. </p>
+<p>
+Suppose on the other hand, the salt of the acid (conjugate base) is added
+to water and allowed to reach equilibrium.  What is the final pH? </p>
+<p>
+First look at the reaction occurring at equilibrium: </p>
+<p class="eqnserif">
+A<sup><i>n</i></sup> + H<sub>2</sub>O
+  <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> HA<sup><i>n</i>+1</sup> +
+  OH<sup>&minus;</sup> </p>
+<p>
+The equilibrium constant, <i>K</i><sub>b</sub>, is: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>b</sub> = </td>
+    <td class="numer">[HA<sup><i>n</i>+1</sup>] &times; [OH<sup>&minus;</sup>] </td></tr>
+<tr><td>[A<sup><i>n</i></sup>]  </td></tr>
+</table>
+<p>
+<i>K</i><sub>b</sub> happens to be 10<sup>&minus;14</sup> /
+<i>K</i><sub>a</sub> for the acid form of the conjugate base.
+As proof of this: </p>
+<p>
+It is well-known that the acid dissociation of water itself </p>
+<p class="eqnserif">
+H<sub>2</sub>O <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> H<sup>+</sup> +
+  OH<sup>&minus;</sup> </p>
+<p>
+although the reaction is actually: </p>
+<p class="eqnserif">
+2  H<sub>2</sub>O <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> H<sub>3</sub>O<sup>+</sup> +
+  OH<sup>&minus;</sup> </p>
+<p>
+The acid dissociation constant, <i>K</i><sub>w</sub>, is defined and its
+value is well known: </p>
+<p class="eqnserif">
+<i>K</i><sub>w</sub> = [H<sup>+</sup>] [OH<sup>&minus;</sup>] = 10<sup>&minus;14</sup> </p>
+<p>
+Since [OH<sup>&minus;</sup>] = 10<sup>&minus;14</sup> / [H<sup>+</sup>], the
+appropriate substitution is made for the <i>K</i><sub>b</sub> equation: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>b</sub> = </td>
+    <td class="numer">[HA<sup><i>n</i>+1</sup>] &times; 10<sup>&minus;14</sup> </td></tr>
+<tr><td>[A<sup><i>n</i></sup>] &times; [H<sup>+</sup>] </td></tr>
+</table>
+<p>
+Since 1 / <i>K</i><sub>a</sub> = [HA<sup><i>n</i>+1</sup>] /
+([A<sup><i>n</i></sup>] + [H<sup>+</sup>]), then: </p>
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>b</sub> = </td>
+    <td class="numer">10<sup>&minus;14</sup> </td></tr>
+<tr><td><i>K</i><sub>a</sub> </td></tr>
+</table>
+Now the formation of [HA<sup><i>n</i>+1</sup>] and [OH<sup>&minus;</sup>]
+in the reaction is equal, and the total concentration of all forms
+of the acid is <i>C</i> = [HA<sup><i>n</i>+1</sup>] + [A<sup><i>n</i></sup>].
+Substituting correctly, the equation is
+
+<table class="eqnserif" style="margin:auto;">
+<tr><td rowspan="2"><i>K</i><sub>b</sub> = </td>
+    <td class="numer"><i>x</i><sup>2</sup> </td></tr>
+<tr><td><i>C</i> &minus; <i>x</i> </td></tr>
+</table>
+<p>
+In solving for <i>x</i>, one gets [OH<sup>&minus;</sup>].  To find the
+pH, one can calculate the pOH (= &minus;log [OH<sup>&minus;</sup>])
+and then subtract its value from 14, or one can divide 10<sup>&minus;14</sup>
+by the value of [OH<sup>&minus;</sup>] and then take the negative of the
+logarithm of the result. </p>
+<p>
+These calculations work well for monoprotic acids and for polyprotic
+acids whose acid dissociations constants are separated by 3 or 4 orders
+of magnitude, but can become more complex with polyprotic acids whose
+acid dissociation constants are within 1-2 orders of magnitude within
+one another. </p>
+
+<p>
+For examples, see the <b>How To Use</b> section. </p>
+</div>
+
+
+<div id="pHpKa-how-to-use" style="width:35em;background-color:#f8f8ff;
+ border:1px solid blue;padding:1em 2em;">
+<h1>How To Use</h1>
+The use of this interface is shown by a few examples.
+<p>
+1. A solution of 0.1 M (glacial) acetic acid is prepared.  What is the
+final pH? </p>
+<div class="answer">
+One needs to know the acid dissociation constant and the total concentration.
+This problem is solved using the <i>K</i><sub>a</sub> = <i>x</i><sup>2</sup>
+/ (<i>C &minus; x</i>) form, and using the quadratic equation to solve
+for <i>x</i>.
+<p>
+Either enter the <b>p<i>K</i><sub>a</sub></b> or the <b><i>K</i><sub>a</sub></b>
+for acetic acid into the box (or alternatively, select from the list
+of well known acids or bases, and it will be entered automatically). </p>
+<p>
+Enter the <b>Total Concentration</b> and make sure to select the proper
+units. </p>
+<p>
+Select the pH to be calculated, and the pH and the concentrations of
+all the components will be reported. </p>
+<p>
+If the p<i>K</i><sub>a</sub> = 4.76, and <i>C</i> = 0.1, then the
+quadratic equation is used: </p>
+
+<table class="eqnserif" style="font-size:90%;margin:auto;">
+<tr><td rowspan="2"><i>x</i> =  </td>
+    <td class="numer">&minus;<i>K</i><sub>a</sub> &plusmn;
+		&radic;<span class="overbar"><i>K</i><sub>a</sub><sup>2</sup> &minus;
+		4(&minus;<i>K</i><sub>a</sub> &times; <i>C</i>)</span>  </td>
+ <td rowspan="2"> = </td>
+    <td class="numer">&minus;(10<sup>&minus;4.76</sup>) &plusmn;
+		&radic;<span class="overbar">(10<sup>&minus;4.76</sup>)<sup>2</sup>
+		&minus; 4(&minus;10<sup>&minus;4.76</sup> &times; 0.1)</span> </td></tr>
+<tr><td>2 </td><td> 2 </td></tr>
+</table>
+The solutions for <i>x</i> are &minus;0.001327 and 0.0013096, but only the
+positive solution is relevant.  Thus [H<sup>+</sup>] = 0.00131 M, and the
+pH = &minus;log[0.00131] = 2.88.  The concentration of acetate
+ion [CH<sub>3</sub>COO<sup>&minus;</sup>] should be equal to the
+[H<sup>+</sup>] concentration, and the concentration of undissociated
+acid [CH<sub>3</sub>COOH] will be 0.1 &minus; 0.00131 or 0.09869.
+Note that the calculation of the pH
+is independent of knowing the volume of the solution.
+</div>
+<p>
+2. 10 grams of monobasic sodium phosphate dihydrate
+(NaH<sub>2</sub>PO<sub>4</sub> &bull; 2 H<sub>2</sub>O)
+is mixed with 25 grams of dibasic potassium phosphate
+(K<sub>2</sub>HPO<sub>4</sub>) in a final 500 ml solution.
+What is the final pH? </p>
+<div class="answer">
+The acid is a form of phosphoric acid.  Phosphoric acid is a polyprotic
+acid with three acidic protons with p<i>K</i><sub>a</sub> values of
+2.3, 7.2, and 12.2.  When NaH<sub>2</sub>PO<sub>4</sub> &bull; 2 H<sub>2</sub>O
+is dissolved in solution, it produces the ion H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>.
+When K<sub>2</sub>HPO<sub>4</sub> is dissolved in solution, it produces
+the ion HPO<sub>4</sub><sup>2&minus;</sup>.  These two ions are in
+equilibrium:
+<p class="eqnserif">
+H<sub>2</sub>PO<sub>4</sub> <span style="vertical-align:0.5em;">&rarr;</span><span
+   style="margin-left:-1em;">&larr;</span> H<sup>+</sup> +
+  HPO<sub>4</sub><sup>2&minus;</sup> </p>
+<p>
+Because this is the second proton released from phosphate, the second
+p<i>K</i><sub>a</sub> is relevant to this reaction (p<i>K</i><sub>a</sub> = 7.2). The
+formula weight of NaH<sub>2</sub>PO<sub>4</sub> &bull; 2 H<sub>2</sub>O is 156.
+01 g/mol. The concentration is thus calculated to be (10 g) / (156.01 g/mol
+&times; 0.5 L) = 0.1282 M. Note that this is the concentration of all the ions
+in solution: [Na<sup>+</sup>] and [H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>
+]. The formula weight of K<sub>2</sub>HPO<sub>4</sub> is 174.18 g/mol. The
+concentration of this molecule in solution is (25 g) / (174.18 g/mol &times; 0.
+5 L) = 0.2871 M. Because there are 2 moles of potassium per mole molecule, its
+concentration is 0.574 M. However neither the [Na<sup>+</sup>] or [K<sup>+</sup>]
+contribute to the pH calculations, although it does contribute to the ionic strength. </p>
+<p>
+The Henderson-Hasselbach form of the equation can now be used to calculate
+the pH.	Note that [A<sup><i>n</i>&minus;1</sup>] = 0.2871 M (where <i>n</i> =
+&minus;1 although that is not significant) and [HA<sup><i>n</i></sup>] =
+0.1282 M.  Thus pH = 7.2 + log (0.2871)/(0.1282) = 7.55, the final value. </p>
+<p>
+The interface tries to give the user as many options as possible without
+doing pre-calculations, but some pre-calculations may be necessary. </p>
+</div>
+3. A 50 mM TrisHCl, pH 7.5 solution is to be prepared using Tris base
+salt and concentrated hydrochloric acid.  The final volume is 1 liter.
+How much Tris base and HCl should be weighed out?
+</div>
+</div>
+</body>
+</html>

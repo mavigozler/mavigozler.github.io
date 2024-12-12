@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- Centrifuge calculations -->
+<head>
+<title>Centrifuge Calculations</title>
+<style type="text/css">
+/* centrifuge styles */
+  .headings { padding-right:0.5em;text-align:right;color:blue;
+             font:bold 90% Helvetica,Arial,sans-serif;padding-left:0.5em;}
+  .units {font:normal 80% Tahoma,Arial,sans-serif;width:16em;}
+  .subtitle { text-align:center;
+		font: bold 150% Tahoma,Arial,sans-serif; color:green;}
+	#centform {font-size:140%;}
+ .eqnserif, .eqnserif td { background:none;text-align:center;padding:0;
+     font:normal 110% 'Times New Roman','Times Roman',Times,serif;}
+ .numer {border-bottom:1px solid black;}
+ .overbar {border-top:1px solid black;}
+  .tablerow {border-top:1px solid black;border-bottom:1px solid black;}
+  #selected-rotor {padding-left:1em;color:purple;display:none;
+				font:normal 90% Palatino,Tahoma,Arial,sans-serif;}
+	#radius-type-header {display:none;padding:0.25em 0.5em;vertical-align:top;
+     font:normal 75% 'Times New Roman','Times Roman',Times,serif;}
+  #radius-types {font:normal 100% Helvetica,Arial,sans-serif;margin-top:0.5em;}
+</style>
+</head>
+
+<body>
+<div id="centrifuge-page">
+
+<!--  Main Table for Calculations  -->
+<form id="centform" action="#">
+<!-- input rows  -->
+<table>
+<tr>
+ <td class="headings" rowspan="2">
+   <span id="radius-header" onmouseover="this.style.color='red';"
+			onmouseout="this.style.color='blue';" title="click here for explanation"
+			onclick="showAvgradHelp();">Average radius of rotor</span>: </td>
+ <td rowspan="2"><div class="errorborder" id="radiuserror"><input
+   type="text" id="rotorradius" size="6" maxlength="6" 
+   class="numvalue" onchange="Centrifuge.setCentFactor(this);" /></div> </td>
+ <td class="units" rowspan="2">
+   <input type="radio" name="radiusdim" value="mm" checked="checked" />mm <br />
+   <input type="radio" name="radiusdim" value="cm" />cm  <br />
+   <input type="radio" name="radiusdim" value="in" />inches  </td>
+ <td><button type="button" onclick="Centrifuge.selectRotor();">Select A
+   Rotor</button></td>
+ <td id="selected-rotor">&nbsp;</td></tr>
+<tr><td id="radius-type-header" rowspan="3" colspan="2">
+  <span style="font:normal 90% Tahoma,Arial,Helvetica,sans-serif;color:brown;">Optionally 
+		choose another radius parameter:</span>
+  <div id="radius-types"></div>   </td></tr>        
+<tr class="tablerow">
+ <td class="headings">Relative Centrifugal Force (RCF): </td>
+ <td><div class="errorborder" id="rcferror"><input type="text" name="RCF" size="6"
+   maxlength="6" class="numvalue" onchange="Centrifuge.setCentFactor(this);" /></div> </td>
+ <td class="units">&times; <i>g</i> </td> </tr>
+<tr class="tablerow">
+ <td class="headings">Speed (Angular Velocity):  </td>
+ <td><div class="errorborder" id="speederror"><input type="text" name="angularvel"
+   size="6" maxlength="6" class="numvalue"
+   onchange="Centrifuge.setCentFactor(this);" /></div> </td>
+ <td class="units">
+  <input type="radio" name="speedim" value="rpm" checked="checked" />revolutions / minute (rpm) <br />
+  <input type="radio" name="speedim" value="rps" />revolutions / second (rps) <br />
+  <input type="radio" name="speedim" value="radps" />radians / second  </td></tr>
+</table>
+
+<table style="margin:0 auto;font:normal 80% Tahoma,Arial,Helvetica,sans-serif;">
+ <tr><td>
+  <table style="border:2px solid black;margin:0 3em 0 0;background-color:#ffd8ff;">
+  <tr><td style="padding:0 3em 0 1em;"><button type="button" 
+        onclick="Centrifuge.centCalc();">Press To Update</button> </td>
+	<td style="width:16em;text-align:right;font:bold 83% Arial,sans-serif;margin:0;color:#050;">
+    Select the one result desired if the other two are given:  </td>
+  <td style="padding:0 1em;">
+   <input type="radio" name="updatefactor" value="radius" />radius<br />
+   <input type="radio" name="updatefactor" value="rcf" />RCF<br />
+   <input type="radio" name="updatefactor" value="speed" checked="checked" />speed </td></tr>
+  </table> </td>
+  <td><button type="reset" onclick="clearCent();">Clear All</button> </td></tr>
+</table>
+
+</form>
+
+ <table style="display:none;">
+ <tr><td style="vertical-align:top;">
+  <div id="instructions"
+   style="margin-right:1em;font:normal 70% Verdana,Garamond,Helvetica,sans-serif;
+     visibility:hidden;background-color:#fff0f0;
+	 border:1px solid #d55;padding:0.75em;">
+<a id="centinstruct" name="centinstruct">Select</a>
+the units/dimensions first, then enter the value in a box.  If a value
+is first entered in a box, and then the unit/dimension for that value is
+selected or changed, then the value will automatically be converted.
+A value entered into a box after units/dimensions are changed will
+not change the value, of course.
+<p>
+The radius of the rotor is never calculated.  A speed for the centrifuge
+(in revolutions per minute, revolutions per second, or radian per second)
+is calculated if values for the radius and relative centrifugal force (RCF)
+are entered, and either one of those has its value changed.  An RCF
+is calculated if values for the radius and speed are entered, and either
+one of those has its values changed. </p>
+<p>
+In the course of entering a value in a box, use of the TAB or
+ENTER/RETURN keys or movement of the focus/cursor with
+the mouse will cause an update operation (calculation), if appropriate,
+with the value entered to be used in the calculation. </p>
+	<p style="margin-top:0.5em;text-align:right;">
+		<input type="button" onclick="hide_centhelp();" name="hide_centhelp"
+		value="Thanks" style="color:green;background-color:#cec;" /></p>
+		</div></td>
+	<td style="vertical-align:top;">
+	<div id="avgradiushelp"
+		style="font:normal 70% Verdana,Garamond,Helvetica,sans-serif;
+		background-color:#f0f0ff;border:1px solid #55d;visibility:hidden;
+		padding:0.75em;">
+<a id="radiushelp" name="radiushelp">The average radius is the
+distance from the center</a>
+of rotation to the point in the tube/container where the sample is
+most likely to be found from the rotational center.
+<p>
+For cylindrical container (tube), the sample at the top of the tube
+may be closer to the sample at the bottom of the tube.  Since the
+force experienced by the sample depends up the radial distance from
+the center (radius), if the top of the tube is positioned a shorter
+distance than the bottom of the tube, sample at the top of the tube
+(at the minimum radius) experiences less of a force than sample at
+the bottom of the tube (at the maximum radius).  This is especially the
+case for a swinging-bucket or -carrier type of centrifuge, as the tube
+swings into its position during the run.  For fixed-angle rotors, there
+is less of a distance between the minimum and maximum radii, and so the
+force throughout the sample is more uniform. </p>
+<p>
+The practical average radius of a swinging bucket type of rotor where
+the midpoint of the container's length is the pivot point is the radius
+to the pivot point.  For a fixed-angle rotor, the average radius is the
+midpoint between the minimum and maximum radius.  A little trigonometry
+solves this problem.  If <i>&theta;</i> represents the angle of the rotor
+well (tube) from the horizontal toward the center, <i>r</i><sub>max</sub>
+is the maximal radius of the rotor well, <i>r</i><sub>min</sub> is the
+minimal radius of the well, and <i>r</i><sub>avg</sub> is the average
+radius (the value desired), then the following equations are true:</p>
+<p style="margin-left:2em;">
+(rotor well length) &times; <b>cos</b> <i>&theta;</i> =
+ <i>r</i><sub>max</sub> &minus; <i>r</i><sub>min</sub> </p>
+ <p>
+Note that &frac12; &times; (rotor well length) represents the midpoint
+of the length of the rotor well, a point that is <i>r</i><sub>avg</sub>: </p>
+<p style="margin-left:2em;">
+&frac12; &times; (rotor well length) &times; <b>cos</b> <i>&theta;</i> =
+<i>r</i><sub>avg</sub> </p>
+<p>
+<i>r</i><sub>avg</sub> can be solved in terms of <i>r</i><sub>min</sub>
+and <i>r</i><sub>max</sub>: </p>
+<p style="margin-left:2em;">
+(rotor well length) &times; <b>cos</b> <i>&theta;</i> = 2 &times;
+<i>r</i><sub>avg</sub> = <i>r</i><sub>max</sub> &minus;
+<i>r</i><sub>min</sub> <br />
+<i>r</i><sub>avg</sub> = &frac12; &times; (<i>r</i><sub>max</sub>
+&minus; <i>r</i><sub>min</sub>)  </p>
+<p>
+Hence <i>r</i><sub>avg</sub> is just the midpoint of the distance between
+<i>r</i><sub>min</sub> and <i>r</i><sub>max</sub>. </p>
+<p style="margin-top:0.5em;">
+<input type="button" onclick="hide_avgradhelp();" name="hide_avgradhelp"
+value="Thanks" style="color:blue;background-color:#cce;" /> </p>
+</div> </td></tr>
+</table>
+
+</div> <!-- id=centrifuge-page -->
+</body>
+</html>

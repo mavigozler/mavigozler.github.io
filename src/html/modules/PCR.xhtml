@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ================================================
+                    PCR TABLE
+     ================================================ -->
+<head>
+<title>Calculations for Performing PCR</title>
+</head>
+
+
+<body>
+<div id="pcr-page">
+ <p style="clear:both;"></p>
+  <hr style="margin-bottom:0;" />
+
+ <p class="subtitle" style="margin-top:0;background-color:#eee;">
+   Theoretical DNA Denaturation (Melting) Temperatures <i>T</i><sub>m</sub></p>
+
+ <div style="margin-top:0;">
+ <div style="float:right;background-color:#f0f0ff;border:2px solid blue;padding:0 0.5em;
+  color:blue;font:bold 200% 'Times New Roman','Times Roman',Times,serif;"
+      onclick="show_centhelp();">?
+ </div>
+ </div>
+
+<form id="pcr_data" action="#">
+ <p style="font:normal 100% Tahoma,Arial,Helvetica,sans-serif;">
+   Enter your oligonucleotide (5&prime;&rarr;3&prime;) sequence here:<br />
+   <input id="DNAseq" name="DNAseq" type="text" size="40" maxlength="60"
+    style="font:normal 100% 'Courier New',Courier,monospace;margin:0;" /><br />
+    [K<sup>+</sup>] = <input id="potassium" type="text" size="4" maxlength="5"
+    style="margin:0;" /> M&nbsp;&nbsp;&nbsp;<button type="button"
+    onclick="pcr_calc();" >Calculate</button>
+  <textarea name="seqerr" id="seqerr" rows="2" cols="60"
+   style="color:red;font:normal 100% Helvetica,Arial,sans-serif;border:none;">
+  </textarea></p>
+ <table style="font:normal 100% Arial,Helvetica,sans-serif;">
+ <tr><td colspan="2">Your estimated melting temperatures (<i>T</i><sub>m</sub>) are
+    determined by two different estimators:                                 </td></tr>
+
+<!-- Wallace -->
+ <tr style="background-color:#e0ffe0;">
+  <td style="text-align:right;"><b>Wallace Rule</b>: </td>
+  <td class="eqnserif"
+   style="text-align:right;font-size:115%;padding-left:1em;vertical-align:middle;">
+   <i>T</i><sub>m</sub> = 2(A + T) + 4(G + C) = </td>
+  <td><span id="wallacetemp"
+  style="font:bold 130% Helvetica,Arial,sans-serif;"></span>  </td></tr>
+<!--
+<span style="font:bold 130% Helvetica,Arial,sans-serif;">&deg;&nbsp;C</span>
+-->
+<!-- Bolton/McCarthy -->
+ <tr><td colspan="3" style="height:2em;">&nbsp; </td></tr>
+ <tr style="background-color:#ffe0e0;">
+  <td style="text-align:right;vertical-align:top;"><b>Bolton &amp; McCarthy:</b> </td>
+  <td class="eqnserif"
+    style="text-align:right;font-size:115%;padding-left:1em;vertical-align:middle;">
+    <i>T</i><sub>m</sub> = 81.5&deg;C + 16.6(log [K<sup>+</sup>]) + 0.41(%[G+C])
+	 	&minus; (675/<i>n</i>) =  </td>
+  <td style="vertical-align:top;"><span id="boltontemp"
+	style="font:bold 130% Helvetica,Arial,sans-serif;"></span>  </td></tr>
+<!--
+<span style="font:bold 130% Helvetica,Arial,sans-serif;">&deg;&nbsp;C</span>
+-->
+
+<!-- Howley et al -->
+  <tr><td colspan="3" style="height:2em;">&nbsp;</td></tr>
+  <tr style="background-color:#e0e0ff;">
+   <td style="text-align:right;"><b>Howley <i>et al.</i></b>: </td>
+   <td class="eqnserif"
+     style="text-align:right;font-size:115%;padding-left:1em;vertical-align:middle;">
+    <table style="font-size:80%;" id="howley-selection">
+    <tr><td><input type="radio" name="howley-type" value="longdna"
+ 	    checked="checked" /> DNA probe &ge; 50 nucleotides </td>
+     <td><input type="radio" name="howley-type" value="rna" /> RNA probe for RNA target </td></tr>
+    <tr><td><input type="radio" name="howley-type" value="shortdna" /> DNA probe &lt; 50 nucleotides </td>
+     <td><input type="radio" name="howley-type" value="rnadna" /> RNA-DNA hybrid </td></tr>
+    </table>
+  <!-- Howley et al Short DNA -->
+    <div id="howley-short-dna" style="display:none;">There is no equation for
+      this, but all three equations are shown for possibly useful information:
+    </div>
+  <!-- Howley et al Long DNA -->
+    <table id="howley-long-dna">
+    <tr><td rowspan="2"><i>T</i><sub>m</sub> = 81.5 + 16.6 log
+ 	 	[K<sup>+</sup> + Na<sup>+</sup>] + 41 (%G + %C) &minus; </td>
+     <td class="numer">500  </td>
+     <td rowspan="2"> &minus; 0.62 [F] </td></tr>
+    <tr><td><i>L</i> </td></tr>
+    </table>
+  <!-- Howley et al RNA -->
+   <table id="howley-rna" style="display:none;">
+   <tr><td rowspan="2"><i>T</i><sub>m</sub> = 79.8 + 18.5 log
+	  [K<sup>+</sup> + Na<sup>+</sup>] +
+ 	  58.4 (%G + %C) + 11.8 (%G + %C)<sup>2</sup> &minus; </td>
+    <td class="numer">820  </td>
+    <td rowspan="2"> &minus; 0.35 [F]  </td></tr>
+   <tr><td><i>L</i> </td></tr>
+   </table>
+  <!-- Howley et al DNA/RNA hybrid -->
+   <table id="howley-rna-dna" style="display:none;">
+   <tr><td rowspan="2"><i>T</i><sub>m</sub> = 79.8 + 18.5 log
+	  [K<sup>+</sup> + Na<sup>+</sup>] +
+	  58.4 (%G + %C) + 11.8 (%G + %C)<sup>2</sup> &minus; </td>
+    <td class="numer">820 </td>
+    <td rowspan="2"> &minus; 0.50 [F] </td></tr>
+   <tr><td><i>L</i> </td></tr>
+   </table>
+   <div><span style="font-size:80%;">Formamide
+ 	 concentration&nbsp;[M]:</span>
+	 <input name="formamide" size="6" maxlength="10" />
+   </div>
+   </td>
+   </tr>
+
+<!-- Freier et al RNA/RNA hybrid -->
+   <tr><td colspan="3" style="height:2em;">&nbsp; </td></tr>
+   <tr style="background-color:#e0e0ff;">
+    <td style="text-align:right;"><b>Freier <i>et al.</i></b>: </td>
+    <td class="eqnserif"
+       style="text-align:right;font-size:115%;padding-left:1em;vertical-align:middle;">
+     <table>
+     <tr><td rowspan="2"><i>T</i><sub>m</sub> = </td>
+      <td class="numer">&Delta;<i>H</i>   </td>
+      <td rowspan="2"> + 16.6 &times; log </td>
+      <td class="numer">[K<sup>+</sup>] </td>
+      <td rowspan="2">&minus; 273.15 = </td></tr>
+     <tr><td>&Delta;<i>S</i> + <i>R</i> &times; ln(<i>n</i> / 4) </td>
+      <td>(1 + 0.7 &times; [K<sup>+</sup>])</td></tr>
+     </table></td>
+    <td><span id="freiertemp"
+ 		style="font:bold 130% Helvetica,Arial,sans-serif;"></span></td></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

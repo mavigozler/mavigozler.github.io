@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"
+     " http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" [
+    <!ENTITY mathml "http://www.w3.org/1998/Math/MathML">
+]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:m="http://www.w3.org/1998/Math/MathML">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Computational Chemistry</title>
+<link type="text/css" href="/style/mathml.css" rel="stylesheet" />
+<link type="text/css" href="support.css" rel="stylesheet" />
+<style type="text/css">
+h1 {clear:both;font:bold 130% Arial,sans-serif;}
+body {width:40em;margin:0 auto;}
+math {text-align:left;margin-left:3em;color:blue;display:block;}
+</style>
+<script type="text/javascript">
+<![CDATA[
+function iterationTable(tableId, insertId) {
+	var tableNode, insertNode, trNode, tdNode;
+	if ((tableNode = document.getElementById(tableId)) != null)
+		tableNode.parentNode.removeChild(tableNode);
+	insertNode = document.getElementById(insertId);
+	insertNode.parentNode.insertBefore(tableNode =
+			document.createElement("table"), insertNode.nextSibling);
+	tableNode.id = tableId;
+	tableNode.appendChild(trNode = document.createElement("tr"));
+	trNode.appendChild(tdNode = document.createElement("th"));
+	tdNode.appendChild(document.createTextNode("Iteration"));
+	trNode.appendChild(tdNode = document.createElement("th"));
+	tdNode.appendChild(document.createTextNode("Result"));
+	return tableNode;
+}
+function addIteration(tableNode, iterationCycle, iterationResult) {
+	var trNode, tdNode;
+	tableNode.appendChild(trNode = document.createElement("tr"));
+	trNode.appendChild(tdNode = document.createElement("td"));
+	tdNode.appendChild(document.createTextNode(iterationCycle));
+	trNode.appendChild(tdNode = document.createElement("td"));
+	tdNode.appendChild(document.createTextNode(iterationResult));
+}
+function qwien(x) {
+	var result, tableNode, iteration, seed = Number(x) + 0.1;
+	iteration = 1;
+	tableNode = iterationTable("secdet-table", "secdet-roots");
+	do {
+		seed += 0.1;
+		result = Math.exp(-seed) + (seed / 5);
+		addIteration(tableNode, iteration++, result);
+	} while (result - 1.0 < 0.0);
+	wienResult.replaceChild(document.createTextNode(result), wienResult.firstChild);
+}
+
+function qroot(form) {
+	var result, tableNode, iteration = 1, seed = 0,
+	 z0 = form["secmat-z0"].value, z1 = form["secmat-z1"].value,
+	 z2 = form["secmat-z2"].value, y0 = form["secmat-y0"].value,
+	 y1 = form["secmat-y1"].value, y2 = form["secmat-y2"].value;
+	tableNode = iterationTable("qroot-table", "qroot-answer");
+	do {
+		seed += 1;
+		result = (z1 - y1 * seed) * (z2 - y2 * seed) -
+				(z0 - y0 * seed) * (z0 - y0 * seed);
+		addIteration(tableNode, iteration++, seed);
+	} while (result > 0.0);
+	document.getElementById("qroot-answer")!.style.display = "";
+	qrootResult.replaceChild(document.createTextNode(result), qrootResult.firstChild);
+}
+
+]]>
+</script>
+</head>
+<body>
+<p id="title">
+Computational Chemistry Test Programs</p>
+
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"
+style="font:normal 16pt serif;;margin:1em 3em 1em 0;text-align:left;float:left;">
+<mstyle mathcolor="blue" mathvariant="serif" displaystyle="true"><msup>
+<mi>e</mi><mrow><mo>-</mo><mi>x</mi></mrow></msup><mo>+</mo><mfrac><mi>x</mi>
+<mn>5</mn></mfrac><mo>=</mo><mn>1</mn></mstyle></math>
+</p>
+<p style="margin-top:3em;" id="secdet-roots">
+x: <input size="3" id="wien-input" />
+<button style="margin-right:3em;" onclick="qwien(wienInput.value)">Go</button>
+convergence: <span id="wien-result"
+style="font:bold 100% Arial,sans-serif;color:blue;">&nbsp;</span>
+</p>
+
+
+<h1>Roots of Secular Determinant</h1>
+<div style="float:left;margin-right:4em;">
+The secular matrix has the form:
+<math xmlns="http://www.w3.org/1998/Math/MathML"
+style="clear:both;font:italic 100%  serif;">
+<mrow><mo>[</mo><mtable><mtr><mtd><msub>
+<mi>z</mi><mn>1</mn></msub><mo>-</mo><msub><mi>y</mi><mn>1</mn></msub><mi>x</mi>
+</mtd><mtd><msub><mi>z</mi><mn>0</mn></msub><mo>-</mo><msub><mi>y</mi><mn>0</mn>
+</msub><mi>x</mi></mtd></mtr><mtr><mtd><msub><mi>z</mi><mn>0</mn></msub><mo>
+-</mo><msub><mi>y</mi><mn>0</mn></msub><mi>x</mi></mtd><mtd><msub><mi>z</mi><mn>
+2</mn></msub><mo>-</mo><msub><mi>y</mi><mn>2</mn></msub><mi>x</mi></mtd></mtr>
+</mtable><mo>]</mo></mrow></math>
+</div>
+<p>and the determinant is:</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mo>|</mo><mtable><mtr><mtd><msub>
+<mi>z</mi><mn>1</mn></msub><mo>-</mo><msub><mi>y</mi><mn>1</mn></msub><mi>x</mi>
+</mtd><mtd><msub><mi>z</mi><mn>0</mn></msub><mo>-</mo><msub><mi>y</mi><mn>0</mn>
+</msub><mi>x</mi></mtd></mtr><mtr><mtd><msub><mi>z</mi><mn>0</mn></msub><mo>
+-</mo><msub><mi>y</mi><mn>0</mn></msub><mi>x</mi></mtd><mtd><msub><mi>z</mi><mn>
+2</mn></msub><mo>-</mo><msub><mi>y</mi><mn>2</mn></msub><mi>x</mi></mtd></mtr>
+</mtable><mo>|</mo></mrow><mo>=</mo><mn>0</mn></math>
+<p></p>
+<p>
+Enter inputs for <i>z</i> and <i>y</i></p>
+<form id="secdet-inputs" style="float:left;margin-right:2em;">
+<i>z</i><sub>0</sub>: <input name="secmat-z0" size="4" value="42" />
+<i>z</i><sub>1</sub>: <input name="secmat-z1" size="4" value="210" />
+<i>z</i><sub>2</sub>: <input name="secmat-z2" size="4" value="12" /><br />
+<i>y</i><sub>0</sub>: <input name="secmat-y0" size="4" value="9" />
+<i>y</i><sub>1</sub>: <input name="secmat-y1" size="4" value="42" />
+<i>y</i><sub>2</sub>: <input name="secmat-y2" size="4" value="2" /><br />
+<button onclick="qroot(this.form);" type="button">Go</button>
+</form>
+
+<div style="display:none;" id="qroot-answer">
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mo>|</mo><mtable><mtr><mtd>
+<mn id="q-z1">210</mn><mo>-</mo><mn id="q-y1">42</mn><mi>x</mi></mtd><mtd>
+<mn id="q-z0-1">42</mn><mo>-</mo><mn id="q-y0-1">9</mn><mi>x</mi></mtd></mtr>
+<mtr><mtd><mn id="q-z0-2">42</mn><mo>-</mo><mn id="q-y0-2">9</mn><mi>x</mi>
+</mtd><mtd><mn id="q-z2">12</mn><mo>-</mo><mn id="q-y2">2</mn><mi>x</mi></mtd>
+</mtr></mtable><mo>|</mo></mrow><mrow><mspace width="1ex"/><mtext> :</mtext>
+</mrow></math>
+<p style="display:inline;">
+root: <span id="qroot-result"
+style="font:bold 100% Arial,sans-serif;color:blue;">&nbsp;</span></p>
+</div>
+
+<h1>Newton-Raphson Method</h1>
+<p>Suppose a function of <i>x</i>, <i>f</i>(<i>x</i>), has a first derivative
+<i>f&prime;</i>(<i>x</i>) at some value of <i>x</i>, <i>x</i><sub>0</sub>.
+The slope of <i>f</i>(<i>x</i>) is:</p>
+
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>'</mo>
+</mrow><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mi>
+f</mi><mrow><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo></mrow></mrow>
+<mrow><msub><mi>x</mi><mn>0</mn></msub><mo>-</mo><msub><mi>x</mi><mn>1</mn>
+</msub></mrow></mfrac></math>
+<p>
+Polynomial degree:  <input id="polydeg" onchange="update-poly-expr();" /></p>
+
+
+
+<script type="text/javascript">
+	var wienResult = document.getElementById("wien-result")!.
+		wienInput = document.getElementById("wien-input")!.
+		qrootResult = document.getElementById("qroot-result")!.
+</script>
+</body>
+</html>
+
+
+

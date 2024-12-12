@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!-- ============================
+          SDS-PAGE assistance
+	============================ -->
+<head>
+<title>Calculations for Laemmli SDS-PAGE Gels</title>
+<style type="text/css">
+	#sds-page * input {text-align:right;color:navy;font:bold 110% Arial,Helvetica,sans-serif;}
+	#sds-page * select {color:navy;font:bold 110% Arial,Helvetica,sans-serif;}
+	#sds-table {padding:5px; background-color:#ccc;}
+	#sds-table th {padding:0.3em 0.5em; background-color:#fff0f0;
+			vertical-align:bottom;font:bold 90% Tahoma,Verdana,Arial,sans-serif;
+			border-top:2px solid #aaa;border-left:2px solid #aaa;
+			border-right:2px solid #fffdfd;border-bottom:2px solid #fffdfd;}
+	#sds-table td {padding:0.3em 0.5em; background-color:#f0fff0;
+			font:normal 100% Helvetica,Arial,sans-serif;
+			border-top:2px solid #aaa;border-left:2px solid #aaa;
+			border-right:2px solid #fdfffd;border-bottom:2px solid #fdfffd;}
+	#SDS-error-info {font:normal 83% Tahoma,Verdana,Arial,sans-serif ! important;
+	color:red;}
+	#SDS-error-info ul {margin:0;padding:0;}
+	#SDS-error-info * li {margin-left:0;padding-left:0;}
+
+#SDS-MW-Calculator {background-color:#999;}
+#SDS-MW-Calculator td {text-align:right;font:bold 120% Arial,Helvetica,sans-serif;}
+</style>
+</head>
+
+<body>
+<div id="sds-page" style="display:none;">
+
+<p style="color:olive;font:bold 125% Verdana,Tahoma,sans-serif;">
+SDS-PAGE Calculations</p>
+<form id="sds-page-form" action="#">
+<p>
+Fill in the table so that the calculations can be made.  The concentrations
+for stock reagents are typical, but change them to suit your purposes.
+<span id="sds-detailed-help" style="color:purple;">Click anywhere on
+	this sentence to display detailed instructions.
+</span>
+</p>
+
+<div style="float:left;margin-right:2em;">
+<table id="sds-table">
+<col style="width:7em;" />
+<col style="width:7em;" />
+<col span="2" style="width:13em;text-align:center;" />
+<tr>
+   <th colspan="3"
+      style="font:normal 83% Arial,Helvetica,sans-serif;background-color:#e8d0ff;">
+   <input type="checkbox" name="volerrorcalc" checked="checked" />
+ 	 In volume calculations, add <input type="text" size="2" maxlength="2"
+	     name="volerrorval" value="15" />% for pipetting error
+	  <button type="button" id="SDS-Table-Print-Button"
+	     style="display:none;font:normal 90% 'Arial Narrow',Arial,sans-serif;color:green;">Make
+	   	a printable version of this table
+		</button>
+	</th>
+
+	<th colspan="2" class="gelheader">Resolving / Separating / Running Gel </th>
+  <th colspan="2" class="gelheader">Stacking Gel </th></tr>
+<tr><td colspan="3">Final percentage </td>
+   <td colspan="2" style="text-align:center;">
+       <input name="sepgelconc" type="text" size="3" maxlength="5" />% </td>
+   <td colspan="2" style="text-align:center;">
+      <input name="stackgelconc" type="text" size="3" maxlength="5" value="4" />% </td></tr>
+<!-- final volume row -->
+<tr><td id="finalvolhdr">Final volume </td>
+   <td colspan="2" id="finalvolradios"
+			style="font:normal 90% 'Arial Narrow',Arial,sans-serif;width:16em;">
+	  <input id="gelvol-given-option-input" type="radio" name="gelvolumes" value="volumegiven"
+				checked="checked" /> Volume is specified <br />
+	 	<input id="gelvol-given-calcd-input" type="radio" name="gelvolumes" value="volumecalcd" />
+			Calculate volume from gel dimensions
+	</td>
+	 <td colspan="2" id="sepgelvoltd" style="text-align:center;" class="calcdinputs">
+			<input name="sepfgelvol" type="text" size="3" maxlength="5" /> ml </td>
+	 <td colspan="2" id="stackgelvoltd" style="text-align:center;" class="calcdinputs">
+			<input name="stackgelvol" type="text" size="3" maxlength="5" /> ml </td>
+	 <td colspan="2" id="gelcounttd" style="display:none;" class="calcdinputs">
+			Count of gels: <input name="gelcount" value="1" type="text" size="2"
+					maxlength="2" /> </td></tr>
+<!-- gel height row -->
+	<tr id="gelheighttr" style="display:none;">
+	 <td colspan="2" class="calcdinputs">
+		<div style="margin:0 0.5em 0 0;padding:0;float:left;width:4em;">resolving height:</div>
+		<input name="sepgelheight" type="text" size="4" maxlength="4" />
+	  <select name="sepgelheightdim"><option>cm</option><option>mm</option></select> </td>
+	 <td  colspan="2" class="calcdinputs">
+		<div style="margin:0 0.5em 0 0;padding:0;float:left;width:4em;">stacking height:</div>
+		<input name="stackgelheight" type="text" size="4" maxlength="4" />
+	  <select name="stackgelheightdim"><option>cm</option><option>mm</option></select>
+      </td></tr>
+<!-- gel width & depth row -->
+	<tr id="gelwidthdepthtr" style="display:none;">
+		<td colspan="3" class="calcdinputs">
+		gel width: <input name="gelwidth" type="text" size="4" maxlength="4" />
+	  <select name="gelwidthdim"><option>cm</option><option>mm</option></select>
+	<br />gel depth: <input name="geldepth" type="text" size="4" maxlength="4" /> mm
+      </td></tr>
+<!-- calculated volume row -->
+	<tr id="calcdgeltr" style="display:none;">
+		<td style="text-align:center;"><span id="calcdsepgelvol">&nbsp;</span> ml </td>
+		<td style="text-align:center;"><span id="calcdstackgelvol">&nbsp;</span> ml
+      </td></tr>
+
+<tr><td colspan="5" style="background-color:#ccc;" id="SDS-error-info">&nbsp;</td></tr>
+<tr><th colspan="3" style="background:none;"> </th>
+  <th class="subheader">Final Concentration </th>
+  <th class="subheader">Volume to Pipet </th>
+  <th class="subheader">Final Concentration </th>
+  <th>Volume to Pipet </th></tr>
+<tr><td colspan="3"><input name="sepgelbuff" type="text" size="3" maxlength="3"
+		value="1.5" /> M Tris HCl, pH 8.8 </td>
+  <td><input name="finalsepbuff" size="5" maxlength="5" value="0.375" /> M </td>
+	<td style="text-align:center;"><span id="sepgelbuffvol">&nbsp;</span> </td>
+	<td colspan="2" style="background:none;">  </td></tr>
+<tr><td colspan="3"><input name="stackgelbuff" type="text" size="3" maxlength="5"
+		value="0.5" /> M Tris HCl, pH 6.8 </td>
+	<td colspan="2" style="background:none;"> </td>
+  <td><input name="finalstackbuff" size="5" maxlength="5" value="0.125" /> M </td>
+	<td style="text-align:center;"><span id="stackgelbuffvol">&nbsp;</span> </td></tr>
+<tr><td  colspan="3" style="line-height:2em;">acrylamide/crosslinker*
+ <p style="text-align:right;margin:0;">
+	<select name="acrylamide" size="4" style="vertical-align:top;">
+	<option value="30">30% T / 2.6% C (37.5:1)</option>
+	<option value="30">30% T / 2.7% C (29.2:0.8)</option>
+	<option value="40">40% T / 2.6% C (37.5:1)</option>
+	<option value="38.5">38.5% T / 2.6% C (37.5:1)</option>
+	<option value="30">30% T / 3.3% C (29:1)</option>
+	<option value="20">&dagger; 20% T / 5% C (19:1)</option>
+	</select> </p></td>
+	<td colspan="2" style="text-align:center;">
+    <span id="sepgelAcrylVol">&nbsp;</span> </td>
+	<td colspan="2" style="text-align:center;">
+    <span id="stackgelAcrylVol">&nbsp;</span> </td></tr>
+<tr><td colspan="3"><input name="SDSconc" type="text" size="3" maxlength="5"
+		value="10" />% SDS </td>
+  <td><input name="SDSfinalsepconc" size="4" value="0.1" />% </td>
+	<td style="text-align:center;"><span id="sepgelSDSvol">&nbsp;</span> </td>
+  <td><input name="SDSfinalstackconc" size="4" value="0.1" />% </td>
+	<td style="text-align:center;"><span id="stackgelSDSvol">&nbsp;</span></td></tr>
+<tr><td colspan="3">ultrapure (Type I, 18 M&Omega;) water </td>
+	<td style="text-align:center;"><span id="sepgelWaterVol">&nbsp;</span></td>
+	<td style="text-align:center;"><span id="stackgelWaterVol">&nbsp;</span></td></tr>
+<tr><td colspan="3" rowspan="2"><input name="APSconc"
+   type="text" size="3" maxlength="5"
+		value="10" />% ammonium&nbsp;persulfate </td>
+  <td><input name="APSfinalconc" size="4" value="0.05" />%</td>
+	<td style="text-align:center;"><span id="sepgelAPSvol">&nbsp;</span></td>
+	<td style="text-align:center;"><span id="stackgelAPSvol">&nbsp;</span></td></tr>
+	<tr><td colspan="2"
+	style="height:0.8em;color:maroon;font-size:85%;margin:0 10%;">
+ <span id="totalAPSvol">&nbsp;</span>
+ <input type="hidden" name="APSmass" value="10" />
+ <input type="hidden" name="APSvol" value="100" /></td></tr>
+<tr><td colspan="3">TEMED </td>
+	<td style="text-align:center;"><span id="sepgelTEMEDvol">&nbsp;</span></td>
+	<td style="text-align:center;"><span id="stackgelTEMEDvol">&nbsp;</span></td></tr>
+</table>
+<div style="float:left;margin-top:0;">
+<button type="button" id="SDScalcButton"
+	style="font-size:135%;">Calculate</button></div>
+<p style="text-align:right;margin-top:0;">
+<button type="button" id="showSDSexample" style="font-size:105%;">Show Example</button> </p>
+<p style="width:45em;font:normal 85% Helvetica,sans-serif;">
+* crosslinker is typically <i>N,N&prime;</i>-methylene-<i>bis</i>-acrylamide,
+ but may be piperazine diacrylamide (PDA) or
+ <i>N,N&prime;</i>-diallyl-tartardiamide (DATD)
+<br />
+&dagger; Note that a 20% T solution is usually only used in DNA-separating
+gels, not protein-separating gels </p>
+</div>
+
+<div id="SDS-PAGE-detailed-help" style="display:none;">
+
+<div style="float:right;">
+<button type="button" id="closeSDSPageDetailedHelp">Close Help</button>
+</div>
+
+<p style="font:bold 105% Verdana,Arial,sans-serif;color:maroon;">
+Instructions  </p>
+
+<p style="margin-top:0.75em;">
+This module is supposed to take the difficulty of remembering the individual
+components of SDS-PAGE gels (as done by Laemmli) and the volumes necessary for
+pipetting them.  There are basically two gels in this system.  A
+<b>separating</b> (also called <b>resolving</b> or <b>running</b>) gel, in which
+the proteins are separated, and a <b>stacking</b> gel, in which proteins in
+solution in the well at the start of electrophoresis are concentrated into a
+tight band before entering the separating gel.  Each gel has its own column both
+for entry of input values and for display of calculated volumes. </p>
+
+<p>
+<b>User-required inputs</b>.  Wherever a user input is required or allowed, an
+<i>input textbox</i> is a form control offered to the user.  For each gel the
+user must enter a <b>final percentage</b>. For example, if the user is going to
+run a 10% gel, then the value <b>10</b> should be entered in the <b>Final
+percentage</b> textbox under <b>Resolving/Separating/Running Gel</b>.  Note that
+a default value of <b>4%</b> is indicated for the <b>Stacking</b> gel; although
+this is typical, it can be changed. </p>
+
+<p>
+The <b>Final volume</b> of gels can either be given by the user directly or
+computed indirectly from a number of inputs given which include the count of
+gels and the height, width, and depth of the gel dimensions. Note that when
+calculating volumes, a pipetting error can be applied to the calculations.
+Click the checkbox at the top of the table columns where it indicates <b>In
+volume calculations, add </b>&lt;<i>error value</i> &gt; <b>for pipetting
+error</b>.  A typical value of <b>15%</b> is a default entry. </p>
+
+<p>
+There are also five inputs for solution concentration values. Typical values are
+entered by default but can be changed.  The Tris solutions are usually 4&times;
+stocks.  Note that the final (gel) concentrations of Tris, SDS, ammonium
+persulfate, and TEMED can <strong>not</strong> be controlled, since these values
+are fixed in the method of Laemmli and important for SDS-PAGE. For
+acrylamide/crosslinker (crosslinker is usually <i>bis-acrylamide</i>) a list of
+typical acryalmide concentrations is given.  Only the total (T) concentration is
+actually used to calculate the final percentage. </p>
+
+</div>
+
+<div style="margin-top:3em;">
+With the exception of the total polyacrylamide concentration, the final
+concentration of components in the gel is immutable:
+
+<ul>
+<li>Separating gel buffer:  0.375 M TrisHCl, pH 8.8 </li>
+<li>Stacking gel buffer:  0.125 M TrisHCl, pH 6.8 </li>
+<li>SDS concentration in both gels:  0.1% SDS </li>
+<li>Ammonium persulfate concentration in both gels:  0.05% APS </li>
+<li>TEMED concentration:  0.05% in the resolving, 0.1% in the stacking </li>
+</ul>
+
+<p>
+This is because these values were determined by the work of Laemmli
+(<i>Nature:London</i> <b>227</b>: 680, 1970).  See <a href="#SDSmodif">below</a>
+for an explanation of the many variations of the SDS-PAGE system. </p>
+
+<p>
+Note that the electrode (running) buffer of 25 mM Tris, 192 mM glycine and 0.1%
+SDS is always made up by dissolving the following in distilled water, and
+bringing it to a final 1.0 liter volume: </p>
+
+<ul>
+<li>3.0 g Tris (base) </li>
+<li>14.4 g glycine </li>
+<li>10 ml of 10% SDS or 1 g SDS </li>
+</ul>
+
+<p>
+There is no need to adjust the pH of the electrode buffer (it will be
+approximately 8.3). </p>
+
+<p>
+The acrylamide/crosslinker concentration is expressed usually as a %T / %C,
+where %T is the total weight per volume of the acrylamide and the crosslinker
+and the %C is the weight per weight of the crosslinker as a proportion of the
+acrylamide plus the crosslinker:  </p>
+
+<table class="eqnserif" style="font-size:85%;margin:1em auto;">
+<tr><td rowspan="2">%T = </td>
+ <td style="border-bottom:1px solid black;">grams acrylamide + grams
+  crosslinker </td>
+ <td rowspan="2">&times; 100 </td></tr>
+<tr><td>total volume (ml) </td></tr>
+</table>
+
+<table class="eqnserif" style="font-size:85%;">
+<tr><td rowspan="2">%C = </td>
+ <td style="border-bottom:1px solid black;">grams crosslinker </td>
+ <td rowspan="2">&times; 100 </td></tr>
+<tr><td>grams acrylamide + grams crosslinker</td></tr>
+</table>
+
+<p>
+However, the weight per volume of acrylamide and of the crosslinker (bis) is
+also usually provided: thus a 30% T solution is shown as 29:1, or 29 grams
+acryamide and 1 gram bis per 100 ml solution. Note that the %C is 3.3 = 1 / (29
++ 1). </p>
+
+<p>
+The final gel percentage, whether it is an 8, 10, or 12% is always an
+expression of the %T of the solution during polymerization. Thus a 10% gel will
+be a one-third dilution of a 30% stock, or a one-fourth dilution of a 40% stock,
+irrespective of the proportion of crosslinker (%C). </p>
+
+<p>
+U. K. Laemmli used 30% acrylamide (30 g/100 ml) and 0.8% (0.8 g/100 ml) <i>N,
+N&prime;</i>-<i>bis</i>-methyleneacrylamide, or 37.5 g acrylamide for each 1 g
+<i>bis</i> (37.5:1) in his original formulation, which has not changed at all.
+Note that %C = 0.8 g / (30 g + 0.8 g) = 2.6% C. For a 40% T stock solution, the
+<i>bis</i> is (40 g/100 ml)(0.026) = 1.04 g/100 ml, and the acrylamide is (40.0
+g &minus; 1.04 g)/100 ml = 39.0 g/100 ml. </p>
+
+<h1 id="SDSmodif">Notes and Variations on SDS-PAGE</h1>
+
+<p>
+Scientists have used a great many variations on the SDS-PAGE system, and there
+are some important things to note: </p>
+
+<ul>
+<li>If SDS-PAGE is used preparatively, such as for immunoblotting or gel
+excision to MALDI-MS, it is important to cast the gel a few hours before its
+use, so that the gel can <q>cure</q>:  freshly polymerized gels are thought to
+have too many free radicals (persulfate) present which can react with proteins.
+However this has been disputed by some, who say that the free radicals are
+negatively charged and will move ahead of the proteins. </li>
+
+<li>The final percentage of APS and TEMED in the monomer solution varies a great
+deal.  U. K. Laemmli used 0.025% (w/v) APS and 0.025% (v/v) TEMED in his original
+widely cited paper.  However, Bio-Rad recommends users of its systems  </li>
+
+<li>A great many are leaving SDS out of the stacking and separating gels.  This
+allows cast gels to be storable for longer periods, and the idea is that the SDS
+present in the sample buffer and electrode buffer keeps the proteins exposed
+continuously to the proper concentration of SDS, and that SDS has a significant
+mobility and would distribute in the gels anyway. </li>
+<li>Commercial pre-cast gels with a stacking and separating gel put pH 8.8 Tris
+buffer in both gels rather than pH 6.8 Tris in the stacking. The reason is that
+mixing of the buffers in the different gels occurs rapidly because of diffusion,
+and stacking occurs anyway if the sample buffer itself is pH 6.8. </li>
+</ul>
+</div>
+</form>
+
+
+<div id="MWcalculator" style="background-color:#e0ffe0;padding:1em;"> <!-- log MW vs. Rm calculator -->
+<form id="LogMWvRM" action="#">
+<table id="SDS-MW-Calculator" style="float:left;margin-right:1em;">
+<tr><th>Marker # </th><th>MW  </th><th>Rm or Travel </th></tr>
+<tr><td>1 </td>
+	<td><input id="M1MW" name="M1MW" size="6" maxlength="8" /> </td>
+   <td><input id="M1Rm" name="M1Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>2 </td>
+	<td><input id="M2MW" name="M2MW" size="6" maxlength="8" /> </td>
+   <td><input id="M2Rm" name="M2Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>3 </td>
+	<td><input id="M3MW" name="M3MW" size="6" maxlength="8" /> </td>
+   <td><input id="M3Rm" name="M3Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>4 </td>
+	<td><input id="M4MW" name="M4MW" size="6" maxlength="8" /> </td>
+   <td><input id="M4Rm" name="M4Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>5 </td>
+	<td><input id="M5MW" name="M5MW" size="6" maxlength="8" /> </td>
+   <td><input id="M5Rm" name="M5Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>6 </td>
+	<td><input id="M6MW" name="M6MW" size="6" maxlength="8" /> </td>
+   <td><input id="M6Rm" name="M6Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>7 </td>
+	<td><input id="M7MW" name="M7MW" size="6" maxlength="8" /> </td>
+   <td><input id="M7Rm" name="M7Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>8 </td>
+	<td><input id="M8MW" name="M8MW" size="6" maxlength="8" /> </td>
+   <td><input id="M8Rm" name="M8Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td>9 </td>
+	<td><input id="M9MW" name="M9MW" size="6" maxlength="8" /> </td>
+   <td><input id="M9Rm" name="M9Rm" size="4" maxlength="4" /> </td></tr>
+<tr><td colspan="2" style="font-size:90%;">Dye Front: </td>
+   <td><input id="FrontRm" name="FrontRm" size="4" maxlength="4" /> </td></tr>
+<tr><td colspan="2" style="font:normal 80% Helvetica,Arial,sans-serif;text-align:left;">
+Type of fit:  <br />
+  <input type="radio" name="fit-type" value="linear" checked="checked" /> Linear
+  <input type="radio" name="fit-type" value="polynomial" /> Polynomial </td>
+  	<td><button type="reset">Clear Form</button> <br />
+     <button id="exampleSDSPlot" type="button">
+		<span	style="font-size:80%;color:blue;">Show Example</span>
+	</button>
+</td></tr>
+</table>
+<ol>
+<li> Enter the MW of the protein standard you used in the gel.  The order of entry
+does not matter (no need to sort from increasing to decreasing or vice-versa). </li>
+<li> Enter either the <i>R</i><sub>m</sub> value or the distance the marker band
+traveled starting from the top of the gel (the dimensions/units do not matter,
+so long as you always measure in the same units).  If you decide to enter the
+distance traveled, you must also enter the distance that the dye front traveled
+in the entry boi>Choose the type line fit you want.  A graph will be presented showing
+the plotted points and line fit.  This may be informative. </li>
+<li>To determine the MW of an unknown band or spot, enter the <i>R</i><sub>m</sub>
+or the distance traveled.  The Estimated MW should appear below. </li>
+</ol>
+<p>
+Notes:</p>
+<ul>
+<li>The <i>R</i><sub>m</sub>, or <i>relative mobility</i>, is the fraction that
+a protein band or spot travels in SDS-PAGE relative to the dye front.  By
+definition, it must be a value between 0 and 1.  For example, suppose in a mini-gel
+the BSA (66 kDa) marker moves 2.7 cm and the dye front moves 6.2 cm from the
+start (top) of the resolving gel.  The BSA <i>R</i><sub>m</sub> thus is
+2.7 cm / 6.2 cm = 0.435.  The system is generally smart enough to know the difference
+between values entered being <i>R</i><sub>m</sub> or distance travelled. </li>
+<li>Errors or irregularities will be noted when possible.  It is the responsibility
+of the user to make careful entries since error checking is not rigorous. </li>
+<li>The principle of electrophoresis should work for protein and DNA gels.
+For MW you can enter the bases (base pairs), and the Rm value should be the
+same. </li>
+</ul>
+
+<p style="clear:both;margin:1em 0;">
+Enter Unknown Band/Spot Rm or Travel:
+	<input name="SampleRm" size="4" maxlength="4" id="updateSDSParams" /></p>
+<p>
+Estimated Molecular Weight:  <span id="estMW"
+style="border:2px solid red;width:5em;">&nbsp;</span></p>
+</form>
+</div>
+</div> <!-- id=sds-page -->
+
+</body>
+</html>
