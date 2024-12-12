@@ -1,7 +1,6 @@
 ﻿"use strict";
 
-let hide_testing = true;
-
+import contentBuilder from "./content-builder.js";
 // import { jest, test } from "@jest/globals";
 interface MediaCapabilities {
 	type: "file";
@@ -60,27 +59,7 @@ interface DeviceProperties {
    //mediaCapabilities: MediaCapabilities;
 }
 
-
 const CSSvalueRE = /(\-?\d+\.?(\d+)?)([a-z]{2})?/;
-
-const DollarReduction = [
-   30, 27.5, 25, 23, 21, 20
-];
-
-const baseRates = [
-   { subject: "Math6-9",      rate: 23 },
-   { subject: "Science6-9",   rate: 21 },
-   { subject: "Science10-12", rate: 23 },
-   { subject: "Math10-12",    rate: 24 },
-   { subject: "GenChem",      rate: 25 },
-   { subject: "OrgChem",      rate: 30 },
-   { subject: "Biochem",      rate: 30 },
-   { subject: "Biology",      rate: 25 },
-   { subject: "WebDev",       rate: 35 },
-   { subject: "MSO",          rate: 30 },
-   { subject: "SharePoint",   rate: 32 },
-   { subject: "PowerApp",     rate: 35 }
-];
 
 const InitialStyleRules: {[key: string]:
          { [key: string]:
@@ -181,12 +160,6 @@ function getCurrentDeviceProperties(): DeviceProperties {
    return currentDeviceProperties;
 }
 
-const viewportWidthCutoff = 500; // px
-const checkDeviceSize = () => {
-	return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
-};
-let isDeviceSmall: boolean;
-
 function reconfigureCssRule(cssRule: string, cssPropName: string): string {
 	let reconfigRule: string = cssRule;
 	let ruleMatch: RegExpMatchArray | null;
@@ -207,45 +180,51 @@ function cssMath(
    cssValue2: string | number,
    op: "+" | "-" | "x" | "/"
 ): string | null {
-   const cssVal1parse: RegExpMatchArray | null = cssValue1.match(CSSvalueRE);
-   let cssVal2parts: {numerical: number; dimension: string | null;};
-   if (cssVal1parse == null)
-      return null;
-   const cssVal1parts = {
-      numerical: parseFloat(cssVal1parse[1]),
-      dimension: cssVal1parse[3]
-   };
-   if (typeof cssValue2 === "string") {
-      const cssVal2parse = cssValue2.match(CSSvalueRE);
-      if (cssVal2parse == null || (cssVal2parse[3] && cssVal2parse[3] !== cssVal1parts.dimension))
-         return null;
-      cssVal2parts = {
-         numerical: parseFloat(cssVal2parse[1]),
-         dimension: cssVal2parse[3]
-      };
-   } else
-      cssVal2parts = {
-         numerical: cssValue2,
-         dimension: null
-      }
+	try {
+		const cssVal1parse: RegExpMatchArray | null = cssValue1.match(CSSvalueRE);
+		let cssVal2parts: {numerical: number; dimension: string | null;};
+		if (cssVal1parse == null)
+			return null;
+		const cssVal1parts = {
+			numerical: parseFloat(cssVal1parse[1]),
+			dimension: cssVal1parse[3]
+		};
+		if (typeof cssValue2 === "string") {
+			const cssVal2parse = cssValue2.match(CSSvalueRE);
+			if (cssVal2parse == null || (cssVal2parse[3] && cssVal2parse[3] !== cssVal1parts.dimension))
+				return null;
+			cssVal2parts = {
+				numerical: parseFloat(cssVal2parse[1]),
+				dimension: cssVal2parse[3]
+			};
+		} else
+			cssVal2parts = {
+				numerical: cssValue2,
+				dimension: null
+			}
 
-   // now the math
-   let retval: string;
-   switch (op) {
-   case "+":
-      retval = `${cssVal1parts.numerical + cssVal2parts.numerical}${cssVal1parts.dimension}`;
-      break;
-   case "-":
-      retval = `${cssVal1parts.numerical - cssVal2parts.numerical}${cssVal1parts.dimension}`;
-      break;
-   case "x":
-      retval = `${(cssVal1parts.numerical * cssVal2parts.numerical).toFixed(1)}${cssVal1parts.dimension}`;
-      break;
-   case "/":
-      retval = `${(cssVal1parts.numerical / cssVal2parts.numerical).toFixed(1)}${cssVal1parts.dimension}`;
-      break;
-   }
-   return retval;
+		// now the math
+		let result: string;
+		switch (op) {
+		case "+":
+			result = `${cssVal1parts.numerical + cssVal2parts.numerical}${cssVal1parts.dimension}`;
+			break;
+		case "-":
+			result = `${cssVal1parts.numerical - cssVal2parts.numerical}${cssVal1parts.dimension}`;
+			break;
+		case "x":
+			result = `${(cssVal1parts.numerical * cssVal2parts.numerical).toFixed(1)}${cssVal1parts.dimension}`;
+			break;
+		case "/":
+			result = `${(cssVal1parts.numerical / cssVal2parts.numerical).toFixed(1)}${cssVal1parts.dimension}`;
+			break;
+		}
+		if (!result)
+			throw new Error ("Invalid CSS value parsing");
+		return result;
+	} catch (error) {
+		return null;
+	}
 }
 
 function mediaAdjustments(action: "initialize" | "adjust"): void {
@@ -332,69 +311,68 @@ function adjustCssValue(adjustParam: [string, string]): string {
 	return adjustParam[0];
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-   mediaAdjustments("initialize");
-   // Object.assign(_DeviceProperties, currentDeviceProperties);
-   window.addEventListener("resize", () => {
-		isDeviceSmall = checkDeviceSize();
-		const deviceProperties = getCurrentDeviceProperties();
-		console.log(`\nDevice resize occurred to 'viewport width' = ${deviceProperties.viewportWidth}px` +
-				`\nDevice size is ${isDeviceSmall == true ? "small (mobile?)" : "normal/large" }`);
-		if (hide_testing == false) {
-			populateDevicePropertiesTable({
-				"screen height": deviceProperties.screenHeight,
-				"screen avail height": deviceProperties.screenAvailHeight,
-				"viewport height": deviceProperties.viewportHeight,
-				"screen width": deviceProperties.screenWidth,
-				"screen avail width": deviceProperties.screenAvailWidth,
-				"viewport width": deviceProperties.viewportWidth,
-				"aspect ratio": deviceProperties.aspectRatio.toFixed(2)
-			});
-		} else /*
-			console.log(
-				`screen height: ${deviceProperties.screenHeight}\n` +
-				`screen avail height: ${deviceProperties.screenAvailHeight}\n` +
-				`viewport height: ${deviceProperties.viewportHeight}\n` +
-				`screen width: ${deviceProperties.screenWidth}\n` +
-				`screen avail width: ${deviceProperties.screenAvailWidth}\n` +
-				`viewport width: ${deviceProperties.viewportWidth}\n` +
-				`aspect ratio: ${deviceProperties.aspectRatio.toFixed(2)}`
-			) */
-      mediaAdjustments("adjust");
-   });
-   window.dispatchEvent(new Event("resize"));
-   const themeSwitcher = document.getElementById('theme-switcher');
-   // Check and apply saved theme preference
-   const savedTheme = localStorage.getItem('theme');
-   if (savedTheme)
-      document.documentElement.setAttribute('data-theme', savedTheme);
-   else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
-      document.documentElement.setAttribute('data-theme', 'dark');
+let isDeviceSmall: boolean;
 
-   // Toggle theme and save preference
-   themeSwitcher?.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      document.documentElement.style.colorScheme = newTheme;
-      localStorage.setItem('theme', newTheme);
-   });
-// base rate calculator for table
-   for (const baseRate of baseRates) {
-      const spanElem = document.getElementById(baseRate.subject);
-      spanElem?.replaceChild(document.createTextNode("$" + baseRate.rate.toString()),
-         spanElem.firstChild as ChildNode);
-   }
-// calculate group reduction rate
-   const rows = document.querySelectorAll("#reduction tr");
-   for (let row = 1; row < rows.length; row++) {
-      const cols = rows[row].querySelectorAll("td");
-      cols[2].appendChild(document.createTextNode("$" + DollarReduction[row - 1].toFixed(2)));
-      cols[1].appendChild(document.createTextNode(
-         (100 - DollarReduction[row - 1] / DollarReduction[0] * 100).toFixed(0) + "%"
-      ));
-   }
-   document.getElementById("example-base")?.appendChild(
-      document.createTextNode("$" + DollarReduction[0])
-   );
+document.addEventListener("DOMContentLoaded", () => {
+	const viewportWidthCutoff = window.matchMedia('(max-width: 500px)').matches ? 500 : 768;
+	//const viewportWidthCutoff = 500; // px
+	const checkDeviceSize = () => {
+		return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
+	};
+
+	fetch('config.json')
+	.then(response => response.json())
+	.then(config => {
+		// Use your config data
+		const showDeviceProperties = config;
+		mediaAdjustments("initialize");
+		// Object.assign(_DeviceProperties, currentDeviceProperties);
+		window.addEventListener("resize", () => {
+			isDeviceSmall = checkDeviceSize();
+			const deviceProperties = getCurrentDeviceProperties();
+			console.log(`\nDevice resize occurred to 'viewport width' = ${deviceProperties.viewportWidth}px` +
+					`\nDevice size is ${isDeviceSmall == true ? "small (mobile?)" : "normal/large" }`);
+			if (showDeviceProperties == true) {
+				populateDevicePropertiesTable({
+					"screen height": deviceProperties.screenHeight,
+					"screen avail height": deviceProperties.screenAvailHeight,
+					"viewport height": deviceProperties.viewportHeight,
+					"screen width": deviceProperties.screenWidth,
+					"screen avail width": deviceProperties.screenAvailWidth,
+					"viewport width": deviceProperties.viewportWidth,
+					"aspect ratio": deviceProperties.aspectRatio.toFixed(2)
+				});
+			} else /*
+				console.log(
+					`screen height: ${deviceProperties.screenHeight}\n` +
+					`screen avail height: ${deviceProperties.screenAvailHeight}\n` +
+					`viewport height: ${deviceProperties.viewportHeight}\n` +
+					`screen width: ${deviceProperties.screenWidth}\n` +
+					`screen avail width: ${deviceProperties.screenAvailWidth}\n` +
+					`viewport width: ${deviceProperties.viewportWidth}\n` +
+					`aspect ratio: ${deviceProperties.aspectRatio.toFixed(2)}`
+				) */
+			mediaAdjustments("adjust");
+		});
+		window.dispatchEvent(new Event("resize"));
+		const themeSwitcher = document.getElementById('theme-switcher');
+		// Check and apply saved theme preference
+		const savedTheme = localStorage.getItem('theme');
+		if (savedTheme)
+			document.documentElement.setAttribute('data-theme', savedTheme);
+		else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+			document.documentElement.setAttribute('data-theme', 'dark');
+
+		// Toggle theme and save preference
+		themeSwitcher?.addEventListener('click', () => {
+			const currentTheme = document.documentElement.getAttribute('data-theme');
+			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+			document.documentElement.setAttribute('data-theme', newTheme);
+			document.documentElement.style.colorScheme = newTheme;
+			localStorage.setItem('theme', newTheme);
+		});
+		contentBuilder(document);
+	}).catch(error => {
+		console.error('Error fetching config:', error);
+	});
 });

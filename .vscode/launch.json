@@ -5,6 +5,30 @@
    "version": "0.2.0",
    "configurations": [
       {
+         "name": "PowerShell Launch File in Active Panel",
+         "type": "PowerShell",
+         "request": "launch",
+         "script": "${file}",
+      //   "args": [ "noscript" ],
+         "cwd": "${cwd}"
+      },
+      {
+         "name": "Debug tunescript.js",
+         "type": "node",
+         "program": "${workspaceFolder}/withscriptset/tunescript.js",
+         "env": {
+            "scripting": "yes"
+         },
+         "preLaunchTask": "tsc: build - tsconfig.json",
+         "request": "launch",
+         "skipFiles": [
+            "<node_internals>/**"
+         ],
+         "sourceMaps": true,
+         "stopOnEntry": true,
+         "smartStep": true,
+      },
+      {
          "type": "chrome",
          "request": "launch",
          "name": "Launch Chrome VS Code Debugging",
@@ -20,6 +44,7 @@
             "--user-data-dir=~/chromeTemp"
          ],
          "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-      }
+      },
+
    ]
 }
