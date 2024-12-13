@@ -1,3 +1,7 @@
 [submodule "src/SPREST"]
 	path = src/SPREST
 	url = https://github.com/mavigozler/SPREST.git
+[submodule "src/GenLib"]
+	path = src/GenLib
+	url = D:/dev/GenLib
+	branch = forChemCalcSPFx
