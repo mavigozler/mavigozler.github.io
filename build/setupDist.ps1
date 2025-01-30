@@ -1,11 +1,17 @@
-﻿# read in noscript arg or config.json
+﻿<#
+This section
+### read in noscript arg or config.json
 if (($args.Count -eq 1 -and $args[0] -eq "noscript") -or
       (Get-Content -Raw 'src/config.json' | ConvertFrom-Json -AsHashtable).createStaticContent -eq $true) {
    $noscript = $true
 } else {
    $noscript = $false
 }
-# clean up gh-pages
+#>
+$buildingJsonPath = "./building.json"
+$buildSysInfo = Get-Content -Path $buildingJsonPath -Raw | ConvertFrom-Json
+
+
 Remove-Item -Path "./gh-pages/*" -Recurse
 $baseCopySet = @(
    @{ Src = @{ Path = "src"; File = "config.json" };

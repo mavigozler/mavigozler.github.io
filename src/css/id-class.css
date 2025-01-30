@@ -69,6 +69,10 @@ table#rates {
    width: 85%;
    margin:0.5em auto;
 }
+th#examplecalc {
+   font-size:75%;
+   opacity: .75;
+}
 table#deviceprops {
    position: fixed;
    font: normal 8pt Roboto,sans-serif;

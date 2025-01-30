@@ -1,50 +1,201 @@
 {
-   // Use IntelliSense to learn about possible attributes.
-   // Hover to view descriptions of existing attributes.
-   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-   "version": "0.2.0",
-   "configurations": [
-      {
-         "name": "PowerShell Launch File in Active Panel",
-         "type": "PowerShell",
-         "request": "launch",
-         "script": "${file}",
-      //   "args": [ "noscript" ],
-         "cwd": "${cwd}"
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PowerShell: Launch Current File",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": "${file}",
+      "cwd": "${fileDirname}"
+    },
+    {
+      "name": "PowerShell: Launch Specified File",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": "${workspaceFolder}/build/building.ps1",
+      "cwd": "'${workspaceFolder}/build'"
+    },
+    {
+      "name": "Debug TestFile.ts Setup",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Compile tsconfig.test.json",
+      "program": "${workspaceRoot}/test/testFile.js",
+      "args": [  ],
+      "env": {
+        "NODE_ENV": "development"
       },
-      {
-         "name": "Debug tunescript.js",
-         "type": "node",
-         "program": "${workspaceFolder}/withscriptset/tunescript.js",
-         "env": {
-            "scripting": "yes"
-         },
-         "preLaunchTask": "tsc: build - tsconfig.json",
-         "request": "launch",
-         "skipFiles": [
-            "<node_internals>/**"
-         ],
-         "sourceMaps": true,
-         "stopOnEntry": true,
-         "smartStep": true,
+      "cwd": "${workspaceFolder}/test",
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Test Build of Build/Gulpfile/Run (WITH COMPILE)",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Build Gulpfile.JS in tsconfig.gulpfile.json (Build/Gulp)",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "args": [
+        "test",
+        "--gulpfile",
+        "${workspaceFolder}/build/Gulp/run/gulpfile.js",
+        "-c",
+        "${workspaceFolder}/build/Gulp/gulpfile.config.json"
+      ],
+      "env": {
+        "NODE_ENV": "development"
       },
-      {
-         "type": "chrome",
-         "request": "launch",
-         "name": "Launch Chrome VS Code Debugging",
-         "url": "http://localhost:9229",
-         "webRoot": "${workspaceFolder}/dist",
-         "sourceMaps": true,
-         "preLaunchTask": "build posting",
-         "runtimeArgs": [
-            "--no-cache",
-            "--remote-debugging-port=9229",
-            "--disable-web-security",
-            "--disable-gpu",
-            "--user-data-dir=~/chromeTemp"
-         ],
-         "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Gulpfile (NO COMPILE) from Build Folder",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "args": [
+        "--gulpfile",
+        "${workspaceFolder}/build/Gulp/run/gulpfile.js",
+        "-c",
+        "${workspaceFolder}/build/Gulp/gulpfile.config.json"
+      ],
+      "env": {
+        "NODE_ENV": "development"
       },
-
-   ]
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Active JS File In Editor Panel",
+      "type": "node",
+      "request": "launch",
+      "program": "${file}"
+    },
+    {
+      "name": "Debug Active TS File In Editor Panel",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Compile Active TS File Open Editor Window",
+      "cwd": "${fileDirname}/out", // put into 'out' subdir
+      "program": "${fileDirname}/out/${fileBasenameNoExtension}.js",
+      "outFiles": ["${fileDirname}/out/**/*.js"],  // Add this to map compiled JS files
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "args": [
+        "${fileBasenameNoExtension}.js"
+      ],
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "stopOnEntry": true
+    },
+    {
+      "name": "Debug Release Build of Build/Gulpfile/Run (WITH COMPILE)",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Build Gulpfile.JS in tsconfig.gulpfile.json (Build/Gulp)",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "args": [
+        "--gulpfile",
+        "${workspaceFolder}/build/Gulp/run/gulpfile.js",
+        "-c",
+        "${workspaceFolder}/build/Gulp/gulpfile.config.json",
+        "-t",
+        "browser",
+        "-s",
+        "release"
+      ],
+      "runtimeArgs": [
+        "--preserve-symlinks"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug NODE Build of Build/Gulpfile/Run (WITH COMPILE)",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Build Gulpfile.JS in tsconfig.gulpfile.json (Build/Gulp)",
+      "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+      "args": [
+        "--gulpfile",
+        "${workspaceFolder}/build/Gulp/run/gulpfile.js",
+        "-c",
+        "${workspaceFolder}/build/Gulp/gulpfile.config.json",
+        "-t",
+        "node",
+        "-s",
+        "build"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug server app",
+      "type": "node",
+      "request": "launch",
+      "preLaunchTask": "Compile Active TS File Open Editor Window",
+      "args": [
+        "src/server.ts"
+      ],
+      "sourceMaps": true
+    },
+    {
+      "name": "Hosted workbench",
+ //     "version": "dev",
+      "type": "msedge",
+      "request": "launch",
+      "url": "https://mhalloran.sharepoint.com/_layouts/workbench.aspx",
+      "webRoot": "${workspaceRoot}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///.././src/*": "${webRoot}/src/*",
+        "webpack:///../../../src/*": "${webRoot}/src/*",
+        "webpack:///../../../../src/*": "${webRoot}/src/*",
+        "webpack:///../../../../../src/*": "${webRoot}/src/*"
+      },
+      "runtimeArgs": [
+        "--remote-debugging-port=9222",
+        "-incognito"
+      ]
+    },
+    {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Next.js: debug full stack",
+      "runtimeExecutable": "git-bash",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/next",
+      "runtimeArgs": ["--inspect"],
+      "skipFiles": ["<node_internals>/**"],
+      "serverReadyAction": {
+        "action": "debugWithChrome",
+        "killOnServerStop": true,
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "webRoot": "${workspaceFolder}"
+      }
+    }
+  ]
 }
