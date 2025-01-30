@@ -1,5 +1,11 @@
 ﻿"use strict";
 
+/*****************************************************************
+ * determines capabilities of device (desktop, mobile) to format display
+ * - includes functions to determine device properties
+ * - includes contentBuilder() to customize content for static pages
+ *****************************************************************/
+
 import contentBuilder from "./content-builder.js";
 // import { jest, test } from "@jest/globals";
 interface MediaCapabilities {

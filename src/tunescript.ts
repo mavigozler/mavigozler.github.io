@@ -1,4 +1,12 @@
-﻿
+﻿"use strict";
+
+/********************************************************
+ * Reads in HTML and CSS files, makes changes to HEAD section 
+ * to produce static page with no javascript, and leave 
+ * 
+ * 
+ *******************************************************/
+
 import fs from "fs";
 import path from "path";
 import { JSDOM } from "jsdom";
