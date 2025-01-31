@@ -24,7 +24,8 @@ import contentBuilder from "./content-builder.js";
 // ========================================
 const HtmlReadFile = "src/base.html",
 	HtmlWriteIndexFile = "gh-pages/index.html",
-	HtmlWriteStaticFile = "gh-pages/static.html";
+	HtmlWriteStaticFile = "gh-pages/static.html",
+	TsConfigJSCompiledFilesPath = "build/compiledset";
 
 const CSSfiles = [
 	{ src: "src/css/elements.css", dest: "gh-pages/elements.css" },
@@ -32,8 +33,8 @@ const CSSfiles = [
 ];
 // ==========================================
 const CopyFiles = [
-	{ src: "./withscriptset/content-builder.js", dest: "./gh-pages/content-builder.js" },
-	{ src: "./withscriptset/tutor-posting.js", dest: "./gh-pages/tutor-posting.js" },
+	{ src: `${TsConfigJSCompiledFilesPath}/content-builder.js`, dest: "./gh-pages/content-builder.js" },
+	{ src: `${TsConfigJSCompiledFilesPath}/tutor-posting.js`, dest: "./gh-pages/tutor-posting.js" },
 	{ src: "./src/config.json", dest: "./gh-pages/config.json" }
 ];
 

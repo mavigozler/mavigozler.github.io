@@ -136,7 +136,7 @@ foreach ($task in $buildSysInfo.Tasks) {  # an array of tasks
                $destInfo = Get-Item -Path $destPath
                $srcInfo = Get-Item -Path $srcPath
                # if the destination for the file does not exist OR the source file is newer than the destination file, copy it
-               if ($null -ne $srcInfo -and $srcInfo.LastWriteTime.CompareTo($destInfo.LastWriteTime) -eq 0) {
+               if ($srcInfo.GetType() -is [System.IO.FileInfo] -and $srcInfo.LastWriteTime.CompareTo($destInfo.LastWriteTime) -eq 0) {
                   Write-Host "Skipping copying '$($srcInfo.FullName)'`n   to '$($destPath)'" `
                      "`n   because the source and destination files have the same last write time"
                   continue
@@ -169,8 +169,7 @@ foreach ($task in $buildSysInfo.Tasks) {  # an array of tasks
             Get-Command $task.executable -ErrorAction SilentlyContinue) {
             $argsArray = @($task.arguments)
             & $task.executable @argsArray
-            Write-Output "Executed: $($task.executable) with arguments: $($task.arguments)" `
-					"`nOutput:`n$($cmdOutput)"
+            Write-Output "Executed: $($task.executable) with arguments: $($task.arguments)"
          } else {
             Write-Output "Executable not found: $($task.executable)"
          }
