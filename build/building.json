@@ -39,9 +39,16 @@
          "action": "run",
          "executable": "tsc",
          "arguments": ["-p", "tsconfig.json"],
-         "skip": true
+         "skip": false
       },
-		{
+      {
+         "title": "post-compile processing",
+         "action": "run",
+         "executable": "node",
+         "arguments": [ "build/compiledset/tunescript.js" ],
+         "skip": false
+      },
+   	{
          "title": "Copy base files",
          "action": "copy",
          "copydef": "baseCopySet",
