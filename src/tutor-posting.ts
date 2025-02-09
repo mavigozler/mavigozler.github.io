@@ -6,8 +6,9 @@
  * - includes contentBuilder() to customize content for static pages
  *****************************************************************/
 
-import contentBuilder from "./content-builder.js";
-// import { jest, test } from "@jest/globals";
+import type { PostingConfigJsonFile } from "./types.d.ts";
+
+// import { jest, test } from "@jest/globals"
 interface MediaCapabilities {
 	type: "file";
    video: {
@@ -68,34 +69,35 @@ interface DeviceProperties {
 const CSSvalueRE = /(\-?\d+\.?(\d+)?)([a-z]{2})?/;
 
 const InitialStyleRules: {[key: string]:
-         { [key: string]:
-            string |
-            null |
-            Array<string | null>
-         }
-   } = {
-   "h1" : {
-      "fontSize": [null, "0.33 (14pt)" ] // format "number, (min-value)?"
-   },
-   "h2" : {
-      "fontSize": [ null, "0.33 (11pt)" ]
-   },
-   "h3" : {
-      "fontSize": [ null, "0.33 (9pt)" ]
-   },
-   "h4" : {
-      "fontSize": [ null, "0.33 (8pt)" ]
-   },
-   "#container": {
-      "width": [null, "auto" ]
-   },
-   "body": {
-      "fontSize": [ null, "0.33 (11pt)" ]
-   },
-   "table#rates": {
-      "width": [null, "auto" ]
+	{ [key: string]:
+		string |
+		null |
+		Array<string | null>
+	}
+} = {};
+
+export function contentBuilder(config: PostingConfigJsonFile, htmldoc: Document): void {
+	const document = htmldoc;
+   // base rate calculator for table
+   for (const baseRate in config.baseRates) {
+      const spanElem = document.getElementById(baseRate);
+      spanElem?.replaceChild(document.createTextNode("$" + config.baseRates[baseRate].toString()),
+         spanElem.firstChild as ChildNode);
    }
-};
+   // calculate group reduction rate
+   const rows = document.querySelectorAll("#reduction tr");
+   for (let row = 1; row < rows.length; row++) {
+      const cols = rows[row].querySelectorAll("td");
+      cols[2].appendChild(document.createTextNode("$" + config.DollarReduction[row - 1].toFixed(2)));
+      cols[1].appendChild(document.createTextNode(
+         (100 - config.DollarReduction[row - 1] / config.DollarReduction[0] * 100).toFixed(0) + "%"
+      ));
+   }
+   document.getElementById("example-base")?.appendChild(
+      document.createTextNode("$" + config.DollarReduction[0])
+   );
+}
+
 
 function populateDevicePropertiesTable(checkedProperties: {[key: string]: string | number | boolean}) {
    const devicePropertiesTable: HTMLTableElement = document.getElementById("deviceprops") as HTMLTableElement;
@@ -319,66 +321,72 @@ function adjustCssValue(adjustParam: [string, string]): string {
 
 let isDeviceSmall: boolean;
 
-document.addEventListener("DOMContentLoaded", () => {
-	const viewportWidthCutoff = window.matchMedia('(max-width: 500px)').matches ? 500 : 768;
-	//const viewportWidthCutoff = 500; // px
-	const checkDeviceSize = () => {
-		return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
-	};
+// this is the main entry point for the script
+//  this TS file also used by 'tunescript.ts' to modify the the 'tutorial-posting.html' file
+//  contains function 'contentBuilder()' to customize content for static pages using Node, so
+//  the document object may not be present as it's for the browser environment
+if (typeof document !== "undefined") {
+	document.addEventListener("DOMContentLoaded", () => {
+		const viewportWidthCutoff = window.matchMedia('(max-width: 500px)').matches ? 500 : 768;
+		//const viewportWidthCutoff = 500; // px
+		const checkDeviceSize = () => {
+			return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
+		};
 
-	fetch('config.json')
-	.then(response => response.json())
-	.then(config => {
-		// Use your config data
-		const showDeviceProperties = config;
-		mediaAdjustments("initialize");
-		// Object.assign(_DeviceProperties, currentDeviceProperties);
-		window.addEventListener("resize", () => {
-			isDeviceSmall = checkDeviceSize();
-			const deviceProperties = getCurrentDeviceProperties();
-			console.log(`\nDevice resize occurred to 'viewport width' = ${deviceProperties.viewportWidth}px` +
-					`\nDevice size is ${isDeviceSmall == true ? "small (mobile?)" : "normal/large" }`);
-			if (showDeviceProperties == true) {
-				populateDevicePropertiesTable({
-					"screen height": deviceProperties.screenHeight,
-					"screen avail height": deviceProperties.screenAvailHeight,
-					"viewport height": deviceProperties.viewportHeight,
-					"screen width": deviceProperties.screenWidth,
-					"screen avail width": deviceProperties.screenAvailWidth,
-					"viewport width": deviceProperties.viewportWidth,
-					"aspect ratio": deviceProperties.aspectRatio.toFixed(2)
-				});
-			} else /*
-				console.log(
-					`screen height: ${deviceProperties.screenHeight}\n` +
-					`screen avail height: ${deviceProperties.screenAvailHeight}\n` +
-					`viewport height: ${deviceProperties.viewportHeight}\n` +
-					`screen width: ${deviceProperties.screenWidth}\n` +
-					`screen avail width: ${deviceProperties.screenAvailWidth}\n` +
-					`viewport width: ${deviceProperties.viewportWidth}\n` +
-					`aspect ratio: ${deviceProperties.aspectRatio.toFixed(2)}`
-				) */
-			mediaAdjustments("adjust");
-		});
-		window.dispatchEvent(new Event("resize"));
-		const themeSwitcher = document.getElementById('theme-switcher');
-		// Check and apply saved theme preference
-		const savedTheme = localStorage.getItem('theme');
-		if (savedTheme)
-			document.documentElement.setAttribute('data-theme', savedTheme);
-		else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
-			document.documentElement.setAttribute('data-theme', 'dark');
+		fetch('config.json')
+		.then(response => response.json())
+		.then((config: PostingConfigJsonFile) => {
+			// Use your config data
+			const showDeviceProperties = config.showDeviceProperties;
+			mediaAdjustments("initialize");
+			// Object.assign(_DeviceProperties, currentDeviceProperties);
+			window.addEventListener("resize", () => {
+				isDeviceSmall = checkDeviceSize();
+				const deviceProperties = getCurrentDeviceProperties();
+				console.log(`\nDevice resize occurred to 'viewport width' = ${deviceProperties.viewportWidth}px` +
+						`\nDevice size is ${isDeviceSmall == true ? "small (mobile?)" : "normal/large" }`);
+				if (showDeviceProperties == true) {
+					populateDevicePropertiesTable({
+						"screen height": deviceProperties.screenHeight,
+						"screen avail height": deviceProperties.screenAvailHeight,
+						"viewport height": deviceProperties.viewportHeight,
+						"screen width": deviceProperties.screenWidth,
+						"screen avail width": deviceProperties.screenAvailWidth,
+						"viewport width": deviceProperties.viewportWidth,
+						"aspect ratio": deviceProperties.aspectRatio.toFixed(2)
+					});
+				} else /*
+					console.log(
+						`screen height: ${deviceProperties.screenHeight}\n` +
+						`screen avail height: ${deviceProperties.screenAvailHeight}\n` +
+						`viewport height: ${deviceProperties.viewportHeight}\n` +
+						`screen width: ${deviceProperties.screenWidth}\n` +
+						`screen avail width: ${deviceProperties.screenAvailWidth}\n` +
+						`viewport width: ${deviceProperties.viewportWidth}\n` +
+						`aspect ratio: ${deviceProperties.aspectRatio.toFixed(2)}`
+					) */
+				mediaAdjustments("adjust");
+			});
+			window.dispatchEvent(new Event("resize"));
+			const themeSwitcher = document.getElementById('theme-switcher');
+			// Check and apply saved theme preference
+			const savedTheme = localStorage.getItem('theme');
+			if (savedTheme)
+				document.documentElement.setAttribute('data-theme', savedTheme);
+			else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+				document.documentElement.setAttribute('data-theme', 'dark');
 
-		// Toggle theme and save preference
-		themeSwitcher?.addEventListener('click', () => {
-			const currentTheme = document.documentElement.getAttribute('data-theme');
-			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-			document.documentElement.setAttribute('data-theme', newTheme);
-			document.documentElement.style.colorScheme = newTheme;
-			localStorage.setItem('theme', newTheme);
+			// Toggle theme and save preference
+			themeSwitcher?.addEventListener('click', () => {
+				const currentTheme = document.documentElement.getAttribute('data-theme');
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+				document.documentElement.setAttribute('data-theme', newTheme);
+				document.documentElement.style.colorScheme = newTheme;
+				localStorage.setItem('theme', newTheme);
+			});
+			contentBuilder(config, document);
+		}).catch(error => {
+			console.error('Error fetching config:', error);
 		});
-		contentBuilder(document);
-	}).catch(error => {
-		console.error('Error fetching config:', error);
 	});
-});
+}
