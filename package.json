@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "del": "^8.0.0",
+    "glob": "^11.0.1",
     "network-information-types": "^0.1.1"
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "cssnano": "^7.0.6",
     "fs": "0.0.1-security",
     "jsdom": "^25.0.1",
-    "postcss": "^8.4.49"
+    "postcss": "^8.4.49",
+    "rimraf": "^6.0.1"
   }
 }
