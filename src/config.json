@@ -5,18 +5,18 @@
       30, 27.5, 25, 23, 21, 20
    ],
    "baseRates": {
-      "Math6-9": 17,
-      "Science6-9": 17,
-      "Science10-12": 19,
-      "Math10-12": 20,
-      "GenChem": 22,
-      "OrgChem": 22,
-      "Biochem": 22,
-      "Biology": 20,
-      "WebDev": 25,
-      "MSO": 24,
-      "SharePoint": 27,
-      "PowerApp": 27
+      "Math6-9": 23,
+      "Science6-9": 20,
+      "Science10-12": 22,
+      "Math10-12": 22,
+      "GenChem": 25,
+      "OrgChem": 25,
+      "Biochem": 25,
+      "Biology": 21,
+      "WebDev": 28,
+      "MSO": 28,
+      "SharePoint": 28,
+      "PowerApp": 23
    },
    "InitialStyleRules": {
       "h1" : {

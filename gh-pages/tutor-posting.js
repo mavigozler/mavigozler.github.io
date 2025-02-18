@@ -1,7 +1,7 @@
 "use strict";
 const CSSvalueRE = /(\-?\d+\.?(\d+)?)([a-z]{2})?/;
 const InitialStyleRules = {};
-export function contentBuilder(config, htmldoc) {
+function contentBuilder(config, htmldoc) {
     const document = htmldoc;
     // base rate calculator for table
     for (const baseRate in config.baseRates) {
