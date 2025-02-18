@@ -66,9 +66,9 @@ function main() {
 			console.log("HTML file processing completed successfully");
 			processCss(config).then(() => {
 				console.log("CSS file processing completed successfully");
-				copyFiles(config).then(() => {
-					const importExportEditPaths = stringSubstitutions(config.Paths_Sets.ImportExportEditFiles, config);
-					delImportExportStmts(importExportEditPaths as string[], true).then(() => {
+				const importExportEditPaths = stringSubstitutions(config.Paths_Sets.ImportExportEditFiles, config);
+				delImportExportStmts(importExportEditPaths as string[], true).then(() => {
+					copyFiles(config).then(() => {
 						setupTesting(config).then(() => {
 							console.log("All processing completed successfully");
 						}).catch((err: unknown) => {
@@ -236,10 +236,12 @@ function processHtml(config: PostingConfigJsonFile): Promise<void> {
 								bodyElem.insertBefore(document.createTextNode("\n"), bodyElem.firstChild || null);
 								switchThemeButton.id = "theme-switcher";
 								switchThemeButton.appendChild(document.createTextNode("Switch Theme"));
+								/*
 								const devicePropsTable = document.createElement("table");
 								bodyElem.insertBefore(devicePropsTable, bodyElem.firstChild || null);
 								bodyElem.insertBefore(document.createTextNode("\n"), bodyElem.firstChild || null);
 								devicePropsTable.id = "deviceprops";
+								*/
 								// console.log("HTML content\n" + dom.serialize());
 								if (!fs.existsSync(path.dirname(htmlFiles.HtmlWriteIndexFile)))
 									fs.mkdirSync(path.dirname(htmlFiles.HtmlWriteIndexFile), { recursive: true });
