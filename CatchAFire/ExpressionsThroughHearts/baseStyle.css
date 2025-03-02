@@ -1,11 +1,11 @@
 /* save as 'baseStyle.css' */
 body {
   background-color: #f0fff0;
-  font: 16px/1.5 Arial, sans-serif;
+  font:normal 12pt Arial, sans-serif;
 }
 #title {
   color: #1316c5;
-  font: bold 16pt Arial, sans-serif;
+  font: bold 18pt Arial, sans-serif;
   margin: 0;
   padding:0;
   text-align: center;
@@ -19,12 +19,21 @@ body {
   margin: 2em auto;
   padding: 2em;
 }
-.container h1 {
+h1 {
   font:bold 14pt Arial, sans-serif;
-  margin: 0 0 10px;
+  margin: 1em 0 0 0;
 }
-h1, h2, h3, h4, h5, h6 {
-  font-weight: normal;
+h2 {
+  font:bold 12pt Arial, sans-serif;
+  margin: 1em 0 0 0;
+}
+h3 {
+  font:bold italic 11pt Arial, sans-serif;
+  margin: 1em 0 0 0;
+}
+h4 {
+  font:bold 10pt Arial, sans-serif;
+  margin: 1em 0 0 0;
 }
 p {
   margin: 0 0 10px;
@@ -36,13 +45,7 @@ ul, ol {
   margin: 0 0 10px 25px;
   padding-left: 0;
 }
-ul li, ol li {
-  margin: 0 0 5px 0;
-}
-li ul, li ol {
-  margin: 0 0 5px 25px;
-  padding-left: 1em;
-}
+
 a {
   color: #0000ff;
   text-decoration: none;
