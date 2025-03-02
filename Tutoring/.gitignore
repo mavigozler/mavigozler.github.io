@@ -1,0 +1,8 @@
+﻿node_modules/
+build/compiledset
+**/*.js.map
+.vscode/
+src/fsys*
+src/stringsExtended.ts
+.vscode
+test/
