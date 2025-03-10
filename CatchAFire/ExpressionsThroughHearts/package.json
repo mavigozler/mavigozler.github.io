@@ -1,0 +1,21 @@
+{
+  "name": "ExpressionsThroughHearts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.5.2",
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "fs": "0.0.1-security",
+    "glob": "^11.0.1",
+    "json5": "^2.2.3",
+    "json6": "^1.0.3",
+    "json7": "^0.2.0"
+  }
+}

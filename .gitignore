@@ -1,0 +1,7 @@
+node_modules
+js
+**/*.js
+**/*.js.map
+build/Gulp/src
+.vscode
+GenLib/**/*.*
