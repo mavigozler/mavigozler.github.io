@@ -10,38 +10,99 @@
   .URLanalysis {
     white-space:pre-wrap;
   }
+  div.imgcomp {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 5px;
+  }
+  div.analytical-text {
+    font:normal 10pt Arial,sans-serif;
+    border: 1px solid gray;
+  }
 </style>
 <script src="./js/bigimage-v2.js"></script>
 <script src="./js/iCss.js"></script>
 <script src="./js/numberExtended.js"></script>
 </head>
-<body onload="setThumbedImages(document.body, true);">
+<!--  Template 
+<div class="URLanalysis">
+URL: <a href="https://expressionsthroughhearts.org/contact">Contact</a>
+<div class="imgcomp">
+  <img src="img/ContactTab.png" alt="Contact tab; full view" class="thumbImage0.50">
+  <div class="analytical-text">
+   Home/landing page.
+   Identified as "Home" on the website
+   
+   Anchors
+   1. Contact
+   2. 
+   
+  </div>
+
+</div>
+</div>  
+-->
+<body> <!--onload="setThumbedImages(document.body, true);"-->
 <div class="container">
+
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/">Home (landing)</a>
-Home/landing page.
-Identified as "Home" on the website
+<div class="imgcomp">
 
-Anchors
-1. Contact
-2. 
+</div>
 </div>
 
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/contact">Contact</a>
+<div class="imgcomp">
+  <img src="img/ContactTab.png" alt="Contact tab; full view" class="thumbImage0.50">
+  <div class="analytical-text">
+   Home/landing page.
+   Identified as "Home" on the website
+   
+   Anchors
+   1. Contact
+   2. 
+   
+  </div>
+ 
+</div>
 </div>
 
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/programs-and-services">Programs &amp; Services</a>
-<img src="img/PandS-1.png" alt="Programs and Service tab, scroll height #1" class="thumbImage0.50"><img 
-src="img/PandS-2.png" alt="Programs and Service tab, scroll height #2" class="thumbImage0.50"><img 
-src="img/PandS-3.png" alt="Programs and Service tab, scroll height #2" class="thumbImage0.50">
-
+<div class="imgcomp">
+  <img src="img/PandS-1.png" alt="Programs and Service tab, scroll height #1" class="thumbImage0.50">
+ <div class="analytical-text">
+  <ol>
+  <li>Recommend removing bullet point and restyling header</li>
+  </ol>
+ </div>
 </div>
+
+<div class="imgcomp">
+  <img src="img/PandS-2.png" alt="Programs and Service tab, scroll height #2" class="thumbImage0.50">
+  <div class="analytical-text">
+
+  </div>
+</div> 
+
+<div class="imgcomp">
+<img src="img/PandS-3.png" alt="Programs and Service tab, scroll height #3" class="thumbImage0.50">
+<div class="analytical-text">
+<ol>
+  <li>Finishing the text on these headers</li>
+</ol>
+</div>
+</div>
+
 
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/calendar">Calendar</a>
-
+<div class="imgcomp">
+  <img src="img/Calendar.png" alt="Calendar tab, full height" class="thumbImage0.50">
+  <div class="analytical-text">
+    
 Database: Loading animination: expanding circles 
 
 1. Text: "Upcoming Events"
@@ -58,11 +119,21 @@ Notes
 <li>Event imaged anchor not functional</li>
 <li>"Volunteer" control not functional</li>
 </ul>
+  </div>
+</div>
+
 </div>
 
 
 <div class="URLanalysis">
 URL:  <a href="https://expressionsthroughhearts.org/m/login">Login Page</a>
+<div class="imgcomp">
+  <img src="img/AccountSignIn.png" alt="Account sign-in full view" class="thumbImage0.50">
+  <div class="analytical-text">
+  "Account Sign In" Form
+  </div>
+   
+</div>
 </div>
   
 
@@ -78,8 +149,32 @@ URL: <a href="https://expressionsthroughhearts.org/m/create-account">Create Acco
 URL: <a href="https://expressionsthroughhearts.org/m/login?r=%2Fm%2Fbookings">Bookings</a>
 </div>
 
+<div>
+No URL: Chat - Contact
+<div class="imgcomp">
+  <img src="img/Chat-Contact-control.png" alt="Chat control" class="thumbImage0.50">
+  <div class="analytical-text">
+    Chat Control
+  </div>
+  <img src="img/Chat-Contact-transition-1.png" alt="Chat contact transition 1" class="thumbImage0.50">
+  <div class="analytical-text">
+    Transition 1
+  </div>
+  <img src="img/Chat-Contact-transition-2.png" alt="Chat contact transition 2" class="thumbImage0.50">
+  <div class="analytical-text">
+    Transition 2
+  </div>
+  <img src="img/Chat-Contact-transition-3.png" alt="Chat contact transition 3" class="thumbImage0.50">
+  <div class="analytical-text">
+    Transition 3
+  </div>
+ 
+</div>
+</div>
+
+
 <p><b>Google Analytics tag</b>
-<pre style="white-space:pre-wrap;"">
+<pre style="white-space:pre-wrap;">
 &lt;!-- Google tag (gtag.js) --&gt;
 &lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-SXYCHMQ936"&gt;&lt;/script&gt;
 &lt;script&gt;
@@ -91,6 +186,7 @@ URL: <a href="https://expressionsthroughhearts.org/m/login?r=%2Fm%2Fbookings">Bo
 &lt;/script&gt;
 </pre>
 
+</div>
 </div>
 </body>
 </html>
