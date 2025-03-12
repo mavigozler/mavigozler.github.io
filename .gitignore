@@ -1,14 +1,22 @@
-node_modules
-js
-**/*.js
-**/*.js.map
-**/build/Gulp/src/**
-**/build/Gulp/run/**
-build/Gulp/src
-**/.vscode/**
-GenLib/**/*.*
-CatchAFire/AngularTutorial
-CatchAFire/ExpressionsThroughHearts/GenLib/
+# Ignore all JavaScript files
+*.js
+
+# Unignore specific js directories under ExpressionsThroughHearts
+!CatchAFire/ExpressionsThroughHearts/
+!CatchAFire/ExpressionsThroughHearts/**/
+!CatchAFire/ExpressionsThroughHearts/js/
+!CatchAFire/ExpressionsThroughHearts/js/**/*.js
+!CatchAFire/ExpressionsThroughHearts/js/**/*.json
+
+# Ignore symlinked directories
+CatchAFire/ExpressionsThroughHearts/build/Gulp/src
 CatchAFire/ExpressionsThroughHearts/GenLib
-todo/
-GenLib
+CatchAFire/ExpressionsThroughHearts/.vscode
+
+# Other ignore rules
+node_modules/
+**/*.js.map
+**/build/Gulp/run/
+CatchAFire/AngularTutorial/
+CatchAFire/ExpressionsThroughHearts/GenLib/
+
