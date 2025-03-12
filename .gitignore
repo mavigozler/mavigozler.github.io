@@ -5,7 +5,7 @@ js
 **/build/Gulp/src/**
 **/build/Gulp/run/**
 build/Gulp/src
-.vscode/**
+**/.vscode/**
 GenLib/**/*.*
 CatchAFire/AngularTutorial
 CatchAFire/ExpressionsThroughHearts/GenLib/
