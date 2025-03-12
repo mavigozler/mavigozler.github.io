@@ -1,4 +1,4 @@
-- name: Checkout repository
+- name: Checkout mavigozler.github.io
   uses: actions/checkout@v4
   with:
     fetch-depth: 1
