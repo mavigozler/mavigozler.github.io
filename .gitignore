@@ -5,3 +5,5 @@ js
 build/Gulp/src
 .vscode
 GenLib/**/*.*
+CatchAFire/AngularTutorial/todo
+todo/
