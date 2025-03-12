@@ -2,9 +2,10 @@ node_modules
 js
 **/*.js
 **/*.js.map
-/**/build/Gulp/src/
+**/build/Gulp/src/**
+**/build/Gulp/run/**
 build/Gulp/src
-.vscode
+.vscode/**
 GenLib/**/*.*
 CatchAFire/AngularTutorial
 CatchAFire/ExpressionsThroughHearts/GenLib/
