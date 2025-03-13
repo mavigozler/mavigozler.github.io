@@ -7,8 +7,14 @@
     <title>Site Pages Analysis</title>
     <link rel="stylesheet" href="baseStyle.css">
 <style>
+  .container {
+    width:70em;
+  }
   .URLanalysis {
     white-space:pre-wrap;
+    border:5px solid blue;
+    padding:3px;
+    margin:6px 0;
   }
   div.imgcomp {
     display: grid;
@@ -18,6 +24,13 @@
   div.analytical-text {
     font:normal 10pt Arial,sans-serif;
     border: 1px solid gray;
+    padding:1em;
+  }
+  div.little-box-div {
+    border:2px solid black;
+    padding:0.5em;
+    margin:0.5em 0 0 0;
+    background-color:#efe;
   }
 </style>
 <script src="./js/bigimage-v2.js"></script>
@@ -28,7 +41,7 @@
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/contact">Contact</a>
 <div class="imgcomp">
-  <img src="img/ContactTab.png" alt="Contact tab; full view" class="thumbImage0.50">
+  <img src="" alt="" class="thumbImage0.50">
   <div class="analytical-text">
    Home/landing page.
    Identified as "Home" on the website
@@ -38,32 +51,133 @@ URL: <a href="https://expressionsthroughhearts.org/contact">Contact</a>
    2. 
    
   </div>
-
 </div>
 </div>  
 -->
 <body> <!--onload="setThumbedImages(document.body, true);"-->
 <div class="container">
-
+<div style="width:50em;margin:0 auto;">
+Format:
+<ol>
+  <li>This is composed of 2 x 1 grid rows</li>
+  <li>Each of these rows has an image of PART or the WHOLE of a site webpage on 
+    the left side. You should be able to click the image on the left side of grid row
+    and that image should open in a new window at original resolution for you to 
+    inspect. On the right side is text which are notes about what is seen and suggestions
+    for action. Note the content will change with updated notes and directions for action
+  </li>
+  <li>The thick blue border containing several grids represents a site 
+    URL (ie. webpaage on your site)
+  </li>
+</ol>
+</div>
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/">Home (landing)</a>
-<div class="imgcomp">
 
+<div class="imgcomp">
+  <img src="img/Home-v1-banner-image.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Home/landing page consists of a 8 scrolled views and a fixed Cookies approval form
+
+banner image at top: Hearts in Hands for "Expressions Through Hearts" Visual 
+   
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v2-GetInvolved.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+"Get Involved" button control => to URL 
+<a href="https://expressionsthroughhearts.org/contact">Contact</a> page
+   
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v3-About-services-about-us-who-we-are.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Text paragraphs should not be centered with uneven left-right edges/margins, but 
+instead fully justified within the containing column
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v4-Programs-Services.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Either increase font size and do better spacing on bullet points to match 
+height of image, or better, edit image at bottom to remove concrete pavement 
+which may or may not add to image
+   
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v5-Power-of-Giving-image-select.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Lightbox-style image galleries always cool stuff for the user and convey a lot of 
+what org wants to present.
+
+Image rotation? Check tool used and its features/options.
+   
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v6-Heart-In-Hand-Donate-Today-Control.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Heart in hand logo fill.
+
+Seemingly broken "Donate Today" control button: jumps to top of Home page.
+Database setup
+
+Reposition Give Hope column higher
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v7-Message-Form-Events-Fieldset.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+1. Check functionality of database service for collecting message.
+2. Calendar function fix in right column 
+   
+  </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-v8-Mission-Vision-Impact.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+Mission, Vision, Impact statement.
+
+<div class="little-box-div"><b>Other declarations?</b>
+
+Core Values: These outline the fundamental beliefs and guiding principles that dictate 
+behavior and action within the organization.
+
+Corporate Responsibility Statements: These express the organization's commitment to ethical 
+practices, social responsibility, and environmental sustainability.
+
+Corporate Identity Statements: These define the unique characteristics and culture of 
+the organization, shaping its internal and external image. 
 </div>
 </div>
+</div>
+
+<div class="imgcomp">
+  <img src="img/Home-cookies-control-position-fixed.png" alt="" class="thumbImage0.50">
+  <div class="analytical-text">
+    Cookies acceptance form
+
+  </div>
+</div>
+</div>
+
 
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/contact">Contact</a>
 <div class="imgcomp">
   <img src="img/ContactTab.png" alt="Contact tab; full view" class="thumbImage0.50">
   <div class="analytical-text">
-   Home/landing page.
-   Identified as "Home" on the website
-   
-   Anchors
-   1. Contact
-   2. 
-   
+  
   </div>
  
 </div>
@@ -95,7 +209,7 @@ URL: <a href="https://expressionsthroughhearts.org/programs-and-services">Progra
 </ol>
 </div>
 </div>
-
+</div>
 
 <div class="URLanalysis">
 URL: <a href="https://expressionsthroughhearts.org/calendar">Calendar</a>
@@ -171,7 +285,7 @@ No URL: Chat - Contact
  
 </div>
 </div>
-
+</div>
 
 <p><b>Google Analytics tag</b>
 <pre style="white-space:pre-wrap;">
@@ -187,6 +301,6 @@ No URL: Chat - Contact
 </pre>
 
 </div>
-</div>
+
 </body>
 </html>
