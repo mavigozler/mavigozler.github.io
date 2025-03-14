@@ -103,7 +103,7 @@ class HtmlImgControl {
             //		imgElem.style.height = "auto"; // ✅ Maintain aspect ratio */
             imgElem.style.display = "block"; // ✅ Ensures proper resizing */
             imgElem.addEventListener("click", (evt) => {
-                this.bigimage(evt.currentTarget, true);
+                this.bigimage(evt.currentTarget.cloneNode(true), true);
             });
             // imgStyle = getComputedStyle(imgElem);
             imgParent = imgElem.parentNode;
@@ -335,13 +335,13 @@ class HtmlImgControl {
         else
             filename = nameParts[1] + nameParts[2] + nameParts[3];
         if (origRez == true)
-            return (this.origImage(filename, imgObj.alt));
-        return (this.makeBigImage(filename, imgObj.alt));
+            return this.origImage(imgObj);
+        return this.makeBigImage(imgObj);
     }
-    origImage(imgURL, imageTitle) {
+    origImage(imgObj) {
         let origwin;
         this.methodError = "";
-        if ((origwin = window.open(imgURL, "", "resizable=yes,scrollbars=yes")) == null) {
+        if ((origwin = window.open("", "", "resizable=yes,scrollbars=yes")) == null) {
             this.methodError = "A child window could not be opened which is necessary. Incorrect URL?";
             return;
         }
@@ -350,7 +350,7 @@ class HtmlImgControl {
         const headElem = doc.getElementsByTagName("head")[0];
         const titleElem = doc.createElement("title");
         headElem.appendChild(titleElem);
-        titleElem.appendChild(doc.createTextNode("Original Size: " + imageTitle));
+        titleElem.appendChild(doc.createTextNode("Original Size: " + imgObj.alt));
         const metaElem = document.createElement("meta");
         metaElem.setAttribute("html-equiv", "Content-Type");
         metaElem.setAttribute("content", "text/html; charset=utf-8");
@@ -365,25 +365,25 @@ class HtmlImgControl {
         divElem.style.textAlign = "center";
         divElem.style.color = "white";
         divElem.style.font = "bold 1em 'Courier New',Courier,monospace";
-        divElem.appendChild(doc.createTextNode(imageTitle));
+        divElem.appendChild(doc.createTextNode(imgObj.alt));
         divElem.appendChild(doc.createElement("br"));
         const imgElem = doc.createElement("img");
-        imgElem.src = imgURL;
+        imgElem.src = imgObj.src;
         imgElem.alt = "Big Goddam Image\n\nClick the right mouse button and select " +
             "'Save Picture As...' to save this image to your hard disk\n" +
-            "\nURL=" + imgURL;
+            "\nURL=" + imgObj.src;
         divElem.appendChild(imgElem);
         bodyElem.appendChild(divElem);
     }
     // this is a support function for bigimage()
-    makeBigImage(imgURL, imageTitle) {
+    makeBigImage(imgObj) {
         const winResize = 1.25, imgResize = 0.80;
         let paraElem, doc, spanElem;
         this.methodError = "";
-        if (typeof imgURL != "string" || imgURL.length == 0)
+        if (typeof imgObj.src != "string" || imgObj.src.length == 0)
             this.methodError = "The argument for parameter 'imgURL' must be a string with a valid URL";
-        if (typeof imageTitle != "string" || imageTitle.length == 0)
-            imageTitle = "*** this image had no title ***";
+        if (typeof imgObj.alt != "string" || imgObj.alt.length == 0)
+            imgObj.alt = "*** this image had no title ***";
         this.imgWin = window.open("" /*window.location.href*/, "", "resizable=no,scrollbars=no;,height=" +
             screen.availHeight * 0.98 + ",width=" + screen.availWidth * 0.98);
         if (this.imgWin == null)
@@ -394,7 +394,7 @@ class HtmlImgControl {
         const headElem = doc.getElementsByTagName("head")[0];
         const titleElem = doc.createElement("title");
         headElem.appendChild(titleElem);
-        titleElem.appendChild(doc.createTextNode(imageTitle));
+        titleElem.appendChild(doc.createTextNode(imgObj.alt));
         const metaElem = doc.createElement("meta");
         metaElem.setAttribute("html-equiv", "Content-Type");
         metaElem.setAttribute("content", "text/html; charset=utf-8");
@@ -429,15 +429,15 @@ class HtmlImgControl {
         paraElem.style.textAlign = "center";
         paraElem.style.color = "white";
         paraElem.style.font = "bold 1em 'Courier New',Courier,monospace";
-        paraElem.appendChild(doc.createTextNode(imageTitle));
+        paraElem.appendChild(doc.createTextNode(imgObj.alt));
         paraElem.appendChild(doc.createElement("br"));
         const theImage = doc.createElement("img");
-        theImage.src = imgURL;
+        theImage.src = imgObj.src;
         theImage.id = "the-Image";
         theImage.alt = "Big Goddam Image\nClick the right mouse button and select " +
             "'Save Picture As...' to save this image to your hard disk";
         theImage.addEventListener("click", () => {
-            return this.origImage(imgURL, imageTitle);
+            return this.origImage(imgObj);
         }, false);
         paraElem.appendChild(theImage);
         doc.getElementById("origrez").appendChild(doc.createTextNode(theImage.width + " \u00d7 " + theImage.height));
