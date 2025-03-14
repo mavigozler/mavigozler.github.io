@@ -112,5 +112,6 @@
     "GenLib/bigimage-v2.ts",
     "GenLib/iCss.ts",
     "GenLib/numberExtended.ts",
+    "GenLib/checkImgLoading.ts"
   ]
 }
