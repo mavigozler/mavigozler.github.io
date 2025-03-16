@@ -327,13 +327,14 @@ class HtmlImgControl {
         origRez is a boolean: if true, open a window immediately to the image's
             original resolution;  if not set or false, then it jumps by intermediates */
     bigimage(imgObj, origRez) {
-        let nameParts, filename;
+        //		let nameParts: RegExpMatchArray | null,
+        //			filename: string;
         if (origRez == null || typeof (origRez) == "undefined")
             origRez = false;
-        if ((nameParts = imgObj.src.match(/(.*)\/thumbs(.*)-thumb(.*)/)) == null)
-            filename = imgObj.src;
-        else
-            filename = nameParts[1] + nameParts[2] + nameParts[3];
+        //		if ((nameParts = imgObj.src.match(/(.*)\/thumbs(.*)-thumb(.*)/)) == null)
+        //			filename = imgObj.src;
+        //		else
+        //			filename = nameParts[1] + nameParts[2] + nameParts[3];
         if (origRez == true)
             return this.origImage(imgObj);
         return this.makeBigImage(imgObj);
@@ -369,7 +370,7 @@ class HtmlImgControl {
         divElem.appendChild(doc.createElement("br"));
         const imgElem = doc.createElement("img");
         imgElem.src = imgObj.src;
-        imgElem.alt = "Big Goddam Image\n\nClick the right mouse button and select " +
+        imgElem.alt = "Huge Image\n\nClick the right mouse button and select " +
             "'Save Picture As...' to save this image to your hard disk\n" +
             "\nURL=" + imgObj.src;
         divElem.appendChild(imgElem);
@@ -434,7 +435,7 @@ class HtmlImgControl {
         const theImage = doc.createElement("img");
         theImage.src = imgObj.src;
         theImage.id = "the-Image";
-        theImage.alt = "Big Goddam Image\nClick the right mouse button and select " +
+        theImage.alt = "Huge Image\nClick the right mouse button and select " +
             "'Save Picture As...' to save this image to your hard disk";
         theImage.addEventListener("click", () => {
             return this.origImage(imgObj);

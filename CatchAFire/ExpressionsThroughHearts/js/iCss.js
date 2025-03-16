@@ -39,7 +39,7 @@ class iCss {
         }
         if (i == doc.styleSheets.length) {
             if (createIfNull != true)
-                return null;
+                return;
             styleElem = doc.createElement("style");
             //	styleElem.type = "text/css";
             doc.head.appendChild(styleElem);
