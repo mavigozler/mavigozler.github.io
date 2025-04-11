@@ -13,8 +13,8 @@ to data or computing device, especially when used as intended.
 For instructions on how to use the interface, see the bottom of this script
 source.
 *****************************************************************************/
-
-
+import { MathOperation, iCss } from "./iCss";
+export { htmlDocTypeDecl, xhtmlMetaContentTypeAsXHTML, xhtmlDocTypeDecl, htmlMetaContentTypeAsHTML, HtmlImgControl };
 const htmlDocTypeDecl = "<!DOCTYPE html\n" +
     "<html>\n";
 const xhtmlDocTypeDecl = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
@@ -340,7 +340,7 @@ class HtmlImgControl {
         return this.makeBigImage(imgObj);
     }
     origImage(imgObj) {
-        let origwin;
+        let origwin, caption;
         this.methodError = "";
         if ((origwin = window.open("", "", "resizable=yes,scrollbars=yes")) == null) {
             this.methodError = "A child window could not be opened which is necessary. Incorrect URL?";
@@ -351,7 +351,9 @@ class HtmlImgControl {
         const headElem = doc.getElementsByTagName("head")[0];
         const titleElem = doc.createElement("title");
         headElem.appendChild(titleElem);
-        titleElem.appendChild(doc.createTextNode("Original Size: " + imgObj.alt));
+        if ((caption = imgObj.getAttribute("data-caption")) == null)
+            caption = imgObj.alt;
+        titleElem.appendChild(doc.createTextNode("Original Size: " + caption));
         const metaElem = document.createElement("meta");
         metaElem.setAttribute("html-equiv", "Content-Type");
         metaElem.setAttribute("content", "text/html; charset=utf-8");
@@ -366,25 +368,27 @@ class HtmlImgControl {
         divElem.style.textAlign = "center";
         divElem.style.color = "white";
         divElem.style.font = "bold 1em 'Courier New',Courier,monospace";
-        divElem.appendChild(doc.createTextNode(imgObj.alt));
+        divElem.appendChild(doc.createTextNode(caption));
         divElem.appendChild(doc.createElement("br"));
         const imgElem = doc.createElement("img");
         imgElem.src = imgObj.src;
-        imgElem.alt = "Huge Image\n\nClick the right mouse button and select " +
+        imgElem.setAttribute("data-caption", "Huge Image\n\nClick the right mouse button and select " +
             "'Save Picture As...' to save this image to your hard disk\n" +
-            "\nURL=" + imgObj.src;
+            "\nURL=" + imgObj.src);
         divElem.appendChild(imgElem);
         bodyElem.appendChild(divElem);
     }
     // this is a support function for bigimage()
     makeBigImage(imgObj) {
         const winResize = 1.25, imgResize = 0.80;
-        let paraElem, doc, spanElem;
+        let paraElem, doc, spanElem, caption = imgObj.getAttribute("data-caption");
         this.methodError = "";
         if (typeof imgObj.src != "string" || imgObj.src.length == 0)
             this.methodError = "The argument for parameter 'imgURL' must be a string with a valid URL";
-        if (typeof imgObj.alt != "string" || imgObj.alt.length == 0)
-            imgObj.alt = "*** this image had no title ***";
+        if (caption == null || caption.length == 0) {
+            caption = "*** this image had no title ***";
+            imgObj.setAttribute("data-capture", caption);
+        }
         this.imgWin = window.open("" /*window.location.href*/, "", "resizable=no,scrollbars=no;,height=" +
             screen.availHeight * 0.98 + ",width=" + screen.availWidth * 0.98);
         if (this.imgWin == null)
@@ -395,7 +399,7 @@ class HtmlImgControl {
         const headElem = doc.getElementsByTagName("head")[0];
         const titleElem = doc.createElement("title");
         headElem.appendChild(titleElem);
-        titleElem.appendChild(doc.createTextNode(imgObj.alt));
+        titleElem.appendChild(doc.createTextNode(caption));
         const metaElem = doc.createElement("meta");
         metaElem.setAttribute("html-equiv", "Content-Type");
         metaElem.setAttribute("content", "text/html; charset=utf-8");
@@ -430,13 +434,13 @@ class HtmlImgControl {
         paraElem.style.textAlign = "center";
         paraElem.style.color = "white";
         paraElem.style.font = "bold 1em 'Courier New',Courier,monospace";
-        paraElem.appendChild(doc.createTextNode(imgObj.alt));
+        paraElem.appendChild(doc.createTextNode(caption));
         paraElem.appendChild(doc.createElement("br"));
         const theImage = doc.createElement("img");
         theImage.src = imgObj.src;
         theImage.id = "the-Image";
-        theImage.alt = "Huge Image\nClick the right mouse button and select " +
-            "'Save Picture As...' to save this image to your hard disk";
+        theImage.setAttribute("data-caption", "Huge Image\nClick the right mouse button and select " +
+            "'Save Picture As...' to save this image to your hard disk");
         theImage.addEventListener("click", () => {
             return this.origImage(imgObj);
         }, false);
@@ -671,15 +675,19 @@ where the '...' represent other attributes of the element.
 A typical 'img' tag in validated Strict HTML will look like this:
 
    <img src="path/to/myimage.jpg" onclick="bigimage(this);"
-     alt="The desired title of my image" class="thumbImage-0.4">
+     data-caption="The desired title of my image" class="thumbImage-0.4">
 
-Note that the 'alt' attribute is required for 'img' elements and its value
+Note that the 'data-caption' attribute is required for 'img' elements and its value
 will be used as a title for the image in the window containing the magnified
-images.  So fill in the 'alt' attribute properly or the text
+images.  So fill in the 'data-caption' attribute properly or the text
 
     *** this image had no title ***
 
 will appear.
+
+NOTE: in a prior version, the captioning was done using the image object's 'alt' attribute,
+but this has changed. Use the "data-caption" attribute instead.  The 'alt' attribute
+is still used for the image in the pop-up window, but it is not used for the captioning.
 
 2. Optionally--but strongly urged---it is useful to enclose the tag
 of reduced images within a DIV container that takes the image out of
@@ -692,7 +700,7 @@ For example:
     Click on image to obtain at original resolution in new window
     <br><img src="path/to/myimage.jpg" onclick="bigimage(this);"
        class="thumbImage-0.33"
-       alt="Nine-tenths of cells allowed to form colonies">
+       data-caption="Nine-tenths of cells allowed to form colonies">
     </div>
 
 Rather than using inline style attributes for every container, the

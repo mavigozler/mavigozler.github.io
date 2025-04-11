@@ -12,6 +12,7 @@
 CatchAFire/ExpressionsThroughHearts/build/Gulp/src
 CatchAFire/ExpressionsThroughHearts/GenLib
 CatchAFire/ExpressionsThroughHearts/.vscode
+CatchAFire/ExpressionsThroughHearts/ExpressionsThroughHearts.code-workspace
 
 # Other ignore rules
 node_modules/

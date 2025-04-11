@@ -1,5 +1,5 @@
 "use strict";
-
+export { areEqual, numberWithThousandsSeparator, getRandom, numbersAreEqual, getRandomIntegerInRange, getFactor, isValidFloat, getLowerRoman };
 function getRandomIntegerInRange(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -93,6 +93,9 @@ function getLowerRoman(num) {
         }
     }
     return romStr;
+}
+function numbersAreEqual(a, b) {
+    return Math.abs(a - b) < Number.EPSILON;
 }
 function isValidFloat(numAsString) {
     return /^[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(numAsString);
