@@ -1,6 +1,6 @@
 "use strict";
-import { areEqual } from "./numberExtended.js";
-export { MathOperation, iCss // class
+//import { areEqual } from "./numberExtended.js";
+//export { MathOperation, iCss // class
  };
 /*debugging;
 cssStyleDeclType = typeof(cssStyleDeclaration);
