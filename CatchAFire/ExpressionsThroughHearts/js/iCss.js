@@ -1,7 +1,7 @@
 "use strict";
 //import { areEqual } from "./numberExtended.js";
 //export { MathOperation, iCss // class
- };
+// };
 /*debugging;
 cssStyleDeclType = typeof(cssStyleDeclaration);
 if (cssStyleDeclType == "function" || cssStyleDeclType == "object") {
