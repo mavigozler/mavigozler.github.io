@@ -13,8 +13,8 @@ to data or computing device, especially when used as intended.
 For instructions on how to use the interface, see the bottom of this script
 source.
 *****************************************************************************/
-import { MathOperation, iCss } from "./iCss";
-export { htmlDocTypeDecl, xhtmlMetaContentTypeAsXHTML, xhtmlDocTypeDecl, htmlMetaContentTypeAsHTML, HtmlImgControl };
+//import { MathOperation, iCss } from "./iCss";
+//export { htmlDocTypeDecl, xhtmlMetaContentTypeAsXHTML, xhtmlDocTypeDecl, htmlMetaContentTypeAsHTML, HtmlImgControl };
 const htmlDocTypeDecl = "<!DOCTYPE html\n" +
     "<html>\n";
 const xhtmlDocTypeDecl = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
