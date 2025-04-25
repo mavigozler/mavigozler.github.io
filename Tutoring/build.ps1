@@ -1,8 +1,8 @@
 <#
 This section
-### read in noscript arg or config.json
+### read in noscript arg or config.yaml
 if (($args.Count -eq 1 -and $args[0] -eq "noscript") -or
-      (Get-Content -Raw 'src/config.json' | ConvertFrom-Json -AsHashtable).createStaticContent -eq $true) {
+      (Get-Content -Raw 'src/config.yaml' | ConvertFrom-Json -AsHashtable).createStaticContent -eq $true) {
    $noscript = $true
 } else {
    $noscript = $false
@@ -47,7 +47,7 @@ Function Remove-StringEndChars {
 
 
 Function Set-LocationRootDirectory {
-   while ((Test-Path -Path ".\tsconfig.json") -eq $false -and (Test-Path -Path ".\node_modules") -eq $false) {
+   while ((Test-Path -Path ".\tsconfig.yaml") -eq $false -and (Test-Path -Path ".\node_modules") -eq $false) {
       Set-Location -Path ".."
       if ($(Get-Location) -eq  "\") {
          Write-Host "Root directory not found"
@@ -59,9 +59,10 @@ Function Set-LocationRootDirectory {
 
 Write-Host "PSModulePath = $($env:PSModulePath)"
 Import-Module -Name Library
+Import-Module powershell-yaml 
 Write-Host "Directory set to '$(Set-LocationRootDirectory)'"
-$configJson = "./src/config.json"
-$buildSysInfo = Get-Content -Path $configJson -Raw | ConvertFrom-Json
+$configYaml = "./src/config.yaml"
+$buildSysInfo = Get-Content -Path $configYaml -Raw | ConvertFrom-Yaml
 
 foreach ($task in $buildSysInfo.PowerShellTasks) {  # an array of tasks
    Write-Host "Processing task: '$($task.title)'"

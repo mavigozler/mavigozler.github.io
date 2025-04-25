@@ -1,5 +1,5 @@
 
-export { PostingConfigJsonFile, ITask, PATH_literal, complexObj};
+export { PostingConfigYamlFile, ITask, PATH_literal, complexObj, DomElem};
 
 interface ITask {
 	title: string;
@@ -17,7 +17,15 @@ type PATH_literal = {[key: `${string}_PATH`]: {path: string; missing: "create" |
 
 type complexObj = { [key: string]: {[key: string]: string | null | Array<string | null>} };
 
-type PostingConfigJsonFile = {
+type DomElem = {
+	elemAttribs: {
+		name: string; 
+		value: string;
+	}[]; 
+};
+
+
+type PostingConfigYamlFile = {
 	createStaticContent: boolean;
 	showDeviceProperties: boolean;
 	DollarReduction: number[];
@@ -25,13 +33,30 @@ type PostingConfigJsonFile = {
 	InitalStyleRules: {[key: string]: {[key: string]: string | null | Array<string | null>}};
 	Aliases:  PATH_literal & { [key: string]: string };
 	Paths_Sets: {
-		HTMLfiles: {[key: string]: string;};
+		HTMLConfigData: {
+			HeadTags?: {
+				scriptsSection?: {
+					marker: string;
+					dom: DomElem[];
+				};
+				linksSection?: {
+					marker: string;
+					dom: DomElem[];
+				};
+			};
+			Files: {
+				HtmlReadFile?: string;
+				HtmlWriteIndexFile?: string;
+				HtmlWriteStaticFile?: string;
+				TsConfigJSCompiledFilePath?: string;
+			};
+		};
 		CSSfiles: { src: string[] | string; dest: string}[];
 		ImportExportEditFiles: string[];
 	} & complexObj;
 	PowerShellTasks: {[key: string]: {[key: string]: string | null | Array<string | null>}}[];
 	Testing: {
 		Dest: string; // where the test folder is
-		Files: (string | {name: string; edits: [string, string][]})[]
+		Files: (string | {name: string; edits: string[]})[];
 	}
 };

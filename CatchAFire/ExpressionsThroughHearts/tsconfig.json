@@ -109,9 +109,9 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "files": [
-    "GenLib/bigimage-v2.ts",
-    "GenLib/iCss.ts",
-    "GenLib/numberExtended.ts",
-    "GenLib/checkImgLoading.ts"
+    "src/GenLib/bigimage-v2.ts",
+    "src/GenLib/iCss.ts",
+    "src/GenLib/numberExtended.ts",
+    "src/GenLib/checkImgLoading.ts"
   ]
 }
