@@ -1,6 +1,3 @@
-# Ignore all JavaScript files
-*.js
-
 # Unignore specific js directories under ExpressionsThroughHearts
 !CatchAFire/ExpressionsThroughHearts/
 !CatchAFire/ExpressionsThroughHearts/**/
@@ -11,6 +8,7 @@
 # Ignore symlinked directories
 CatchAFire/ExpressionsThroughHearts/build/Gulp/src
 CatchAFire/ExpressionsThroughHearts/GenLib
+Tutoriing/src/Genlib/
 CatchAFire/ExpressionsThroughHearts/.vscode
 CatchAFire/ExpressionsThroughHearts/ExpressionsThroughHearts.code-workspace
 
