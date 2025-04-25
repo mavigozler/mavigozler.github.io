@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 /*****************************************************************
  * determines capabilities of device (desktop, mobile) to format display
@@ -6,10 +6,11 @@
  * - includes contentBuilder() to customize content for static pages
  *****************************************************************/
 
-import type { PostingConfigJsonFile } from "./types.d.ts";
+import type { PostingConfigYamlFile } from "./types.d.ts";
+import jsyaml from "js-yaml";
 
 // import { jest, test } from "@jest/globals"
-interface MediaCapabilities {
+export interface MediaCapabilities {
 	type: "file";
    video: {
    	contentType: string; // video/mp4
@@ -76,7 +77,7 @@ const InitialStyleRules: {[key: string]:
 	}
 } = {};
 
-export function contentBuilder(config: PostingConfigJsonFile, htmldoc: Document): void {
+export function contentBuilder(config: PostingConfigYamlFile, htmldoc: Document): void {
 	const document = htmldoc;
    // base rate calculator for table
    for (const baseRate in config.baseRates) {
@@ -99,8 +100,10 @@ export function contentBuilder(config: PostingConfigJsonFile, htmldoc: Document)
 }
 
 
-function populateDevicePropertiesTable(checkedProperties: {[key: string]: string | number | boolean}) {
-   const devicePropertiesTable: HTMLTableElement = document.getElementById("deviceprops") as HTMLTableElement;
+function populateDevicePropertiesTable(checkedProperties: {[key: string]: string | number | boolean}): void {
+   const devicePropertiesTable: HTMLTableElement | null = document.getElementById("deviceprops") as HTMLTableElement | null;
+	if (devicePropertiesTable == null) 
+		return;
    while (devicePropertiesTable.firstChild)
       devicePropertiesTable.removeChild(devicePropertiesTable.firstChild);
    for (const item in checkedProperties) {
@@ -295,7 +298,7 @@ function mediaAdjustments(action: "initialize" | "adjust"): void {
 }
 
 function adjustCssValue(adjustParam: [string, string]): string {
-	const POINTS_TO_PIXELS = 1.333;
+	// const POINTS_TO_PIXELS = 1.333;
 	const parseRE = new RegExp("\\s*(\\-?(\\d+)?\\.?(\\d+)?)?(\\s\\((" +
 				CSSvalueRE.toString().slice(1, -1) + ")\\))?");
 	// Group 1 is the first number, Group 5 is all, Grp 6 is number, Grp 8 is dim
@@ -333,11 +336,12 @@ if (typeof document !== "undefined") {
 			return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
 		};
 
-		fetch('config.json')
-		.then(response => response.json())
-		.then((config: PostingConfigJsonFile) => {
+		fetch('config.yaml')
+		.then(response => response.text())
+		.then((config$: string) => {
 			// Use your config data
-			const showDeviceProperties = config.showDeviceProperties;
+			const configFromYaml = jsyaml.load(config$);
+			const { showDeviceProperties } = configFromYaml as PostingConfigYamlFile;
 			mediaAdjustments("initialize");
 			// Object.assign(_DeviceProperties, currentDeviceProperties);
 			window.addEventListener("resize", () => {
@@ -384,7 +388,7 @@ if (typeof document !== "undefined") {
 				document.documentElement.style.colorScheme = newTheme;
 				localStorage.setItem('theme', newTheme);
 			});
-			contentBuilder(config, document);
+			contentBuilder(configFromYaml as PostingConfigYamlFile, document);
 		}).catch(error => {
 			console.error('Error fetching config:', error);
 		});

@@ -1,4 +1,5 @@
 "use strict";
+
 const CSSvalueRE = /(\-?\d+\.?(\d+)?)([a-z]{2})?/;
 const InitialStyleRules = {};
 function contentBuilder(config, htmldoc) {
@@ -19,6 +20,8 @@ function contentBuilder(config, htmldoc) {
 }
 function populateDevicePropertiesTable(checkedProperties) {
     const devicePropertiesTable = document.getElementById("deviceprops");
+    if (devicePropertiesTable == null)
+        return;
     while (devicePropertiesTable.firstChild)
         devicePropertiesTable.removeChild(devicePropertiesTable.firstChild);
     for (const item in checkedProperties) {
@@ -202,7 +205,7 @@ function mediaAdjustments(action) {
     }
 }
 function adjustCssValue(adjustParam) {
-    const POINTS_TO_PIXELS = 1.333;
+    // const POINTS_TO_PIXELS = 1.333;
     const parseRE = new RegExp("\\s*(\\-?(\\d+)?\\.?(\\d+)?)?(\\s\\((" +
         CSSvalueRE.toString().slice(1, -1) + ")\\))?");
     // Group 1 is the first number, Group 5 is all, Grp 6 is number, Grp 8 is dim
@@ -237,11 +240,12 @@ if (typeof document !== "undefined") {
         const checkDeviceSize = () => {
             return getCurrentDeviceProperties().viewportWidth < viewportWidthCutoff;
         };
-        fetch('config.json')
-            .then(response => response.json())
-            .then((config) => {
+        fetch('config.yaml')
+            .then(response => response.text())
+            .then((config$) => {
             // Use your config data
-            const showDeviceProperties = config.showDeviceProperties;
+            const configFromYaml = jsyaml.load(config$);
+            const { showDeviceProperties } = configFromYaml;
             mediaAdjustments("initialize");
             // Object.assign(_DeviceProperties, currentDeviceProperties);
             window.addEventListener("resize", () => {
@@ -288,7 +292,7 @@ if (typeof document !== "undefined") {
                 document.documentElement.style.colorScheme = newTheme;
                 localStorage.setItem('theme', newTheme);
             });
-            contentBuilder(config, document);
+            contentBuilder(configFromYaml, document);
         }).catch(error => {
             console.error('Error fetching config:', error);
         });

@@ -1,0 +1,272 @@
+$schema: ./gulpfileYamlSchema.json
+
+configNameInfo:    # format also for InquirerChoice type of Node module 'inquirer'
+  - name: browser
+    value: browser
+    description: building interface for the browser
+    disabled: false
+    short: ''
+  - name: node
+    value: node
+    description: building interface for Node
+    disabled: false
+    short: ''
+default:
+  task: browser
+  stage: release
+base:
+  ProjectRootPath: 'D:/dev/Mavigozler GitHub/mavigozler.github.io/CatchAFire/ExpressionsThroughHearts'
+  GulpRootPath: ${ProjectRootPath}/build/Gulp
+  browserReleaseDirName: forBrowser
+  browserReleasePath: ${ProjectRootPath}/${browserReleaseDirName}
+  browserRelease: ${browserReleasePath}
+  browserScriptsPath: ${browserPath}/js
+  NodeClientPath: ${ProjectRootPath}/nodeJSclient
+  LogsPath: ${ProjectRootPath}/logs
+  ProjectSourcesSubDir: /src
+  ProjectSourcesPath: ${ProjectRootPath}/${ProjectSourcesSubDir}
+  LibsSourcesSubDir: /srclibs
+  LibsSourcesPath: ${ProjectRootPath}/${LibsSourcesSubDir}
+browser:
+  # ---- build test of browser
+  test:
+    preclean:
+      patterns:
+        - ${projectRoot}/lib/*
+        - ${projectRoot}/html/*.html
+      options:
+        force: true
+        dryRun: false
+    tsconfig:
+      path: null  # will go to tsconfig.json, "" = dont use tsconfig.json
+      compilerOptionsOverrides:
+        outDir: ${projectRoot}/lib
+        sourceMap: true
+    html:
+      templateTransform:
+        - from: ${HTML_TEMPLATES}/ChemCalcTemplate.html
+          to: ${HTML_REALPATH}/ChemCalc.html
+      subfolderPaths:
+        JS: ../js
+        CSS: ../css
+        HTML: ../html
+        HTML_REALPATH: ${projectRoot}/html
+        HTML_TEMPLATES: ${projectRoot}/html/Templates
+        JSON_FILES: ${JS}
+      links:  # // use '<!-- $${LINK ELEMENTS} -->' in HTML Template
+          # something like "${CSS}/<name-of-CSS-fileÇ.css"
+        - ${CSS}/ChemCalc.css
+      scripts:  # use '<!-- $${SCRIPT ELEMENTS} -->' in HTML Template'
+        special: https://cdnjs.cloudflare.com/ajax/libs/eventemitter3/5.0.1/index.min.js
+          # 	"src": "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js",
+          #		"integrity": "sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6",
+          #		"crossorigin": "anonymous" },
+        module:   #  format: "%%<string>%%" match a substring in from than map
+          tsconfigPathMaps:  # default: ./${JS}
+            - from: '%%lib%%'
+              to: ${JS}
+              typemodule: false
+              flatten: false
+              except:
+                - nobrowser.js
+              filesCopyTo: ${HTML_REALPATH}/${JS}
+              order:
+                - ModuleController
+                - UtilFuncs
+      replace: []
+      add: []
+      del: []
+    copy:
+      - bypass: true
+      - from:
+          - ${projectRoot}/html/modules/*.xhtml
+          - ${projectRoot}/html/modules/*.css
+        to: ${JS}/modules
+      - from:
+          - ${projectRoot}/src/*.json
+        to: ${HTML_REALPATH}/${JS}
+    moveRename: []  # ["${projectRoot}/lib/index.js.map", "${projectRoot}/test/index.js.map"]
+    edits:  # if "^" insert at start, if "$" append replace
+      - bypass: false
+      - filepath: ${projectRoot}/js/ModuleController.js
+        fixes:
+          - target: '%%%JSON FILES LOCATION%%%' # flags: gm
+            replace: ${JS}
+          - target: '%%%MODULES LOCATION%%%'  # flags: gm
+            replace: ${HTML}/modules
+    webpack:
+      entryJS: ${projectRoot}/${JS}/ChemCalcjs
+      dest: ${projectRoot}/${JS}
+  # -----  build release of browser
+  release:
+    preclean:
+      patterns:
+        - ${browserRelease}*
+        - ${projectRoot}/lib/*
+        - ${projectRoot}/html/*.html
+      options:
+        force: true
+        dryRun: false
+    tsconfig:
+      path: null
+      compilerOptionsOverrides:
+        outDir: undefined
+        thisUndefinedOutDirOverrides: false
+        sourceMap: true
+        rootDir: null
+    html:
+      templateTransform:
+        - from: ${HTML_TEMPLATES}/ChemCalcTemplate.html
+          to: ${HTML_REALPATH}/ChemCalc.html
+      subfolderPaths:
+        JS: ./js
+        CSS: ./css
+        HTML: ${projectRoot}/html
+        HTML_REALPATH: ${projectRoot}/html
+        HTML_TEMPLATES: ${projectRoot}/html/Templates
+        JSON_FILES: ${JS}
+      links:
+        - ${CSS}/ChemCalc.css
+      scripts:
+        special:
+          - src: >-
+              https://cdnjs.cloudflare.com/ajax/libs/eventemitter3/5.0.1/index.min.js
+            integrity: >-
+              sha512-2Ennqwp8s5F7iz0njdlWWKbd6bCby5nny78Wt9e9t780ErG6eb/vaFDkIt/j3EVhBXeCYH7uc0eFmOvc0EbwLA==
+            crossorigin: anonymous
+            refrrerpolicy: no-referrer
+        module:
+          tsconfigPathMaps:
+            - from: '%%lib%%'
+              to: ${JS}
+              typemodule: false
+              flatten: false
+              except:
+                - nobrowser.js
+              filesCopyTo: ${browserReleasePath}/js
+              order:
+                - ModuleController
+                - UtilFuncs
+      replace: []
+      add: []
+      del: []
+    copy:
+      - bypass: false
+      - from:
+          - ${projectRoot}/html/ChemCalc.html
+        to: ${browserReleasePath}
+      - from:
+          - ${projectRoot}/html/modules/*.xhtml
+        to: ${browserReleasePath}/modules
+      - from:
+          - ${projectRoot}/html/modules/*.css
+        to: ${browserReleasePath}/modules
+      - from:
+          - ${projectRoot}/css/*.css
+        to: ${browserReleasePath}/css
+      - from:
+          - ${projectRoot}/html/modules/modulesForSP.json
+        to: ${browserReleasePath}/js
+    moveRename:
+      - - ${browserReleasePath}/ChemCalc.html
+        - ${browserReleasePath}/ChemCalc.aspx
+      - - ${browserReleasePath}/modules/*.xhtml
+        - dir: .
+          ext: aspx
+    edits:
+      - filepath: ${browserReleasePath}/js/ModuleController.js
+        fixes:
+          - target: '%%%JSON FILES LOCATION%%%'
+            replace: ${JS}
+          - target: '%%%MODULES LOCATION%%%'
+            replace: ./modules
+      - filepath: ${browserReleasePath}/js/modulesForSP.json
+        fixes:
+          - target: .xhtml
+            replace: .aspx
+    webpack:
+      entryJS: ${projectRoot}/${JS}/ChemCalc.js
+      dest: ${projectRoot}/${JS}
+    cleanup:
+      - id: delete files/folders in 'build/Gulp/run'
+        path: ${projectRoot}/build/Gulp/run
+        filter: ^(?:(?!\.js$|\.js\.map$|\.tsbuildinfo$).)*$
+        recursive: true
+        preview: true
+# ---- build Node
+node:
+  build: # ---- no other stage for Node
+    preclean:
+      patterns:
+        - ${projectRoot}/js/**/*
+        - ${projectRoot}/lib/**/*
+        - ${projectRoot}/html/*Node*.html
+      options:
+        force: true
+    tsconfig:
+      path: tsconfig.node.json
+      compilerOptionsOverrides:
+        outDir: ${projectRoot}/lib
+        sourceMap: true
+    html:
+      templateTransform:
+        - from: ${HTML_TEMPLATES}/ChemCalcTemplate.html
+          to: ${HTML_REALPATH}/ChemCalc4Node.html
+      subfolderPaths:
+        JS: ../js
+        CSS: ../css
+        HTML: ${projectRoot}/html
+        HTML_TEMPLATES: ${projectRoot}/html/Templates
+        TEST: ../test
+      links:
+        - ${CSS}/elements.css
+        - ${CSS}/listing.css
+      scripts:
+        special: []
+        module:
+          tsconfigPathMaps:
+            - from: '%%lib%%'
+              to: ${JS}
+              typemodule: false
+              flatten: false
+      replace: []
+      add: []
+      del: []
+    copy: []
+    moveRename: []
+    edits:
+      - filepath: ${projectRoot}/js/node/EventHandlers.js
+        fixes:
+          - target: |
+              "use strict";
+            replace:
+              - |-
+                "use strict";
+
+                import { sendRequest, setupMethod, formatDate, hideHeaderSet,
+              - ' showHeaderSet, setupXDigest, deleteHeader, fillPrevious,'
+              - |2+
+                 addHeader, loadPreviousData } from "./ChemCalc.js";
+
+      - filepath: ${projectRoot}/js/node/ChemCalc.js
+        fixes:
+          - target: |
+              "use strict";
+            replace:
+              - |-
+                "use strict";
+
+                export { sendRequest, setupMethod, formatDate,
+              - ' hideHeaderSet, showHeaderSet, setupXDigest,'
+              - |2+
+                 deleteHeader, fillPrevious, addHeader, loadPreviousData };
+
+    webpack:
+      entryJS: ${projectRoot}/${JS}/ChemCalcjs
+      dest: ${projectRoot}/${JS}
+    cleanup:
+      - id: delete files/folders in 'build/Gulp/run'
+        path: ${projectRoot}/build/Gulp/run
+        filter: ^(?:(?!\.js$|\.js\.map$|\.tsbuildinfo$).)*$
+        recursive: true
+        preview: true

@@ -6,10 +6,10 @@
  * 
  * 
  *******************************************************/
-import type { PostingConfigJsonFile, PATH_literal, complexObj } from "./types.d.ts";
-import type { NodeFsMulticopyElem, SrcDestCopy } from "./fsystemTypes.d.ts";
-import { NodeFsMulticopy, FileSystemItem } from "./fsystem.js";
-import { string2RE } from "./stringsExtended.js";
+import type { PostingConfigYamlFile, PATH_literal, DomElem } from "./types.d.ts";
+import type { NodeFsMulticopyElem, SrcDestCopy } from "./GenLib/fsystemTypes.d.ts";
+import { NodeFsMulticopy /*, FileSystemItem*/ } from "./GenLib/fsystem.js";
+import { string2RE } from "./GenLib/stringsExtended.js";
 
 import fs from "fs";
 import path from "path";
@@ -18,18 +18,19 @@ import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import cssnano from "cssnano";
 import { glob } from "glob";
+import jsyaml from "js-yaml";
 //import {deleteSync} from "del";
-import util from "util";
+// import util from "util";
 
 import delImportExportStmts from "./importExportStmtEdit.js";
 import { contentBuilder } from "./tutor-posting.js";
-import { createDeflate } from "zlib";
+// import { createDeflate } from "zlib";
 import { deleteSync } from "del";
 //import { get } from "http";
 
 //const projectDirectory = "D:/dev/GitHub Pages Repo/mavigozler.github.io";
 
-const copyOp = util.promisify(fs.copyFile);
+// const copyOp = util.promisify(fs.copyFile);
 
 //deleteSync("gh-pages/*");
 
@@ -44,7 +45,7 @@ function fwdSlash(files: string | string[]): string | string[] {
 }
 
 function main() {
-	readConfigFile().then((config: PostingConfigJsonFile) => {
+	readConfigFile().then((config: PostingConfigYamlFile) => {
 // verify that paths exist that are defined in config.Aliases and key ending in "_PATH"
 		for (const key in config.Aliases)
 			if (key.endsWith("_PATH")) { // will be object not string
@@ -56,7 +57,7 @@ function main() {
 						fs.mkdirSync(pathlitobj.path, { recursive: true });
 					else if (pathlitobj.missing === "error") {
 						console.log(`Path '${pathlitobj.path}' does not exist and is required` +
-							`\nPlease update config.json file with correct path` +
+							`\nPlease update config.yaml file with correct path` +
 							`\nExiting program`);
 						process.exit(1);
 					}
@@ -96,21 +97,21 @@ function main() {
 	});
 }
 
-function readConfigFile(): Promise<PostingConfigJsonFile> {
-	return new Promise<PostingConfigJsonFile>((resolve, reject) => {
-		fs.readFile("./src/config.json", "utf8", (err, content) => {
+function readConfigFile(): Promise<PostingConfigYamlFile> {
+	return new Promise<PostingConfigYamlFile>((resolve, reject) => {
+		fs.readFile("./src/config.yaml", "utf8", (err, content) => {
 			if (err)
 				reject(`Failed to read config file` +
 					`\nErr: ${JSON.stringify(err, null, "  ")}`);
 			else
-				resolve(JSON.parse(content) as PostingConfigJsonFile);
+				resolve(jsyaml.load(content) as PostingConfigYamlFile);
 		});
 	});
 }
 
 function stringSubstitutions(
 	targets: {[key: string]: string} | string[], 
-	config: PostingConfigJsonFile
+	config: PostingConfigYamlFile
 ): {[key: string]: string} | string[] {
 	if (Array.isArray(targets)) {
 		const modifiedTargets = [];
@@ -124,7 +125,7 @@ function stringSubstitutions(
 	return modifiedTargets;
 }
 
-function getStringSubsitution(config: PostingConfigJsonFile, ref: string): string {
+function getStringSubsitution(config: PostingConfigYamlFile, ref: string): string {
    const matches = [...ref.matchAll(/%#([^#%]+)#%/g)]; // Find all matches of %#[^#]+#%
 	if (matches)
    	for (const match of matches) {
@@ -140,7 +141,7 @@ function getStringSubsitution(config: PostingConfigJsonFile, ref: string): strin
 }
 
 /*
-readConfigFile().then((config: PostingConfigJsonFile) => {	
+readConfigFile().then((config: PostingConfigYamlFile) => {	
 	stringSubstitutions(config.Paths_Sets.HTMLfiles, config);
 }).catch((err: unknown) => {
 	console.log(`Failed promise caught:` +
@@ -172,8 +173,11 @@ function getSourceFiles(pathPatterns: string | string[]): Promise<string[]>	 {
 	});
 }
 
-function processHtml(config: PostingConfigJsonFile): Promise<void> {
-	const htmlFiles = stringSubstitutions(config.Paths_Sets.HTMLfiles, config) as {[key: string]: string;};
+function processHtml(config: PostingConfigYamlFile): Promise<void> {
+	const htmlFiles = stringSubstitutions(
+		config.Paths_Sets.HTMLConfigData.Files, 
+		config
+	) as {[key: string]: string;};
 	return new Promise<void>((resolve, reject) => {
 		console.log(`Reading file '${htmlFiles.HtmlReadFile}'`);
 		fs.readFile(htmlFiles.HtmlReadFile, "utf8", (err, content) => {
@@ -182,60 +186,33 @@ function processHtml(config: PostingConfigJsonFile): Promise<void> {
 						`\nErr: ${JSON.stringify(err, null, "  ")}`));
 			else {
 				console.log(`File '${htmlFiles.HtmlReadFile}' opened successfully for reading`);
-				const dom = new JSDOM(content);
+				let dom: JSDOM | null = new JSDOM(content);
 				// Execute JavaScript to modify the DOM
-				const window = dom.window;
-				const document = window.document;
+				const { window } = dom;
+				const { document } = window;
 				const noScriptDiv = document.getElementById("noscript-sect");
 				noScriptDiv?.parentNode?.removeChild(noScriptDiv);
 				contentBuilder(config, document);
+				content = dom.serialize();
+				content = expandHtmlScriptsLinksTags(content, config, "links");
 				// Save final HTML
 				if (!fs.existsSync(path.dirname(htmlFiles.HtmlWriteStaticFile)))
 					fs.mkdirSync(path.dirname(htmlFiles.HtmlWriteStaticFile), { recursive: true });
-				fs.writeFile(htmlFiles.HtmlWriteStaticFile, dom.serialize(), (err) => {
+				fs.writeFile(htmlFiles.HtmlWriteStaticFile, content, (err) => {
 					if (err)
 						reject(console.log(`Failed to create file '${htmlFiles.HtmlWriteStaticFile}'` +
 						`\nErr: ${JSON.stringify(err, null, "  ")}`));
 					else {
-						console.log(`File '${htmlFiles.HtmlWriteStaticFile}' written successfully`);
+						console.log(`Static HTML file '${htmlFiles.HtmlWriteStaticFile}' written successfully`);
 						fs.readFile(htmlFiles.HtmlReadFile, "utf8", (err, content) => {
 							if (err)
 								reject(console.log(`Failed to open '${htmlFiles.HtmlReadFile}' for processing` +
 									`\nErr: ${JSON.stringify(err, null, "  ")}`));
 							else {
-								console.log(`File '${htmlFiles.HtmlReadFile}' opened successfully for reading`);
+								console.log(`JavaScript-based file '${htmlFiles.HtmlReadFile}' opened successfully for reading`);
 
 								// delete any HTML comments to mark placing LINKS and SCRIPT elements
-								content = content.replace(new RegExp("<!-- %%% LINK %%% -->"), "");
-								content = content.replace(new RegExp("<!-- %%% SCRIPT %%% -->"), "");
-
-								const dom = new JSDOM(content);
-								// Execute JavaScript to modify the DOM
-								const window = dom.window;
-								const document = window.document;
-	
-								const headElem = document.getElementsByTagName("head")![0];
-								let scriptElem = document.createElement("script");
-								headElem.appendChild(scriptElem);
-								headElem.appendChild(document.createTextNode("\n"));
-								scriptElem.src = "tutor-posting.js";
-								console.log(`Scripts added to head of '${htmlFiles.HtmlWriteIndexFile}'`);
-
-								let linkElem = document.createElement("link");
-								linkElem.href = "./css/elements.css";
-								linkElem.setAttribute("rel", "stylesheet");
-								headElem.appendChild(linkElem);
-								linkElem = document.createElement("link");
-								linkElem.href = "./css/id-class.css";
-								linkElem.setAttribute("rel", "stylesheet");
-								headElem.appendChild(linkElem);
-	
-								const bodyElem = document.getElementsByTagName("body")![0];
-								const switchThemeButton = document.createElement("button");
-								bodyElem.insertBefore(switchThemeButton, bodyElem.firstChild || null);
-								bodyElem.insertBefore(document.createTextNode("\n"), bodyElem.firstChild || null);
-								switchThemeButton.id = "theme-switcher";
-								switchThemeButton.appendChild(document.createTextNode("Switch Theme"));
+								content = expandHtmlScriptsLinksTags(content, config);
 								/*
 								const devicePropsTable = document.createElement("table");
 								bodyElem.insertBefore(devicePropsTable, bodyElem.firstChild || null);
@@ -245,12 +222,12 @@ function processHtml(config: PostingConfigJsonFile): Promise<void> {
 								// console.log("HTML content\n" + dom.serialize());
 								if (!fs.existsSync(path.dirname(htmlFiles.HtmlWriteIndexFile)))
 									fs.mkdirSync(path.dirname(htmlFiles.HtmlWriteIndexFile), { recursive: true });
-								fs.writeFile(htmlFiles.HtmlWriteIndexFile, dom.serialize(), (err) => {
+								fs.writeFile(htmlFiles.HtmlWriteIndexFile, content, (err) => {
 									if (err)
 										reject(console.log(`Failed to create file '${htmlFiles.HtmlWriteIndexFile}'` +
 											`\nErr: ${JSON.stringify(err, null, "  ")}`));
 									else {
-										console.log(`File '${htmlFiles.HtmlWriteIndexFile}' written successfully`);
+										console.log(`Javascript-based file '${htmlFiles.HtmlWriteIndexFile}' written successfully`);
 										resolve();
 									}
 								});
@@ -263,7 +240,49 @@ function processHtml(config: PostingConfigJsonFile): Promise<void> {
 	});
 }
 
-function processCss(config: PostingConfigJsonFile): Promise<void> {
+function expandHtmlScriptsLinksTags(
+	content: string, 
+	config: PostingConfigYamlFile,
+	option?: "links" | "scripts" | "both"
+): string {
+	const headTags = config.Paths_Sets.HTMLConfigData.HeadTags,
+		composeElement = (
+			headElem: HTMLHeadElement,
+			whichElem: string,
+			elemInfo: DomElem[],
+		) => {
+			for (const elem of elemInfo) {
+				const headElemChild = document.createElement(whichElem);
+				headElem.appendChild(headElemChild);
+				for (const attrib of  elem.elemAttribs)
+					headElemChild.setAttribute(attrib.name, attrib.value);
+				headElem.appendChild(document.createTextNode("\n"));
+			}
+		};
+	if (option == undefined)
+		option = "both";
+	if (headTags && headTags.scriptsSection)
+		content = content.replace(new RegExp(headTags.scriptsSection.marker), "");
+	if (headTags && headTags.linksSection)
+		content = content.replace(new RegExp(headTags.linksSection.marker), "");
+	const dom = new JSDOM(content);
+	const { window } = dom;
+	const { document } = window;
+	const headElem = document.getElementsByTagName("head")![0];
+	if ((option == "scripts" || option == "both") && headTags && headTags.scriptsSection)
+		composeElement(headElem, "script", headTags.scriptsSection.dom);
+	if ((option == "links" || option === "both") && headTags && headTags.linksSection)
+		composeElement(headElem, "link", headTags.linksSection.dom);
+	const bodyElem = document.getElementsByTagName("body")![0];
+	const switchThemeButton = document.createElement("button");
+	bodyElem.insertBefore(switchThemeButton, bodyElem.firstChild || null);
+	bodyElem.insertBefore(document.createTextNode("\n"), bodyElem.firstChild || null);
+	switchThemeButton.id = "theme-switcher";
+	switchThemeButton.appendChild(document.createTextNode("Switch Theme"));
+	return dom.serialize();
+}
+
+function processCss(config: PostingConfigYamlFile): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
 		const processOp: Promise<string>[] = [];
 		for (const cssFile of config.Paths_Sets.CSSfiles) {
@@ -276,7 +295,7 @@ function processCss(config: PostingConfigJsonFile): Promise<void> {
 						processOp.push(new Promise<string>((resolve, reject) => {
 							fs.readFile(file, "utf8", (err, content) => {
 								if (err)
-									console.log(err);
+									console.log(`CSS read file fail: ${err}`);
 								else {
 									console.log(`CSS source file '${file}' opened successfully for reading`);
 									postcss([autoprefixer, cssnano])
@@ -288,18 +307,18 @@ function processCss(config: PostingConfigJsonFile): Promise<void> {
 											fs.mkdirSync(path.dirname(cssFileDest), { recursive: true });
 										fs.writeFile(cssFileDest, result.css, (err) => {
 											if (err)
-												reject(err);
+												reject(`CSS file write fail: ${err}`);
 											else
 												resolve(`Destination file '${cssFileDest}' written successfully`);
 										});
 									}).catch((err) => {
-										reject(err);
+										reject(`CSS postcss processing fail: ${err}`);
 									});
 								}
 							});
 						}));
 				}).catch((err: unknown) => {
-					reject(err);
+					reject(`getSourceFiles() failed: ${err}`);
 				});
 		}
 		Promise.all(processOp).then((responses: string[]) => {
@@ -312,8 +331,8 @@ function processCss(config: PostingConfigJsonFile): Promise<void> {
 	});
 }
 
-function copyFiles(config: PostingConfigJsonFile): Promise<void> {
-	return new Promise<void>((resolve, reject) => {
+function copyFiles(config: PostingConfigYamlFile): Promise<void> {
+	return new Promise<void>((resolve) => {
 		const copyList: NodeFsMulticopyElem[] = [];
 		for (const copyFile of config.Paths_Sets.baseCopySet as unknown as any[]) {
 			const srcFile = fwdSlash(getStringSubsitution(config, `${copyFile.source.dirpath}/${copyFile.source.file}`)) as string;
@@ -333,12 +352,12 @@ function copyFiles(config: PostingConfigJsonFile): Promise<void> {
 	});
 } 
 
-type testingSpecItem = {
+/*type testingSpecItem = {
 	name: string;
-	edits: [string, string][];
-}
+	edits: string[];
+}*/
 
-function setupTesting(config: PostingConfigJsonFile): Promise<void> {
+function setupTesting(config: PostingConfigYamlFile): Promise<void> {
 	console.log("\n\nPromise: set up testing environment");
 	return new Promise<void>((resolve, reject) => {
 		const rootDestPath = getStringSubsitution(config, config.Testing.Dest);
@@ -358,9 +377,10 @@ function setupTesting(config: PostingConfigJsonFile): Promise<void> {
 				if (typeof file == "string") {
 					destFile = fwdSlash(`${rootDestPath}/${file.split("#%")[1]}`) as string;
 					srcFile = fwdSlash(getStringSubsitution(config, file)) as string;
-				} else {
-					destFile = fwdSlash(`${rootDestPath}/${(file as testingSpecItem).name.split("#%")[1]}`) as string;
-					srcFile = fwdSlash(getStringSubsitution(config, (file as testingSpecItem).name)) as string;
+				} else { // the item is an object with 'name' and 'edits' properties
+					// the 'edits' property is handled in the next step
+					destFile = fwdSlash(`${rootDestPath}/${file.name.split("#%")[1]}`) as string;
+					srcFile = fwdSlash(getStringSubsitution(config, file.name)) as string;
 				}
 				const currentSrcFile = srcFile;
 				destPath = path.dirname(destFile);
@@ -390,12 +410,14 @@ function setupTesting(config: PostingConfigJsonFile): Promise<void> {
 							if (err)
 								reject(console.log(`Error reading '${path.basename(file.name)}'\nError: ${err}`));
 							else {
-								for (const edit of file.edits) {
-									if (content.search(string2RE(edit[1])) >= 0)
-										console.log(`String "${edit[1]}" already present`);
-									else
-										content = content.replace(edit[0], edit[1]);
-								}
+								// file.edits will be reference to string or DomElem[]
+								if (typeof file.edits[1] == "string")
+									if (content.search(string2RE(file.edits[1])) >= 0)
+										console.log(`String "${file.edits[1]}" already present`);
+									else 
+										content = content.replace(file.edits[0], file.edits[1]);
+								else 
+									content = expandHtmlScriptsLinksTags(content, config);
 								fs.writeFile(fileName, content, "utf-8", (err) => {
 									if (err)
 										reject(console.log(`Error reading '${path.basename(file.name)}'\nError: ${err}`));
