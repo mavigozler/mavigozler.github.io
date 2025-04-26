@@ -2,7 +2,7 @@
 build/compiledset
 **/*.js.map
 .vscode/
-src/fsys*
-src/stringsExtended.ts
+src/GenLib/
+src/GenLib
 .vscode
 test/

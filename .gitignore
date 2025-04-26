@@ -8,14 +8,14 @@
 # Ignore symlinked directories
 CatchAFire/ExpressionsThroughHearts/build/Gulp/src
 CatchAFire/ExpressionsThroughHearts/GenLib
+CatchAFire/ExpressionsThroughHearts/GenLib/
 Tutoriing/src/Genlib/
+Tutoriing/src/Genlib
 CatchAFire/ExpressionsThroughHearts/.vscode
 CatchAFire/ExpressionsThroughHearts/ExpressionsThroughHearts.code-workspace
+CatchAFire/AngularTutorial/
 
 # Other ignore rules
 node_modules/
 **/*.js.map
 **/build/Gulp/run/
-CatchAFire/AngularTutorial/
-CatchAFire/ExpressionsThroughHearts/GenLib/
-
