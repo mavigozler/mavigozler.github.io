@@ -14,6 +14,8 @@ Tutoriing/src/Genlib
 CatchAFire/ExpressionsThroughHearts/.vscode
 CatchAFire/ExpressionsThroughHearts/ExpressionsThroughHearts.code-workspace
 CatchAFire/AngularTutorial/
+**/src/GenLib/
+**/src/GenLib
 
 # Other ignore rules
 node_modules/
