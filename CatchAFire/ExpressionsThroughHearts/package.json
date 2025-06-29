@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "vscodeFiles": "cd .vscode && tsc -p ./tsconfig.vscode.json && node ./tasksJsonGenerator.js && node ./launchJsonGenerator.js",
-    "pregulp": "tsc -p ./tsconfig.preGulpBuild.json && node ./build/Gulp/src/preGulpBuild.js"
+    "pregulp": "tsc -p ./tsconfig.preGulpBuild.json && node ./build/Gulp/pre/preGulpBuild.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   "packageManager": "pnpm@10.8.0",
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "child-process": "^1.0.2",
     "fs": "0.0.1-security",
     "glob": "^11.0.1",
     "ts-node": "^10.9.2"

@@ -1,5 +1,0 @@
-{
-   "yaml.schemas": {
-      "./gulpfileJsonSchema.json": "gulpfile.config.yaml"
-	}
-}

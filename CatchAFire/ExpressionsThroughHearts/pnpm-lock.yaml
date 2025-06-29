@@ -69,6 +69,9 @@ importers:
       '@types/node':
         specifier: ^22.14.0
         version: 22.14.0
+      child-process:
+        specifier: ^1.0.2
+        version: 1.0.2
       fs:
         specifier: 0.0.1-security
         version: 0.0.1-security
@@ -587,6 +590,9 @@ packages:
 
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
+
+  child-process@1.0.2:
+    resolution: {integrity: sha512-e45+JmjvkV2XQsJ9rUJghiYJ7/9Uk8fyYi1UwfP071VmGKBu/oD1OIwuD0+jSwjMtQkV0a0FVpPTEW+XGlbSdw==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -2530,6 +2536,8 @@ snapshots:
       supports-color: 7.2.0
 
   chardet@0.7.0: {}
+
+  child-process@1.0.2: {}
 
   chokidar@3.6.0:
     dependencies:

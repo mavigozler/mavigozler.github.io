@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+        "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!-- Take note of the doctype convention...remove 'Transitional' with
+     no space before //EN and change 'loose' to 'strict' -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+<meta name="Author" content="Nobody">
+<title>Practice with Addition</title>
+<script type="text/javascript">
+   baseht = Math.round(window.screen.height / 25);
+   document.write("<style type=\"text/css\">\n" +
+        "table {background:transparent;\n" +
+        "    font:bold " + baseht * 2  + "px Arial,sans-serif;\n" +
+        "     text-align:center ; margin:0;\n" +
+        "}\n" +
+   "td {padding:0;background:transparent;text-align:center; }\n" +
+   "input { text-align:center;padding:0;margin:0;\n" +
+   "         vertical-align:middle ; background:transparent; }\n" +
+   "textarea {\n" +
+   "  font:bold " + baseht * 1.5 + "px Verdana,Tahoma,Helvetica,sans-serif;\n" +
+   "  border:0;\n" +
+	"	background : transparent ;\n" +
+   "  text-align:center;\n" +
+   "  vertical-align:middle;\n" +
+   "}\n" +
+   "#hello {font:normal " + baseht * 1.5 + "px Verdana,Arial,sans-serif;}\n" +
+   "#response {font:bold " + baseht * 3 + "px Arial,sans-serif; width:10ex; }\n" +
+   "#sum, #addend1, #addend2 {font:bold " + baseht * 3 +
+         "px Helvetica,Arial,sans-serif;\n" +
+   "           width:2em;}\n" +
+   "#response {border:0;background:transparent;text-align:center;}\n" +
+   "#prompt {\n" +
+   "     font:bold " + baseht + "px Verdana,Tahoma,Arial,sans-serif;\n" +
+   "     border:0;\n" +
+   "}\n" +
+   "#check {font:bold " + baseht * 1.5 + "px \"Times New Roman\",Times,serif; }\n" +
+   "#add1figs,\n" +
+   "#add2figs,\n" +
+   "#sumfigs { font: bold " + baseht * 1.2 + "px Wingdings,\"Zapf Dingbats\",fantasy;\n" +
+   "          vertical-align:middle;text-align:center;}\n" +
+  "</style>\n");
+</script>
+<bgsound id="auIEEmb">
+<script type="text/javascript" src="std.js"></script>
+<script type="text/javascript" src="audio.js"></script>
+<script type="text/javascript">
+	var sumLimit = 15, newExpression = 0;
+	var sum, addend1, addend2, prompt, response;
+
+	good_responses = [ "Correct!", "Yes!", "Good!", "Terrific!" ];
+   bad_responses = [ "Incorrect", "No", "Try Again", "Sorry" ];
+   soundFiles = [ "correct.wav", "yes.wav", "good.wav", "terrific.wav",
+   					"incorrect.wav", "no.wav", "tryagain.wav", "sorry.wav" ];
+   function makeAddends(addend1, addend2)
+   {
+      var sum, addend;
+      
+      sum = Math.round(sumLimit * Math.random());
+      addend = Math.round(sum * Math.random());
+      addend1.value = sum - addend;
+      addend2.value = addend;
+   }
+   function fillSymbols(value1, value2)
+   {
+      var i, j, val, sym, ch, symcount;
+
+      sym = Math.round(255 * Math.random());
+      val = "";
+      for (i = 0; i < value1; i++)
+      {
+         if (i % 6 == 0 && i)
+            val += "\n";
+         val += String.fromCharCode(sym);
+      }
+      document.all.add1figs.value = new String(val);
+      val = "";
+      for (i = 0; i < value2; i++)
+      {
+         if (i % 6 == 0 && i)
+            val += "\n";
+         val += String.fromCharCode(sym);
+      }
+      document.all.add2figs.value = new String(val);
+      val = "";
+      symcount = 0;
+
+      str = document.all.add1figs.value;
+      for (i = 0, j = document.all.add1figs.value.length; i < j; i++)
+      {
+          ch = str.charAt(i);
+          if (ch != '\n')
+          {
+             val += ch;
+             symcount++;
+          }
+          if (symcount == 6)
+          {
+             val += '\n';
+             symcount = 0;
+          }
+      }
+      str = document.all.add2figs.value;
+      for (i = 0, j = document.all.add2figs.value.length; i < j; i++)
+      {
+          ch = str.charAt(i);
+          if (ch != '\n')
+          {
+             val += ch;
+             symcount++;
+          }
+          if (symcount == 6)
+          {
+             val += '\n';
+             symcount = 0;
+          }
+      }
+  		document.all.sumfigs.value = new String(val);
+	}
+   function checkEnterKey(theEvent)
+   {
+      if (((navigator.appName == "Microsoft Internet Explorer") &&
+           (theEvent.keyCode == 10 || theEvent.keyCode == 13)) ||
+				(theEvent.which == "\n" || theEvent.which == "\r"))
+        	return (1);
+      return (0);
+   }
+   function getRandomColor(coltype)
+   {
+      var i, color;
+
+		for (i = 0; i < 3; i++)
+      	color = (color << 8) | Math.round(Math.random() * 256);
+      return (color);
+   }
+   function colorContrast(theColor, itsContrast)
+   {
+    /*
+      return ((theColor & 0x7f7f7f) | ~(itsContrast & 0x808080)); */
+      theColor &= 0x7f7f7f;
+    	itsContrast &= 0x808080;
+      theColor |= itsContrast;
+      return (theColor);
+   }
+	function checkAnsw()
+   {
+   	var response_index;
+
+      // IE and Netscape differ as to methods/properties
+      if (checkEnterKey(event) == 0)
+      {
+   	   response.value = "";
+			return (0);
+      }
+      if (newExpression == 0) /* checking answer */
+      {
+	      response_index = Math.round(3 * Math.random());
+	      if (sum.value == "")
+   	   	response.value = "No Entry!";
+         else
+         {
+	   	   if (parseInt(sum.value) != parseInt(addend1.value) +
+											      				parseInt(addend2.value))
+				{
+   		   	response.value = bad_responses[response_index];
+      	      playAudio(4 + response_index);
+				}
+		      else
+		      {
+   		   	response.value = good_responses[response_index];
+	            playAudio(response_index);
+				}
+	         prompt.value = "Hit Enter/Return for new problem";
+   	      newExpression = 1;
+         }
+      }
+      else /* writing new expression */
+      {
+			sum.value = "";
+         makeAddends(addend1, addend2);
+         fillSymbols(addend1.value, addend2.value);
+         setPageColors();
+         document.all.response.value = "";
+         document.all.prompt.value = "";
+			sum.focus();
+			newExpression = 0;
+      }
+   }
+
+	function setPageColors()
+   {
+      var i, winbgcolor, color, objStyle;
+
+      winbgcolor = getRandomColor();
+      document.bgColor = winbgcolor;
+      document.all.addend1.style.backgroundColor =
+      			colorContrast(getRandomColor(), winbgcolor);
+      document.all.addend2.style.backgroundColor =
+      			colorContrast(getRandomColor(), winbgcolor);
+
+      for (i = 0; i < 4; i++)
+      {
+         switch (i)
+         {
+         case 0:
+		      objStyle = document.all.prompt.style;
+            break;
+         case 1:
+		      objStyle = document.all.add1figs.style;
+            break;
+         case 2:
+		      objStyle = document.all.add2figs.style;
+            break;
+         case 3:
+		      objStyle = document.all.sumfigs.style;
+            break;
+         }
+	      objStyle.scrollbarBaseColor = objStyle.scrollbarArrowColor =
+   	   objStyle.scrollbarTrackColor = objStyle.scrollbarHighlightColor =
+	      objStyle.scrollbarShadowColor = objStyle.scrollbarDarkShadowColor =
+   	   objStyle.scrollbarFaceColor = winbgcolor;
+      }
+
+	   objStyle = document.all.hello.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.addtable.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.fname.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.prompt.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.response.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.addend1.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+	   objStyle = document.all.addend2.style;
+      objStyle.color = colorContrast(getRandomColor(), objStyle.backgroundColor);
+   }
+</script>
+</head>
+<body onLoad="newExpression=0;loadSounds();">
+<!--<body onLoad="newExpression=0;">-->
+<noscript>
+<div style="color:red;font:bold 125% Helvetica,Arial,sans-serif;">
+If you can read this, it means that you are using a browser that does
+not interpret JavaScript, or that JavaScript for your browser is disabled.
+You cannot use the math features on this web page unless you have a
+browser that is enabled to interpret it.  (The latest versions of popular
+browsers are JavaScript-capable:  MSIE, Netscape Navigator, Opera.)
+</div>
+</noscript>
+
+<div id="mainpage">
+<div id="hello">
+Hello <span id="fname">Sequoia</span>!
+<br>
+Time for practicing addition!
+</div>
+
+<div id="addtable" align="center">
+<form>
+<table>
+<tr>
+  <td><textarea disabled id="add1figs" rows="4" cols="7"></textarea>
+  <td>+
+  <td><textarea disabled id="add2figs" rows="4" cols="7"></textarea>
+  <td>=
+  <td><textarea disabled id="sumfigs" rows="4" cols="7"></textarea>
+<tr>
+  <td><input type="text" disabled id="addend1" size="2" maxlength="2">
+  <td>+
+  <td><input type="text" disabled id="addend2" size="2" maxlength="2">
+  <td>=
+  <td><input type="text" id="sum" size="2" maxlength="2"
+          onclick="checkAnsw(this);" onKeyPress="checkAnsw(this);">
+</table>
+<table>
+<tr><td>
+     <input type="text" disabled id="response" size="10">
+  <td>
+     <textarea disabled id="prompt" cols="20" rows="2"></textarea>
+</table>
+</form>
+</div>
+</div>
+
+<script type="text/javascript">
+   sum = document.all.sum;
+   addend1 = document.all.addend1;
+   addend2 = document.all.addend2;
+   response = document.all.response;
+   prompt = document.all.prompt;
+	setPageColors();
+   makeAddends(addend1, addend2);
+   fillSymbols(addend1.value, addend2.value);
+   document.all.sum.focus();
+   document.all.sum.select();
+</script>
+</body>
+</html>

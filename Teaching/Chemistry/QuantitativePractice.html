@@ -18,7 +18,7 @@
 <meta property="commenting-disabled" content="true"> <!-- do not allow commenting -->
 <meta property="word-counting-disabled" content="true"> <!-- don't do word counting -->
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
-<link href="./css/std.css" rel="stylesheet">
+<link href="../css/std.css" rel="stylesheet">
 <style>
   math {display:block;}
   math.center {margin:1em auto;}
@@ -146,12 +146,12 @@ what digits are significant).
 <p>
 These examples will be presented in tabular form with explanations.
 <table>
-<tr><th>Number  <th>Number of Significant Digits <th>Explanation
-<tr><td>2084.307  <td class="center">7
+<tr><th>Number</th>  <th>Number of Significant Digits</th> <th>Explanation</th></tr>
+<tr><td>2084.307</td>  <td class="center">7</td>
    <td class="left smaller">The first and last digits are both nonzero, so by the 
 rules, all digits in between are significant, including zeroes. The decimal 
-point is not a factor here in evaluating significance
-<tr><td>200,000   <td class="center">1
+point is not a factor here in evaluating significance</td></tr>
+<tr><td>200,000</td>   <td class="center">1</td>
    <td class="left smaller">The trailing zeroes are not included as significant 
 digits to the right of the last nonzero digits (which is also the first nonzero 
 digit, "2")
@@ -168,7 +168,7 @@ number 200,000 is accurate all the way to the 10<sup>0</sup> (one's) digit
     to last nonzero digit are 4, including the <q>captive zero.</q>
 <tr><td>0.0000090430000  <td class="center">8
     <td class="left smaller">The addition of zeroes to the right of the last nonzero <em>after the
-    decimal point is intended to indicate just how true the value is, even down
+    decimal point</em> is intended to indicate just how true the value is, even down
     to 10<sup>&minus;13</sup> digit
 <tr><td>230.0000090430000  <td class="center">16
     <td class="left smaller">Changing the value to left of decimal point to alter which is the first
@@ -239,7 +239,8 @@ least significant digits.
 Here's an example.  Evaluate and give the result with the correct number of 
 significant digits the operation:
 
-<math class="center"><mstyle displaystyle="true" mathcolor="blue" mathvariant="serif">
+<math class="center">
+   <mstyle displaystyle="true" mathcolor="blue" mathvariant="serif">
 <mn>9.7</mn><mo>×</mo><mn>12.35</mn><mo>=</mo><mo>?</mo></mstyle></math>
 <p>
 If one merely enters the values into the calculator and writes down all the digits
