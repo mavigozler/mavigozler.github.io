@@ -22,7 +22,7 @@ document.write ('		\n');
 document.write ('\n');
 document.write ('\n');
 document.write ('\n');
-document.write ('<script type="text/javascript">\n');
+document.write ('<script>\n');
 document.write ('//<![CDATA[\n');
 document.write ('var filePath                     = "http://imagec16.247realmedia.com/RealMedia/ads/Creatives/Informa/BTN-P-TLB-ROCHE-COMPLETE-ROWONLY-20120930-100000/120813_ras_complete_ultra_biotech_728x90_01.swf/1345821163";\n');
 document.write ('var TFSMFlash_PRETAG             = "";\n');

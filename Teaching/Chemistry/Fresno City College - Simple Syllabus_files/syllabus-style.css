@@ -1,0 +1,84 @@
+
+pre {
+    white-space: pre-wrap;
+}
+
+.component img {
+    max-width:100%;
+    height: auto;
+}
+
+body.mce-content-body .block-placeholder {
+    background-color: bisque !important;
+}
+
+body.mce-content-body .block-prefix {
+    background-color: beige !important;
+}
+
+body.mce-content-body .block-prefix::before {
+    color: rgba(0, 0, 0, 0.60) !important;
+    content: "(" !important;
+}
+
+body.mce-content-body .block-suffix {
+    background-color: beige !important;
+}
+
+body.mce-content-body .block-suffix::after {
+    color: rgba(0, 0, 0, 0.60) !important;
+    content: ")" !important;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+}
+
+.component-header, .component-name {
+    page-break-after: avoid;
+}
+
+.component table {
+    height: auto;
+    width: auto;
+    max-width: 100%;
+}
+
+/* Adds bullet style to objective items */
+.objective-component .cell-basic {
+    margin-left: 52px;
+}
+
+.objective-component .cell-basic:nth-child(1) {
+    list-style: disc;
+    display: list-item;
+}
+
+td.fr-thick {
+    line-height: 1.5em;
+    padding: 5px;
+}
+
+
+.app-name-view.component-name {
+      font-size: 11pt; 
+}
+
+.component-body.app-body-view {
+      font-size: 11pt;
+}
+
+h1.app-name-view.component-name {
+  font-size: 14pt;
+}
+
+h2.app-name-view.component-name {
+  font-size: 13pt;
+}
+
+h3.app-name-view.component-name {
+  font-size: 12pt;
+}
+
+

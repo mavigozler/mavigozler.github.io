@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../TheHalloranCompleteReference"
+		}
+	],
+	"settings": {
+		"arduino.useArduinoCli": true,
+		"arduino.path": "C:\\Program Files\\Arduino CLI",
+		"arduino.logLevel": "info",
+		"liveServer.settings.multiRootWorkspaceName": "Teaching"
+	}
+}

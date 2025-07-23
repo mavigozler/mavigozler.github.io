@@ -3,12 +3,12 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Glossary for Clinical Laboratory Medicine</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="/style/std.css" type="text/css" rel="stylesheet">
-<link href="/style/glossary.css" type="text/css" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="./stdcss/std.css" rel="stylesheet">
+<link href="/style/glossary.css" rel="stylesheet">
 </head>
 <body>
 

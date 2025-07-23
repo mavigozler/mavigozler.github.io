@@ -23,7 +23,7 @@ if (TFSMFlash_VERSION){
 		var MM_FlashCanPlay = (flashActiveX != null)? true : false;
 
 		if(TFSMFlash_FSCOMMAND)	{
-			document.write('<SCR' + 'IPT type="text/javascript"\> \n');
+			document.write('<SCR' + 'IPT\> \n');
 			document.write("function "+TFSMFlash_OASADID+"_DoFSCommand(){ window.open('"+TFSMFlash_OASCLICK+"'); }\n");
 			document.write('</SCR' + 'IPT\> \n');
 			document.write('<SCR' + 'IPT LANGUAGE=VBScript\> \n');

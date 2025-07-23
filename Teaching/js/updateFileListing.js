@@ -5,7 +5,7 @@ export const SERVER_CONFIG = [
     {
         extension: "pdf",
         path: "/pdf",
-        staticRoot: "D:\\dev\\Mavigozler GitHub\\mavigozler.github.io\\Teaching\\powerpointPdfs",
+        staticRoot: "D:\\Mavigozler GitHub\\mavigozler.github.io\\PowerPoint Talks--Libraries\\__pdfs",
         filesFilter: (s) => s.endsWith(".pdf"),
         fileListTitle: "PowerPoint (as PDFs)",
         fileNamesList: []
@@ -13,7 +13,7 @@ export const SERVER_CONFIG = [
     {
         extension: "html",
         path: "/html",
-        staticRoot: "D:\\The Halloran Complete Reference",
+        staticRoot: "D:\\Mavigozler GitHub\\mavigozler.github.io\\TheHalloranCompleteReference",
         filesFilter: (s) => s.endsWith('.html'),
         fileListTitle: "Web documents",
         fileNamesList: []

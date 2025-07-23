@@ -5685,7 +5685,7 @@ i(m.prototype,
 {toString:function(){
 var n=this._content||'';
 if(this._extra_action)
-n+='<script type="text/javascript">'+this._extra_action+
+n+='<script>'+this._extra_action+
 '</scr'+'ipt>';
 
 return n;},

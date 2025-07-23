@@ -1,5 +1,5 @@
 "use strict";
-//export { areEqual, numberWithThousandsSeparator, getRandom, numbersAreEqual, getRandomIntegerInRange, getFactor, isValidFloat, getLowerRoman };
+
 function getRandomIntegerInRange(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

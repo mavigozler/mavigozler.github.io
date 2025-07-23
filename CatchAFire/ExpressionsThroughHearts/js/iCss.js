@@ -1,7 +1,6 @@
 "use strict";
-//import { areEqual } from "./numberExtended.js";
-//export { MathOperation, iCss // class
-// };
+
+
 /*debugging;
 cssStyleDeclType = typeof(cssStyleDeclaration);
 if (cssStyleDeclType == "function" || cssStyleDeclType == "object") {
@@ -132,6 +131,24 @@ class iCss {
      */
     getCssRule(selector, styleSheet = null) {
         let i, j, rule = null, sheet;
+        const searchThisStyleSheet = (selector, sheet, isIE) => {
+            let rule, styleRule;
+            if (isIE == true)
+                for (j = 0; j < sheet.cssRules.length; j++) {
+                    rule = sheet.cssRules[j];
+                    // Rule Types not defined in IE DOM
+                    if ((styleRule = rule) && styleRule.selectorText && styleRule.selectorText.toLowerCase() == selector.toLowerCase())
+                        return styleRule;
+                }
+            else // standard CSS DOM
+                for (j = 0; j < sheet.cssRules.length; j++) {
+                    rule = sheet.cssRules[j];
+                    // Rule Type 1 is a Style Rule
+                    if ((rule.type == CSSRule.STYLE_RULE) && (rule.cssText.toLowerCase() == selector.toLowerCase()))
+                        return rule;
+                }
+            return null;
+        };
         if (typeof selector != "string")
             throw "a selector parameter of type 'string' is required";
         if (selector.search(/\s*(\S+)\s*\{.+\}/) >= 0)
@@ -155,24 +172,6 @@ class iCss {
                     break;
             }
         return rule;
-        function searchThisStyleSheet(selector, sheet, isIE) {
-            let rule, styleRule;
-            if (isIE == true)
-                for (j = 0; j < sheet.cssRules.length; j++) {
-                    rule = sheet.cssRules[j];
-                    // Rule Types not defined in IE DOM
-                    if ((styleRule = rule) && styleRule.selectorText && styleRule.selectorText.toLowerCase() == selector.toLowerCase())
-                        return styleRule;
-                }
-            else // standard CSS DOM
-                for (j = 0; j < sheet.cssRules.length; j++) {
-                    rule = sheet.cssRules[j];
-                    // Rule Type 1 is a Style Rule
-                    if ((rule.type == CSSRule.STYLE_RULE) && (rule.cssText.toLowerCase() == selector.toLowerCase()))
-                        return rule;
-                }
-            return null;
-        }
     }
     /**
      * setCssRule() returns a CSS rule from inspecting one or all style sheets
@@ -730,7 +729,7 @@ class iCss {
         return wordWidth;
     }
     getEffectiveElementWidth(element) {
-        const parentElement = element.parentElement;
+        const { parentElement } = element;
         let parentComputedStyle, elementComputedStyle, elementWidth, parentWidth, effectiveColumnWidth;
         if (parentElement.offsetWidth == 0 || element.offsetWidth == 0) {
             parentComputedStyle = getComputedStyle(parentElement);

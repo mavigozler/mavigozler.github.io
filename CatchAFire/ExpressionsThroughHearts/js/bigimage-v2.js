@@ -13,8 +13,11 @@ to data or computing device, especially when used as intended.
 For instructions on how to use the interface, see the bottom of this script
 source.
 *****************************************************************************/
-//import { MathOperation, iCss } from "./iCss";
-//export { htmlDocTypeDecl, xhtmlMetaContentTypeAsXHTML, xhtmlDocTypeDecl, htmlMetaContentTypeAsHTML, HtmlImgControl };
+
+// for browser, use following script tag:
+// <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+
+
 const htmlDocTypeDecl = "<!DOCTYPE html\n" +
     "<html>\n";
 const xhtmlDocTypeDecl = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
@@ -450,12 +453,12 @@ class HtmlImgControl {
         this.resizeWin2Image(theImage, this.imgWin, winResize);
         doc.getElementById("currez").appendChild(doc.createTextNode(theImage.width + " \u00d7 " + theImage.height));
     }
-    readJsonConfig(jsonConfig) {
+    readJsonConfig(yamlConfig) {
         return new Promise((resolve, reject) => {
-            fetch(jsonConfig)
-                .then(response => response.json())
+            fetch(yamlConfig)
+                .then(response => response.text())
                 .then(data => {
-                this.configInfo = data;
+                this.configInfo = yaml.load(data);
                 resolve();
             }).catch(err => {
                 reject(err);
@@ -468,7 +471,7 @@ class HtmlImgControl {
 */
 document.addEventListener("DOMContentLoaded", () => {
     const htmlImgControl = new HtmlImgControl();
-    htmlImgControl.readJsonConfig("./js/bigImageConfig.json")
+    htmlImgControl.readJsonConfig("./js/bigImageConfig.yaml")
         .then(() => {
         htmlImgControl.setThumbedImages(document.body, true, true);
     }).catch(err => {

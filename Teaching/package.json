@@ -5,9 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "compile": "tsc -p tsconfig.json",
-    "filelistserve": "node assets/filelisting.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc -p tsconfig.node.json && tsc -p tsconfig.json",
+    "filelistserve": "node js/filelisting.js",
+    "buildstart": "npm run compile && npm run filelistserve",
+    "test": "ecrror: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

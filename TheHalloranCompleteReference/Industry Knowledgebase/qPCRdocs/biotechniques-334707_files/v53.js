@@ -399,7 +399,7 @@ function _rsCLRegisterIt() {
 
 // main
 if((_rsSE)&&(random() <= _rsSM)) {
-        var _rsIM='<scr'+'ipt language="JavaScript" type="text/javascript" src="'+_rsND+'cgi-bin/j?ci='+_rsCI+'&ss='+_rsSS+'&cc='+_rsCC+'&rd='+_rsRD+'&se='+_rsSE+'&sv='+_rsSV+'"><\/scr'+'ipt>';
+        var _rsIM='<scr'+'ipt language="JavaScript" src="'+_rsND+'cgi-bin/j?ci='+_rsCI+'&ss='+_rsSS+'&cc='+_rsCC+'&rd='+_rsRD+'&se='+_rsSE+'&sv='+_rsSV+'"><\/scr'+'ipt>';
     document.write(_rsIM);
 }
 else {

@@ -52,10 +52,10 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
             "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html lang="en">
 <head>
 <title>Directory Listing</title>
-<style type="text/css">
+<style>
 	#dir-listing-header {font-size:12pt;padding:0.1em 0.3em;
 				border:4px groove red;background-color:#fff0ff;}
  	#dirname {font:bold 120% Helvetica,Arial,sans-serif;color:green;}
