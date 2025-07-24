@@ -19,7 +19,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./__Pages # Adjust this to your static site root (e.g., './site' or './public')
+          path: ./docs # Adjust this to your static site root (e.g., './site' or './public')
 
   deploy-to-pages:
     needs: deploy
