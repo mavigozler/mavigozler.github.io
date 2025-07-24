@@ -9,6 +9,9 @@
 **/PowerPoint Talks--Libraries
 *.js.map
 
-CatchAFire/AngularTutorial
+CatchAFire/
+Tutoring/
+Gulp/
+TheHalloranCompleteReference/
 
 **/__NotesToWorkOn
