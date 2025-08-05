@@ -9,7 +9,7 @@
 **/PowerPoint Talks--Libraries
 *.js.map
 
-pdfs
+pdfs/
 CatchAFire/
 Gulp/
 Reference/UPhoenix
