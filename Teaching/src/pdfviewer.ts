@@ -2,7 +2,7 @@
 // <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 
 declare const pdfjsLib: any;
-import type { PDFDocumentProxy, PDFPageProxy } from "../node_modules/pdfjs-dist/types/src/pdf";
+import type { PDFDocumentProxy, PDFPageProxy } from "../node_modules/pdfjs-dist/types/src/pdf.ts";
 
 const HEIGHT_CANVAS_MAX = 630;
 const WIDTH_CANVAS_MAX = HEIGHT_CANVAS_MAX * 16 / 9;

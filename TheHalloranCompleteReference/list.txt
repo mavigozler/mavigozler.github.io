@@ -1,0 +1,108 @@
+
+    Directory: D:\Mavigozler GitHub\mavigozler.github.io\TheHalloranCompleteReference
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----           6/29/2025 12:09 AM                ___NotesToWorkOn
+d----           7/22/2025  7:03 AM                ___OldHTML
+d----           7/21/2025  9:02 PM                ClinicalLabScience
+d----           7/21/2025  9:58 PM                FlowCytometry
+d----           7/20/2025  6:51 PM                Glossaries
+d----           7/20/2025  6:51 PM                HBV
+d----           6/29/2025 12:09 AM                HCV
+d----           6/29/2025 12:09 AM                HIV
+d----           6/29/2025 12:09 AM                images
+d----           6/29/2025 12:09 AM                imagesAllbiochemHTML
+d----           6/29/2025 12:09 AM                imagesBiologyFirstYearHTML
+d----           6/29/2025 12:09 AM                imagesBiologyHTML
+d----           6/29/2025 12:09 AM                imagesCellCycle-CDKHTML
+d----           6/29/2025 12:09 AM                imagesChemieHTML
+d----           6/29/2025 12:09 AM                imagesEKGinfoHTML
+d----           6/29/2025 12:09 AM                imagesGenomicsReferenceHTML
+d----           6/29/2025 12:09 AM                imagesHistoHTML
+d----           6/29/2025 12:09 AM                imagesImmunologyRefHTML
+d----           6/29/2025 12:09 AM                imagesLinearAlgebraLecturesHTML
+d----           6/29/2025 12:09 AM                imagesMethodsHTML
+d----           6/29/2025 12:09 AM                imagesOChemHTML
+d----           6/29/2025 12:09 AM                imagesPhotosynthesisNotesHTML
+d----           6/29/2025 12:09 AM                imagesPlantBiochemistryHTML
+d----           6/29/2025 12:09 AM                imagesProjectManagementHTML
+d----           6/29/2025 12:09 AM                imagesSoftwareProjectManagementHTML
+d----           6/29/2025 12:09 AM                imagesXrayxtalHTML
+d----           6/29/2025 12:09 AM                imagesZoologyHTML
+d----           7/21/2025  9:46 PM                Industry Knowledgebase
+d----           6/29/2025 12:09 AM                LCCW
+d----           7/20/2025  7:07 PM                Learning-Teaching
+d----           7/21/2025  2:41 PM                LitReadings
+d----           7/21/2025 10:13 PM                Mathematics
+d----           6/29/2025 12:09 AM                molbiol
+d----           6/29/2025 12:09 AM                nmr
+d----           6/29/2025 12:09 AM                PHD
+d----           7/22/2025  7:00 AM                Proteomics
+d----           7/20/2025  6:51 PM                ProtocolsGuides
+d----           7/21/2025  2:50 PM                refcss
+d----           6/29/2025 12:09 AM                SequoiaHomework
+d----           7/22/2025  7:02 AM                Statistics
+l----           7/19/2025  3:05 PM                stdcss -> D:\dev\css
+l----           7/19/2025  3:50 PM                sysimages -> D:\images
+d----           6/29/2025 12:09 AM                Toxoplasma
+d----           7/21/2025  9:49 PM                TyrosineHydroxylase
+d----           7/22/2025  7:03 AM                UCD Lectures
+-a---           7/21/2025  9:26 PM          15370 AcidIonizationConstants.html
+-a---           7/21/2025  9:29 PM         223918 allbiochem.html
+-a---           7/20/2025  6:43 PM           5690 AnalyticalInstruments.html
+-a---           7/21/2025  9:34 PM          81150 bioinformatics.html
+-a---           7/21/2025  9:26 PM          80064 biology.html
+-a---           7/21/2025  9:34 PM         231829 BiologyFirstYear.html
+-a---           7/21/2025  9:26 PM           8736 BiologyGlossary.html
+-a---           7/21/2025  9:26 PM          98816 biotechniques-334707.html
+-a---           7/21/2025  9:26 PM          95896 biotechniques-335698.html
+-a---           7/20/2025  6:43 PM         160678 CellCulture-cleaned.html
+-a---           6/29/2025 12:09 AM           6594 coatset.gif
+-a---           7/21/2025  9:26 PM           2706 constants.html
+-a---           7/21/2025  9:26 PM          32918 DogPsychologyBehaviorTraining.html
+-a---           7/21/2025  9:26 PM          84127 ekginfo.html
+-a---           7/21/2025  9:26 PM           8018 FabricationGlossary.html
+-a---           7/21/2025 11:23 AM         110149 GeneralChemistryLectures.html
+-a---           7/21/2025  9:26 PM          53493 GeneralLaboratoryPractice.html
+-a---           7/21/2025  9:26 PM         448825 GenomicsReference.html
+-a---           6/29/2025 12:09 AM           1477 GlnDerivs.gif
+-a---           7/21/2025  9:26 PM          10014 GlossaryOfImmunologyAndImmunochemistry.html
+-a---           7/21/2025  9:26 PM          17110 GovRegulationsLegal.html
+-a---           7/21/2025  9:31 PM         132061 histo.html
+-a---           7/21/2025  9:31 PM           4992 immunohistochem.html
+-a---           7/21/2025  9:24 PM         142040 Immunology Reference.html
+-a---           7/21/2025  9:26 PM           3843 index.html
+-a---           7/21/2025  9:31 PM         118486 IntroductoryChemistry.html
+-a---           7/22/2025  7:04 AM            468 list.txt
+-a---           7/21/2025  9:34 PM           4059 LKB Rackbeta 1211 OpGuide.html
+-a---           7/21/2025  9:26 PM          50159 Methods.html
+-a---           7/21/2025  9:26 PM           8139 MicroscopyGlossary.html
+-a---           7/20/2025  6:43 PM           4231 MolBiol_Reports.html
+-a---           7/21/2025  9:34 PM           7187 molbiol.html
+-a---           6/29/2025 12:09 AM         106258 MWChart.gif
+-a---           7/21/2025 10:22 PM           3935 now.txt
+-a---           7/21/2025  9:26 PM         919040 OrganicChemistry-Morrison&Boyd-METULectures.html
+-a---           7/21/2025  9:26 PM         163955 OtherMethods.html
+-a---           7/21/2025  9:26 PM          49860 PapersByVulliet.html
+-a---           7/21/2025  9:24 PM          12427 PEP_CHEM.html
+-a---           6/29/2025 12:09 AM         121039 Periodic Table of Elements.pdf
+-a---           7/21/2025  9:26 PM           7277 PhilosophyGlossary.html
+-a---           7/21/2025  9:24 PM          10928 Phlebotomy-Fluid Collection.html
+-a---           7/21/2025  9:26 PM           7160 PhysicalScienceGlossary.html
+-a---           7/20/2025  6:43 PM          97085 physiology.html
+-a---           7/21/2025  9:34 PM         399995 PlantBiochemisty-METU Lectures.html
+-a---           7/21/2025  9:26 PM         174256 ProjectManagementPrinciples.html
+-a---           7/21/2025  9:26 PM          11653 proportions.html
+-a---           7/21/2025  9:31 PM          57683 QuantitativePractice.html
+-a---           7/21/2025  9:26 PM          28808 recipes.html
+-a---           7/21/2025  9:26 PM           6159 SISAKnowledgebase.html
+-a---           7/20/2025  6:43 PM          40810 SoftwareProjectManagement.html
+-a---           7/21/2025  9:26 PM          11403 SpotCutterPlus.html
+-a---           7/21/2025  9:35 PM         679201 Stem Cell Biology Literature.html
+-a---           7/21/2025  9:31 PM          19140 Toxicology.html
+-a---           7/21/2025  9:34 PM           9879 UrinaryIodineMeasurementMethods.html
+-a---           7/20/2025  6:43 PM           9561 wine.html
+-a---           7/21/2025  9:34 PM          21486 xrayxtal.html
+-a---           7/21/2025  9:26 PM         645849 Zoology-METU Lectures.html
+
