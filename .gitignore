@@ -8,10 +8,19 @@
 **/Ketcher
 **/PowerPoint Talks--Libraries
 *.js.map
-
+bfg.jar
 pdfs/
 CatchAFire/
 Gulp/
+Teaching/
 Reference/UPhoenix
 
 **/__NotesToWorkOn
+
+request.rest
+DriveAPIcredentials.json
+Teaching/js/GoogleDriveApiFileRetrieve.js
+Teaching/js/GoogleDriveApiFileListing[Node].js
+Teaching/src/GoogleDriveApiFileRetrieve.ts
+Teaching/src/GoogleDriveApiFileListing[Node].ts
+mavigozler.github.io-mirror.git/
