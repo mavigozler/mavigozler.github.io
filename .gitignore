@@ -16,11 +16,9 @@ Teaching/
 Reference/UPhoenix
 
 **/__NotesToWorkOn
+mavigozler.github.io-mirror.git/
 
+Teaching/src/GoogleDriveApiFileRetrieve.ts
+Teaching/src/GoogleDriveFileListing\[Node].ts
 request.rest
 DriveAPIcredentials.json
-Teaching/js/GoogleDriveApiFileRetrieve.js
-Teaching/js/GoogleDriveApiFileListing[Node].js
-Teaching/src/GoogleDriveApiFileRetrieve.ts
-Teaching/src/GoogleDriveApiFileListing[Node].ts
-mavigozler.github.io-mirror.git/
