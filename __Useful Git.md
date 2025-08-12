@@ -1,8 +1,23 @@
-# Useful Git 
+# Useful Git
 
-Here are the best ways to **scan your repo** for large files that could cause sync issues with GitHub (especially the 100 MB hard limit).
+## Removing Tracked Files from Repository
+
+When git is already tracking files, putting these paths in the `.gitignore` file does not remove the tracked files. It only informs git that no further git actions involving the files will be done.
+
+The following removes the file 'config.json' and the folder 'logs/' from being tracked.
+
+```bash
+git rm --cached config.json
+git rm -r --cached logs/
+```
+
+The option `--cached` removes files from being tracked while keeping the file locally. The `-r` option is needed for folders.
+
+See [this guide](https://www.baeldung.com/ops/git-remove-tracked-files-gitignore) for details on using '.gitignore'
 
 ---
+
+Here are the best ways to **scan your repo** for large files that could cause sync issues with GitHub (especially the 100 MB hard limit).
 
 ## 🔍 1. **Check Unstaged / Tracked Files**
 

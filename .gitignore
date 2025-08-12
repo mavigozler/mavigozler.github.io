@@ -12,13 +12,13 @@ bfg.jar
 pdfs/
 CatchAFire/
 Gulp/
-Teaching/
+./Teaching/Chemistry/
 Reference/UPhoenix
 
 **/__NotesToWorkOn
-mavigozler.github.io-mirror.git/
 
 Teaching/src/GoogleDriveApiFileRetrieve.ts
 Teaching/src/GoogleDriveFileListing\[Node].ts
 request.rest
 DriveAPIcredentials.json
+mavigozler.github.io-mirror.git/
