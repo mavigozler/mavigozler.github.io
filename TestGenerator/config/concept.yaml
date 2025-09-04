@@ -1,5 +1,4 @@
 # Mulitple choice format concept
-
 ---
 - question: "If a right-angled triangle has sides of length $a$ and $b$, what is the length of the hypotenuse $c$ according to the Pythagorean theorem?"
   options:
@@ -36,3 +35,4 @@
     - "c) $14$"
     - "d) $18$"
   answer: "a"
+  
