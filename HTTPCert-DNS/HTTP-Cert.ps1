@@ -156,7 +156,7 @@ $global:FreeDnsPassword = $null
 function Initialize-FreeDnsSession {
     param(
         [string]$Username,
-        [string]$Password
+        [securestring]$Password
     )
 
     $body = @{
