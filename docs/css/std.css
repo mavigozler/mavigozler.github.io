@@ -65,6 +65,7 @@
 	q:before { content: open-quote;}
 	q:after  { content: close-quote; }
 	dfn {font-weight:bolder;color:navy;font-style:normal;}
+   mark {background-color: rgb(252, 186, 252);font-weight: bold;}
 
 /* HTML 5 deprecated elements styled in CSS */
    /* use class attribute 'tt' in inline element */
