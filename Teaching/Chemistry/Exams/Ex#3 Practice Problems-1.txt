@@ -1,0 +1,102 @@
+ALWAYS UNDERSTAND WHAT YOU ARE BEING ASKED!!!
+
+Things to Know about doing Calculations with Gases
+For all calculations in chemistry and the sciences:
+1. 
+-  Look at the units of your quantities (numbers): they must cancel in calculations
+-  If a temperature is in Celsus, you MIGHT have to convert it to Kelvin
+
+
+
+Use the Yellow and Green Sheets to answer any of the problems that requires it
+The mass of an atom, a molecule, or a forumla unit of an ionic compound is in units of 'amu'
+The molar mass of an atom, a molecule or a formula unit of an ionic compound is in units of 'grams per mole' (g/mol)
+
+
+
+The best way to find significant digits is to first convert to scientific notation
+===========
+
+1. What is the pressure in pascals if a force of 4.88 kN is pressed against an area of 235 cm2?
+a)
+b)
+c)
+d)
+e)
+2. What is the pressure in pascals if a force of 3.44 × 104 MN is pressed against an area of 1.09 km2?
+a)
+b)
+c)
+d)
+e)
+3. A gas has a pressure of 2.0 atm when its volume is 4.0 L. If the volume is compressed to 2.0 L at constant temperature, what is the new pressure?
+a)
+b)
+c) 4.0 atm
+d)
+e) 
+
+4. A sample of gas occupies 6.0 L at 750 mmHg. What volume will it occupy at 500 mmHg, assuming constant temperature?
+a)
+b)
+c)  9.0 L
+d)
+e)
+5. A gas has a volume of 0.025 L at 300 K. What will its volume in milliliters be at 360 K if pressure and moles remain constant?
+a)
+b) 3.00 L
+c)
+d)
+e)
+6. A sample of gas occupies 1.20 L at 27 °C. If the gas is heated to 127 °C at constant pressure, what is the new volume?
+a)
+b)
+c)  1.60 L
+d)
+e)
+7. A gas sample has a pressure of 1.20 atm at 300 K. What will the pressure be if the temperature is raised to 360 K, assuming volume and moles remain constant?
+a)
+b)
+c) 1.44 atm
+d)
+e)
+8. A sealed container of gas has a pressure of 2.50 atm at 27 °C. If the container is heated to 127 °C, what is the new pressure in torr?
+a) 3.33 atm
+b)
+c)
+d)
+e)
+
+
+1. A 0.500 mol sample of gas at 25°C and 1.0 atm has an initial volume of 22.4 L. If pressure is changed to 85.7 mmHg, how many milliliters does the gas occupy?
+a)
+b)
+c)
+d)
+e)
+2. If volume of gas in #1 is reduced to 275 mL, what is the pressure in millimeters of mercury?
+a)
+b)
+c)
+d)
+e)
+3. The pressure of gas in #1 is increased to 25.3 atm. What is the temperature in degrees Celsius?
+a)
+b)
+c)
+d)
+e)
+4. If the gas in #1 is heated to 30°C, what is the volume in liters?
+a)
+b)
+c)
+d)
+e)
+5. Now the gase is compressed to 1255 mL, and the pressure is increased to 2555 torr. What is the temperature of the gas in kelvins?
+a)
+b)
+c)
+d)
+e)
+3. What is the final temperature of a gas whose initial conditions are 1.3 L, 400 torr, and 40°C and whose final volume and pressure are 0.950 L and 5.00 atm, respectively? Assume the amount remains constant.
+6. What is the final pressure of a gas whose initial conditions are 1.407 L, 2.06 atm, and −67°C and whose final volume and temperature are 608 mL and 449 K, respectively? Assume the amount remains constant.
