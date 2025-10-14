@@ -61,6 +61,14 @@
          padding:1px 3px;border-radius:6px;background-color:black;color:white;}
 	img {font:bold 70% Helvetica,Arial,sans-serif;color:green;
     border:1px solid blue;}
+   .img-contain {
+      width:100%;
+   }
+   .imgcredit {
+      font:bold italic 9pt "Times New Roman","Times Roman",Times;
+      color:navy;
+      display:block;
+   }
 	q {quotes: '\201c' '\201d' '\2018' '\2019' }
 	q:before { content: open-quote;}
 	q:after  { content: close-quote; }
