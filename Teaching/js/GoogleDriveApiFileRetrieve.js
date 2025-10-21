@@ -1,6 +1,6 @@
 const gapiLibraries = "client", // should be ':'-separated list of libraries to load
 apiLoadTimeout = 5000, // milliseconds for GAPI loading to occur
-CLIENT_ID = "949429110997-pveh14isubihlnri1pnjs0vvmtmham1v.apps.googleusercontent.com", SCOPES = "https://www.googleapis.com/auth/drive.file", API_KEY = "AIzaSyCcwNPZPNCbep7lSDHt9a8rHLgUg4jnAdU", DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+CLIENT_ID = "949429110997-pveh14isubihlnri1pnjs0vvmtmham1v.apps.googleusercontent.com", SCOPES = "https://www.googleapis.com/auth/drive.file", API_KEY = "AIzaSyDsjlRQ0HmeBRPCAzcmmCqbKxekc8kgdXw", DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
 let accessToken;
 function gapiInit(GoogleDriveApi) {
     return new Promise((resolve, reject) => {
