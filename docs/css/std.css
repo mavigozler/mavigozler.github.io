@@ -28,7 +28,7 @@
       border: 1px solid blue;
       width: 80%;
       max-width: 50em;
-      margin: 1em auto;
+      margin: 1em auto 10em;
       padding: 1em 3em;
    }
 	/* headings */
@@ -61,7 +61,7 @@
          padding:1px 3px;border-radius:6px;background-color:black;color:white;}
 	img {font:bold 70% Helvetica,Arial,sans-serif;color:green;
     border:1px solid blue;}
-   .img-contain {
+   img.contain, .img-contain {
       width:100%;
    }
    .imgcredit {
@@ -161,6 +161,7 @@
  .box-left ul, .box-right ul {list-style-type:none;margin:0;padding:0;}
 
   .math {color:blue;margin:0 3em;font-size:100%;line-height: 5px;}
+  .math-inline {color:blue;font-size:100%;line-height: 5px;}
  .contentblock {width:35em;margin:1em auto;text-align:justify;}
 #motd {background-color:#fff0f0;color:black;text-align:center;margin:0 auto;
    font:normal 100% Tahoma,Verdana,sans-serif;padding:0.3em 1em;}
