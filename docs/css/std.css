@@ -12,17 +12,86 @@
       size:portrait;
       margin:1in;
    }
+   body {
+      /* Font Stack: Sans-serif for optimal on-screen reading */
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+      
+      /* Accessibility Standard Base Size */
+      font-size: 16px; 
+      
+      /* Readability: Spacing between lines */
+      line-height: 1.5;
+      
+      /* Contrast: Very dark gray to reduce eye fatigue */
+      color: #333; 
+      
+      /* Set box-sizing globally for simpler layout management */
+      box-sizing: border-box;
+   }
 
-   @media screen {
-      body { background-color:#f8fff8;
-      	font:normal 16px Helvetica,Arial,sans-serif;}
-		h1 {  margin:0.5em 0 0 -1em; }
-		h2 {  margin:0.5em 0 0 -0.75em; }
-		h3 {  margin:0.5em 0 0 -0.5em; }
-		h4 {  margin:0.4em 0 0 -0.25em;  }
-		h5 {  margin:0.75em 0 0 0; }
-		h6 {  margin:0.75em 0 0 0.25em;  } 
+   /* Optional: Apply box-sizing to all elements for predictable widths/heights */
+   *, *::before, *::after {
+      box-sizing: inherit;
+   }
+   :root {
+      /* Define a primary brand color variable (Dark Teal/Blue) */
+      --color-primary: #1F497D; 
+   }
+	/* headings */
+   h1, h2, h3, h4, h5, h6 {
+		/* Use a modern, readable font stack */
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+   		/* Reset top margin on the first heading of a section */
+   	margin-top: 1.5em; 
+   	margin-bottom: 0.5em;
+	   /* Inherit the primary color by default */
+		color: var(--color-primary); 
 	}
+	/* --- Level 1: Most prominent --- */
+	h1 {
+		font-size: 1.8rem;
+		font-weight: 900;
+		border-bottom: 2px solid #EEE; /* Optional visual separation */
+		padding-bottom: 0.25em;
+	}
+
+	/* --- Level 2: Primary Section Headings --- */
+	h2 {
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+
+	/* --- Level 3: Sub-Section Headings --- */
+	h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+	}
+
+	/* --- Level 4: Detail Headings (Slight Color Shift) --- */
+	h4 {
+		font-size: 1.15rem;
+		font-weight: 500;
+		/* Darken the color slightly for emphasis, while keeping it distinct from h1-h3 */
+		color: #2D6099; 
+	}
+
+	/* --- Level 5 & 6: Utility Headings (Less Prominence) --- */
+	h5 {
+		font-size: 1.0rem;
+		font-weight: 500;
+		/* Use a desaturated gray to reduce visual hierarchy */
+		color: #666; 
+	}
+
+	h6 {
+		font-size: 0.9rem;
+		font-weight: 500;
+		/* Further desaturate for labels/fine print */
+		color: #999; 
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
    div.container {
       background-color: white;
       border: 1px solid blue;
@@ -31,25 +100,6 @@
       margin: 1em auto 10em;
       padding: 1em 3em;
    }
-	/* headings */
-	h1 { page-break-after:avoid;text-align:left;
-			font:bold 130% Helvetica,Arial,sans-serif;
-         color: navy }
-	h2 { page-break-after:avoid;text-align:left;
-			font:bold italic 115% Verdana,Arial,Helvetica,sans-serif;
-         color:darkblue;}
-	h3 { page-break-after:avoid;text-align:left;
-   font:bold oblique 110% Palatino,"Century Schoolbook","Times New Roman",Times,serif;
-			color:#050; }
-	h4 {  page-break-after:avoid;text-align:left;
-			font:bold 105% Helvetica,Tahoma,Arial,sans-serif;
-			color:#936; }
-	h5 { page-break-after:avoid;text-align:left;
-			font:bold italic 100% "Times New Roman","Times Roman",Times,serif;
-			color:#00e; }
-	h6 {  page-break-after:avoid;text-align:left;
-			font:bold oblique 100% Arial,Tahoma,Helvetica,sans-serif;
-			color:#d90; }
 	section {border-top:1px inset;padding-top:0.5em;padding-bottom:0.5em;}
    p {margin-top:0.5em;}
    sup, sub { font-size:75%;line-height:0;}
@@ -163,5 +213,6 @@
   .math {color:blue;margin:0 3em;font-size:100%;line-height: 5px;}
   .math-inline {color:blue;font-size:100%;line-height: 5px;}
  .contentblock {width:35em;margin:1em auto;text-align:justify;}
+ .justify {text-align: justify;}
 #motd {background-color:#fff0f0;color:black;text-align:center;margin:0 auto;
    font:normal 100% Tahoma,Verdana,sans-serif;padding:0.3em 1em;}

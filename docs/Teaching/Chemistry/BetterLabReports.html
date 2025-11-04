@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preparing Better Lab Reports</title>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="../../css/std.css">
-    <link rel="stylesheet" href="../../css/chem.css">
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Preparing Better Lab Reports</title>
+   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="192x192" href="android-icon-192.png">
+
+   <link rel="stylesheet" href="css/std.css">
+   <link rel="stylesheet" href="css/chem.css">
 </head>
 <body>
 <p id="title">
    Preparing Better Lab Reports
 </p>
-<div class="container" style="width:45em;">
+<div class="container justify" style="width:45em;">
 <h1>Scope</h1>
-<p>This not the complete guide to lab report preparation, or else it would be titled
+<p>This is not the complete guide to lab report preparation, or else it would be titled
 something like <i>Mastering The Chemistry Lab Report</i>.</p>
 <p>This is more of a <q>Dont's</q> and not a <q>Do's</q> document for the moment.
 These are things I have noticed students doing that they should not do or things 
@@ -25,19 +31,83 @@ This document was created based on recent evaluations of lab reports and hopeful
 this is a way that can improve the reports being submitted.
 </p>
 <section>
-<h1>Experiment 5a: Empirical Formula</h1>
+<h2>Using the (Electronic) Balance To Determine Mass</h2>
+<p>
+Some of the students' experiments have been complicated by getting incorrect mass 
+readings. An example is when a group is asked to get the mass reading 
+of an empty container (Reading #1) and later to get another mass reading 
+(Reading #2) of the container with important sample inside. 
+When Reading #2 is subtracted with value of Reading #1, the number is 
+actually negative!  Since masses cannot be less than zero, what happened?
+</p>
+<p>
+To be certain of Reading #2, the students read the mass maybe once or twice or 
+three times, and those multiple readings continue to agree with each other with only
+the small expected variation. The students now have to wonder that it was 
+Reading #1 that was wrong, and they wished they had taken that reading more than 
+once, which can not be done now that the sample is in the container. (Actually there 
+can be ways to recover.)
+</p>
+<p>
+What the students are doing in this activity is realizing that perhaps 
+instruments that seem very sophisticated like an electronic balance should 
+probably not be read just once, particularly if the reading is not to be 
+an approximate mass, but rather one recorded on a data line that will be 
+significant in experimental calculations.
+</p>
+<p>
+And this is a good thing and something generally that experienced, 
+professional scientists do. They take an instrumental reading 
+<em>multiple times</em> on a critical sample to be very sure of the value 
+of the property of that sample (in this case, mass). They especially 
+take multiple readings on the instrument if they are concerned that 
+the instrument might not be performing optimally, or if there is a 
+question that it might be out of calibration, or that it has been 
+some time since the last maintenance operation or inspection.
+</p>
+<p>
+So if you have any doubt about your reading, or you want to sure that 
+you have an excellent mass reading on a critical sample, this is a 
+suggestion for you on procedure for using a balance to get a mass:
+</p>
+<ol>
+<li>Carefully take three (3) readings of the mass, taring the balance 
+each time. Note the <i><b>minimum</b></i> and <b><i>maximum</i></b> of the 
+three values, and also calculate the <b><i>mean (average)</i></b>
+as well.</li>
+<li>Calculate <span class="math-inline">
+   \( \displaystyle \textit{percent difference} = 
+\frac{\textit{maximum value} - \textit{minimum value}}{\textit{mean}} 
+\times 100\text{%} \)</span>
+</li>
+</ol>
+<p>
+If the difference is 1% or less, the balance can be assumed to be 
+highly reproducible and be used with confidence. Note it is not always
+necessary to take triplicate readings of masses unless the chemist 
+might be determining a very critical measurement. The above procedure 
+is only done periodically to ensure instruments are operating in an 
+expected manner.
+</p>
+
+</section>
+<section>
+<h2>Experiment 5a: Empirical Formula</h2>
 <p>This laboratory session involved heating magnesium (Mg) metal ribbon pieces
 so they would react with atmospheric oxygen in the following reaction. The reaction is:
 <span class="chemical-equation">
    2 Mg (<i>s</i>) + O<sub>2</sub> (<i>g</i>) 
    <span class="reaction-arrow">&srarr;</span> 2 MgO (<i>s</i>)
 </span>
-<h2>The <q>No Work Shown on Calculations</q> Part of The Report</h2>
+<h3>The <q>No Work Shown on Calculations</q> Part of The Report</h3>
+<p>
 In the course of the experiment, students must record the mass of the 
 container itself (empty), then of the magnesium in the container (the starting 
 reactant), then of the product that forms in the container. (These data are not 
-shown in the image below.)
-<img class="center contain" src="BetterLabReport_assets/CalculationsNotShown.png" 
+shown in the image below. The image was edited to change from the handwriting 
+of the student to machine-based chracter lettering, but is a facsimile of 
+the entered data.)
+<img class="center contain" src="BetterLabReport_assets/CalculationsNotShown-masked.png" 
    alt="example of not showing calculations in reports"></p>
 <p>
 Then it is time for the calculations, which are shown in the form above.</p>
@@ -66,14 +136,14 @@ actually do fill up their lab books with that detail because a quick glance
 generally stops them from having to wonder how a certain quantity came to
 appear seemingly out of nowhere.
 </p>
-<h2>How Did You Do That Calculation?</h2>
+<h3>How Did You Do That Calculation?</h3>
 <p>
 When one sees a calcuation like below&mdash;which actually has the 
 correct answer&mdash;this is the kind of finding that is most disturbing.
 Because this report has students working in partners as groups of two, 
 it seems clear that the partner knew what was going on but the understanding
 did not catch up with the student.
-<img class="center" src="BetterLabReport_assets/WrongUnitsShown.png" 
+<img class="center" src="BetterLabReport_assets/WrongUnitsShown-masked.png" 
    alt="Calculation with Wrong Units and Wrong Math Operation">
 The calculation was determine the mole amount of the element oxygen 
 that was formed in the MgO product using oxygen's molar mass. 
@@ -135,7 +205,8 @@ this way? The lab report below shows that there was a failure to help
 the student understand the concept.
 </p>
 <p>
-<img class="center contain" src="BetterLabReport_assets/WrongCalculationOfMoleRatioEmpircalFormula.png"
+<img class="center contain" 
+src="BetterLabReport_assets/WrongCalculationOfMoleRatioEmpircalFormula-masked.png"
  alt="example of empirical formula wrongly determined">
 </p>
 <p>
@@ -148,7 +219,8 @@ sulfur (S). The sheet below then shows the calculations for determining
 the empirical formula.
 </p>
 <p>
-<img class="center" style="transform: scale(1.25);margin:2.5em auto;" src="BetterLabReport_assets/EmpiricalFormulaCalculations.png"
+<img class="center" style="transform: scale(1.25);margin:2.5em auto;" 
+src="BetterLabReport_assets/EmpiricalFormulaCalculations.png"
   alt="Excel sheet showing example empirical formula calcuations the right way and wrong ways">
 </p>
 <p>
